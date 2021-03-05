@@ -1,7 +1,7 @@
 <?php
     include_once "DatabaseInfo.php";
     class DatabaseHandler{
-        public $DatabaseConnection;
+        public static $DatabaseConnection;
 
         function __construct()
         {

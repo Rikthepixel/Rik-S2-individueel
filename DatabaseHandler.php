@@ -1,14 +1,20 @@
 <?php
     include_once "DatabaseInfo.php";
     class DatabaseHandler{
-        public static $DatabaseConnection;
+        private static $DatabaseConnection;
 
         function __construct()
         {
-            $DatabaseConnection = mysqli_connect(DBInfo::$DBServer, DBInfo::$DBUser, DBInfo::$DBPassword, DBInfo::$DBName);
-            if (!$DatabaseConnection) {
+            DatabaseHandler::$DatabaseConnection = mysqli_connect(DBInfo::$DBServer, DBInfo::$DBUser, DBInfo::$DBPassword, DBInfo::$DBName);
+            if (!DatabaseHandler::$DatabaseConnection) {
                 die("Connection to the database failed");
             }
+        }
+
+        public static function ExecuteQuery($Query){
+
+            return DatabaseHandler::$DatabaseConnection -> query($Query) -> fetch_array();
+
         }
 
     }

@@ -1,6 +1,6 @@
 <?php
 
-class Game
+class GameController
 {
 
     //Private
@@ -41,6 +41,7 @@ class Game
     public function GetSingle($GameID)
     {
         $GameID = $this->DatabaseHandler->EscapeString($GameID);
+
         $Query = "SELECT 
                 pltfrm.Name as Platform_Name,
                 pltfrm.Link as Platform_Link,
@@ -55,9 +56,9 @@ class Game
             FROM
                 $this->table gms
             LEFT JOIN
-                platforms pltfrm ON gms.PlatformID = pltfrm.ID
-            LEFT JOIN
                 images imgs ON gms.IconID = imgs.ID
+            LEFT JOIN
+                platforms pltfrm ON gms.PlatformID = pltfrm.ID
             WHERE
                 gms.ID = $GameID
             ";
@@ -112,8 +113,7 @@ class Game
             $UpdateData[$i] = $this->DatabaseHandler->EscapeString($UpdateData[$i]);
         }
 
-        function IsValidvalue($Value)
-        {
+        function IsValidvalue($Value){
             if (isset($Value) && $Value != null) {
                 return true;
             } else {
@@ -121,8 +121,7 @@ class Game
             }
         }
 
-        function CheckandAddToString($Value, $CollumName, $StringtoAddTo)
-        {
+        function CheckandAddToString($Value, $CollumName, $StringtoAddTo){
             if (IsValidvalue($Value)) {
                 return "$StringtoAddTo, $CollumName = $Value";
             }
@@ -151,10 +150,8 @@ class Game
 
     public function Delete($GameID)
     {
+        $GameID = $this->DatabaseHandler->EscapeString($GameID);
         $Query = "DELETE FROM $this->table WHERE ID = $GameID";
-        echo "Before execture";
-        $ReturnValue =  $this->DatabaseHandler->ExecuteQuery($Query);
-        echo "After";
-        return $ReturnValue;
+        return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 }

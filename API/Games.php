@@ -6,7 +6,7 @@ $Objects = "$Root/Objects";
 $Models = "$Objects/Models";
 
 include_once "$Models/API/ApiResponse.php";
-include_once "$Models/Game.php";
+include_once "$Models/GameController.php";
 include_once "$Objects/URLParameter.php";
 include_once "$Root/Database/DatabaseHandler.php";
 
@@ -18,9 +18,9 @@ $GamesActionValue = URLParameter::getParam("Games.php");
 $DBHandler = new DatabaseHandler();
 $DBHandler->Connect();
 
-function GetSingleGame($GameID, $DatabaseHandler)
+function GetSingleGame($DatabaseHandler, $GameID)
 {
-    $GameObject = new Game($DatabaseHandler);
+    $GameObject = new GameController($DatabaseHandler);
     $ListOfGames = $GameObject->GetSingle($GameID);
     $ValidationResult = $DatabaseHandler->ValidateSQLResponse($ListOfGames);
 
@@ -29,7 +29,7 @@ function GetSingleGame($GameID, $DatabaseHandler)
 }
 function GetAllGames($DatabaseHandler)
 {
-    $GameObject = new Game($DatabaseHandler);
+    $GameObject = new GameController($DatabaseHandler);
     $ListOfGames = $GameObject->GetAll();
     $ValidationResult = $DatabaseHandler->ValidateSQLResponse($ListOfGames);
 
@@ -47,7 +47,7 @@ function CreatNewGame($DatabaseHandler, $CreateData)
 }
 function UpdateGame($DatabaseHandler, $UpdateData)
 {
-    $GameObject = new Game($DatabaseHandler);
+    $GameObject = new GameController($DatabaseHandler);
     $Response = $GameObject->Update($UpdateData);
     $ValidationResult = $DatabaseHandler->ValidateSQLResponse($Response);
 
@@ -56,19 +56,23 @@ function UpdateGame($DatabaseHandler, $UpdateData)
 }
 
 function DeleteGame($DatabaseHandler, $GameID) {
-    $GameObject = new Game($DatabaseHandler);
+    if ( isset($DatabaseHandler) && isset($GameID)) {
+        $GameObject = new GameController($DatabaseHandler);
 
-    $Response = $GameObject->Delete($GameID);
-    echo "afeter";
-    if ($Response != null){
-        $ValidationResult = $DatabaseHandler->ValidateSQLResponse($Response);
-        $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
-        $ApiResponse->EchoResponse();
+        $Response = $GameObject->Delete($GameID);
+        if ($Response != null){
+            $ValidationResult = $DatabaseHandler->ValidateSQLResponse($Response);
+            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
+            $ApiResponse->EchoResponse();
+        }
+        else {
+            $ValidationResult = $DatabaseHandler->ValidateSQLResponse(false);
+            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], false);
+            $ApiResponse->EchoResponse();
+        }
     }
-    else {
-        $ValidationResult = $DatabaseHandler->ValidateSQLResponse(false);
-        $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], false);
-        $ApiResponse->EchoResponse();
+    else{
+        echo "Undefinedvariable";
     }
 }
 
@@ -78,7 +82,7 @@ if (isset($GamesActionValue) && $GamesActionValue != null) {
     if (is_numeric($GamesActionValue)) {
 
         $ActionValue = URLParameter::getParam("Games.php/$GamesActionValue");
-
+        echo $ActionValue;
         if ($ActionValue != null) {
 
             if($ActionValue == "Update") {
@@ -97,16 +101,15 @@ if (isset($GamesActionValue) && $GamesActionValue != null) {
             }
             elseif ($ActionValue == "Delete") {
                 //Delete the game from the page
-                
-                DeleteGame($DatabaseHandler, $GamesActionValue);
+                echo "Deleting";
+                DeleteGame($DBHandler, $GamesActionValue);
             }
         }
         else {
-            GetSingleGame($GamesActionValue, $DBHandler);
+            GetSingleGame($DBHandler, $GamesActionValue);
         }
     } elseif ($GamesActionValue == "Create") {
         //Create a new game
-        echo "Create";
         CreatNewGame($DatabaseHandler, array(
             "Name" => $_GET["Name"],
             "Description" => $_GET["Description"],

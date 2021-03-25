@@ -2,19 +2,40 @@
 include_once "DatabaseInfo.php";
 class DatabaseHandler
 {
-    public $DatabaseConnection;
+    private $DatabaseConnection;
 
     public function Connect()
     {
         $this->DatabaseConnection = null;
         try {
-            $this->DatabaseConnection = new PDO('mysql:host='.DBInfo::$DBServer.';dbname='.DBInfo::$DBName, DBInfo::$DBUser, DBInfo::$DBPassword);
-        } catch(PDOException $e) {
-            echo "Connection error $e->getMessage()";
+            $Host = DBInfo::$DBServer;
+            $DBname = DBInfo::$DBName;
+            $this->DatabaseConnection = new PDO("mysql:host=$Host;dbname=$DBname", DBInfo::$DBUser, DBInfo::$DBPassword);
+        } catch (PDOException $e) {
+            $Message = $e->getMessage();
+            echo "Connection error $Message";
         }
-        $this->DatabaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        if ($this->DatabaseConnection != null) {
+            $this->DatabaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
+    }
+    
+    public function TestConnect()
+    {
+        $this->DatabaseConnection = null;
+        try {
+            $DBHost = DBInfo::$TestDBServer;
+            $DBname = DBInfo::$TestDBName;
+            $this->DatabaseConnection = new PDO("mysql:dbname=$DBname;host=$DBHost", DBInfo::$TestDBUser, DBInfo::$TestDBPassword);
+        } catch (PDOException $e) {
+            $Message = $e->getMessage();
+            echo "Connection error $Message";
+        }
+        if ($this->DatabaseConnection != null) {
+            $this->DatabaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+        }
 
-        //$this->DatabaseConnection = mysqli_connect(DBInfo::$DBServer, DBInfo::$DBUser, DBInfo::$DBPassword, DBInfo::$DBName);
+        //$this->DatabaseConnection = mysqli_connect(DBInfo::$TestDBServer, DBInfo::$TestDBUser, DBInfo::$TestDBPassword, DBInfo::$TestDBName);
         //if (!$this->DatabaseConnection) {
         //    die("Connection to the database failed");
         //}
@@ -22,33 +43,41 @@ class DatabaseHandler
 
     public function ExecuteQuery($Query)
     {
-        echo "Before query";
         $Response = $this->DatabaseConnection->query($Query);
-        echo "after query";
         if ($Response != null) {
-            echo "Not";
-            $FetchedArray = $Response->fetch(PDO::FETCH_ASSOC); //$Response->FETCH_ASSOC(); //
-            if ($FetchedArray != null) {
-
-                $ReturnArray = array();
-
-                array_push($ReturnArray, $FetchedArray);
-
-                while ($Row = $Response->fetch_assoc()) {
-                    array_push($ReturnArray, $Row);
-                }
-
-                if (count($ReturnArray) == 1) {
-                    //Dont return an array in an array if it is only one item
-                    return $ReturnArray[0];
-                }
-                return $ReturnArray;
-            } else {
-                return true;
+            if (gettype($Response) == "boolean") {
+                return $Response;
             }
+            else {
+                try {
+                    $ReturnArray = array();
+
+                    while ($Row = $Response->fetch(PDO::FETCH_ASSOC)) {   //$Response->FETCH_ASSOC()
+                        array_push($ReturnArray, $Row);
+                    }
+                    
+                    if (count($ReturnArray) == 1) {
+                        //Dont return an array in an array if it is only one item
+                        return $ReturnArray[0];
+                    }
+                    return $ReturnArray;
+                }  catch(PDOException $e) {
+                    try {
+                        if ( $Response->queryString) {
+                            return true;
+                        }
+                        return;
+                    } catch(Error $e) {
+                        return $Response;
+                    }
+
+                }
+            }
+
         } else {
             return false;
         }
+
     }
 
     public function ValidateSQLResponse($ResultValue)
@@ -75,6 +104,6 @@ class DatabaseHandler
 
     public function EscapeString($UnsafeVariable)
     {
-        return htmlspecialchars(strip_tags(mysqli_escape_string($this->DatabaseConnection, $UnsafeVariable)));
+        return $this->DatabaseConnection->quote($UnsafeVariable);
     }
 }

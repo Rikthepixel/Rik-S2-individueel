@@ -13,7 +13,7 @@ class DatabaseHandler
             echo "Connection error $e->getMessage()";
         }
         $this->DatabaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-        
+
         //$this->DatabaseConnection = mysqli_connect(DBInfo::$DBServer, DBInfo::$DBUser, DBInfo::$DBPassword, DBInfo::$DBName);
         //if (!$this->DatabaseConnection) {
         //    die("Connection to the database failed");
@@ -22,24 +22,29 @@ class DatabaseHandler
 
     public function ExecuteQuery($Query)
     {
+        echo "Before query";
+        $Response = $this->DatabaseConnection->query($Query);
+        echo "after query";
+        if ($Response != null) {
+            echo "Not";
+            $FetchedArray = $Response->fetch(PDO::FETCH_ASSOC); //$Response->FETCH_ASSOC(); //
+            if ($FetchedArray != null) {
 
-        if ($Response = $this->DatabaseConnection->query($Query)) {
-            if ($Response != null) {
-                if ($FetchedArray = $Response->fetch(PDO::FETCH_ASSOC)) {
-                    $ReturnArray = array();
-                    array_push($ReturnArray, $FetchedArray);
+                $ReturnArray = array();
 
-                    while ($Row = $Response->fetch_assoc()) {
-                        array_push($ReturnArray, $Row);
-                    }
-                    if (count($ReturnArray) == 1) {
-                        //Dont return an array in an array if it is only one item
-                        return $ReturnArray[0];
-                    }
-                    return $ReturnArray;
-                } else {
-                    return true;
+                array_push($ReturnArray, $FetchedArray);
+
+                while ($Row = $Response->fetch_assoc()) {
+                    array_push($ReturnArray, $Row);
                 }
+
+                if (count($ReturnArray) == 1) {
+                    //Dont return an array in an array if it is only one item
+                    return $ReturnArray[0];
+                }
+                return $ReturnArray;
+            } else {
+                return true;
             }
         } else {
             return false;
@@ -47,7 +52,7 @@ class DatabaseHandler
     }
 
     public function ValidateSQLResponse($ResultValue)
-    {  
+    {
         $ReturnValue = array(
             "Result" => false,
             "Message" => "Unknown Error"

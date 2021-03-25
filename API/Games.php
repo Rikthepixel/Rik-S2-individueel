@@ -57,16 +57,18 @@ function UpdateGame($DatabaseHandler, $UpdateData)
 
 function DeleteGame($DatabaseHandler, $GameID) {
     $GameObject = new Game($DatabaseHandler);
-    if ($Response = $GameObject->Delete($GameID)){
-        echo "wtf";
+
+    $Response = $GameObject->Delete($GameID);
+    echo "afeter";
+    if ($Response != null){
         $ValidationResult = $DatabaseHandler->ValidateSQLResponse($Response);
-        echo "wtf";
         $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
-        echo "wtf";
         $ApiResponse->EchoResponse();
     }
     else {
-        echo "wtf";
+        $ValidationResult = $DatabaseHandler->ValidateSQLResponse(false);
+        $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], false);
+        $ApiResponse->EchoResponse();
     }
 }
 

@@ -152,6 +152,9 @@ class Game
     public function Delete($GameID)
     {
         $Query = "DELETE FROM $this->table WHERE ID = $GameID";
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+        echo "Before execture";
+        $ReturnValue =  $this->DatabaseHandler->ExecuteQuery($Query);
+        echo "After";
+        return $ReturnValue;
     }
 }

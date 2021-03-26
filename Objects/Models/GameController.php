@@ -1,4 +1,5 @@
 <?php
+include_once "../../Database/DatabaseHandler.php";
 
 class GameController
 {
@@ -7,9 +8,10 @@ class GameController
     private $DatabaseHandler;
     private $table = "games";
 
-    function __construct($DB)
+    function __construct()
     {
-        $this->DatabaseHandler = $DB;
+        $this->DatabaseHandler = new DatabaseHandler();
+        $this->DatabaseHandler->Connect();
     }
 
     public function GetAll()
@@ -19,10 +21,7 @@ class GameController
                 pltfrm.Link as Platform_Link,
                 imgs.Image as Icon_blob,
                 imgs.Name as Icon_Name,
-                gms.ID,
                 gms.Name,
-                gms.IconID,
-                gms.PlatformID,
                 gms.LaunchDate,
                 gms.Link
             FROM
@@ -47,10 +46,7 @@ class GameController
                 pltfrm.Link as Platform_Link,
                 imgs.Image as Icon_blob,
                 imgs.Name as Icon_Name,
-                gms.ID,
                 gms.Name,
-                gms.IconID,
-                gms.PlatformID,
                 gms.LaunchDate,
                 gms.Link
             FROM

@@ -6,67 +6,58 @@ $Objects = "$Root/Objects";
 $Models = "$Objects/Models";
 
 include_once "$Models/API/ApiResponse.php";
-include_once "$Models/GameController.php";
+include_once "$Models/PlatformController.php";
 include_once "$Objects/URLParameter.php";
-include_once "$Root/Database/DatabaseHandler.php";
 
-
-//URL parameters
-$GamesActionValue = URLParameter::getParam("Games.php");
-
-//Objects
-$DBHandler = new DatabaseHandler();
-$DBHandler->Connect();
-
-function GetSingleGame($DatabaseHandler, $GameID)
+function GetSinglePlatform($PlatformID)
 {
-    $GameObject = new GameController($DatabaseHandler);
-    $ListOfGames = $GameObject->GetSingle($GameID);
-    $ValidationResult = $DatabaseHandler->ValidateSQLResponse($ListOfGames);
+    $PlatformObject = new PlatformController();
+    $ListOfPlatforms = $PlatformObject->GetSingle($PlatformID);
+    $ValidationResult = ApiResponse::GenerateResponse($ListOfPlatforms);
 
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfGames);
+    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfPlatforms);
     $ApiResponse->EchoResponse();
 }
-function GetAllGames($DatabaseHandler)
+function GetAllPlatforms()
 {
-    $GameObject = new GameController($DatabaseHandler);
-    $ListOfGames = $GameObject->GetAll();
-    $ValidationResult = $DatabaseHandler->ValidateSQLResponse($ListOfGames);
+    $PlatformObject = new PlatformController();
+    $ListOfPlatforms = $PlatformObject->GetAll();
+    $ValidationResult = ApiResponse::GenerateResponse($ListOfPlatforms);
 
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfGames);
+    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfPlatforms);
     $ApiResponse->EchoResponse();
 }
-function CreatNewGame($DatabaseHandler, $CreateData)
+function CreatNewPlatform($CreateData)
 {
-    $GameObject = new Game($DatabaseHandler);
-    $Response = $GameObject->Create($CreateData);
-    $ValidationResult = $DatabaseHandler->ValidateSQLResponse($Response);
+    $PlatformObject = new PlatformController();
+    $Response = $PlatformObject->Create($CreateData);
+    $ValidationResult = ApiResponse::GenerateResponse($Response);
 
     $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
     $ApiResponse->EchoResponse();
 }
-function UpdateGame($DatabaseHandler, $UpdateData)
+function UpdatePlatform($UpdateData)
 {
-    $GameObject = new GameController($DatabaseHandler);
-    $Response = $GameObject->Update($UpdateData);
-    $ValidationResult = $DatabaseHandler->ValidateSQLResponse($Response);
+    $PlatformObject = new PlatformController();
+    $Response = $PlatformObject->Update($UpdateData);
+    $ValidationResult = ApiResponse::GenerateResponse($Response);
 
     $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
     $ApiResponse->EchoResponse();
 }
 
-function DeleteGame($DatabaseHandler, $GameID) {
+function DeletePlatform($GameID) {
     if ( isset($DatabaseHandler) && isset($GameID)) {
-        $GameObject = new GameController($DatabaseHandler);
+        $PlatformObject = new PlatformController($DatabaseHandler);
 
-        $Response = $GameObject->Delete($GameID);
+        $Response = $PlatformObject->Delete($GameID);
         if ($Response != null){
-            $ValidationResult = $DatabaseHandler->ValidateSQLResponse($Response);
+            $ValidationResult = ApiResponse::GenerateResponse($Response);
             $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
             $ApiResponse->EchoResponse();
         }
         else {
-            $ValidationResult = $DatabaseHandler->ValidateSQLResponse(false);
+            $ValidationResult = ApiResponse::GenerateResponse(false);
             $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], false);
             $ApiResponse->EchoResponse();
         }
@@ -76,50 +67,42 @@ function DeleteGame($DatabaseHandler, $GameID) {
     }
 }
 
-if (isset($GamesActionValue) && $GamesActionValue != null) {
+//URL parameters
+$PlatformActionValue = URLParameter::getParam("Platforms.php");
+if (isset($PlatformActionValue) && $PlatformActionValue != null) {
     //user wants to do something with a specific game
 
-    if (is_numeric($GamesActionValue)) {
+    if (is_numeric($PlatformActionValue)) {
 
-        $ActionValue = URLParameter::getParam("Games.php/$GamesActionValue");
-        echo $ActionValue;
+        $ActionValue = URLParameter::getParam("Platforms.php/$PlatformActionValue");
         if ($ActionValue != null) {
 
             if($ActionValue == "Update") {
                 //Update the game  
-
-                echo "Update";
-                UpdateGame($DatabaseHandler, array(
-                    "ID" => $GamesActionValue,
+                UpdatePlatform(array(
+                    "ID" => $PlatformActionValue,
                     "Name" => $_GET["Name"],
-                    "Description" => $_GET["Description"],
                     "Link" => $_GET["Link"],
-                    "PlatformID" => $_GET["PlatformID"],
-                    "IconID" => $_GET["IconID"],
-                    "LaunchDate" => $_GET["LaunchDate"]
+                    "IconID" => $_GET["IconID"]
                 ));
             }
             elseif ($ActionValue == "Delete") {
                 //Delete the game from the page
-                echo "Deleting";
-                DeleteGame($DBHandler, $GamesActionValue);
+                DeletePlatform($PlatformActionValue);
             }
         }
         else {
-            GetSingleGame($DBHandler, $GamesActionValue);
+            GetSinglePlatform($PlatformActionValue);
         }
-    } elseif ($GamesActionValue == "Create") {
+    } elseif ($PlatformActionValue == "Create") {
         //Create a new game
-        CreatNewGame($DatabaseHandler, array(
+        CreatNewPlatform(array(
             "Name" => $_GET["Name"],
-            "Description" => $_GET["Description"],
             "Link" => $_GET["Link"],
-            "PlatformID" => $_GET["PlatformID"],
-            "IconID" => $_GET["IconID"],
-            "LaunchDate" => $_GET["LaunchDate"]
+            "IconID" => $_GET["IconID"]
         ));
     }
 } else {
     //Get All games
-    GetAllGames($DBHandler);
+    GetAllPlatforms();
 }

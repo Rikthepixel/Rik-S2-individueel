@@ -1,66 +1,51 @@
 <?php
+include_once "../../Database/DatabaseHandler.php";
 
-class GameController
+class PlatformController
 {
 
     //Private
     private $DatabaseHandler;
-    private $table = "games";
+    private $table = "platforms";
 
-    function __construct($DB)
+    function __construct()
     {
-        $this->DatabaseHandler = $DB;
+        $this->DatabaseHandler = new DatabaseHandler();
+        $this->DatabaseHandler->Connect();
     }
 
     public function GetAll()
     {
         $Query = "SELECT 
-                pltfrm.Name as Platform_Name,
-                pltfrm.Link as Platform_Link,
+                Name,
+                Link,
                 imgs.Image as Icon_blob,
                 imgs.Name as Icon_Name,
-                gms.ID,
-                gms.Name,
-                gms.IconID,
-                gms.PlatformID,
-                gms.LaunchDate,
-                gms.Link
             FROM
-                $this->table gms
+                $this->table pltfrm
             LEFT JOIN
-                images imgs ON gms.IconID = imgs.ID
-            LEFT JOIN
-                platforms pltfrm ON gms.PlatformID = pltfrm.ID
+                pltfrm.IconID = imgs.ID
             ORDER BY 
-                gms.LaunchDate DESC
+            pltfrm.ID DESC
             ";
-
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 
-    public function GetSingle($GameID)
+    public function GetSingle($PlatformID)
     {
-        $GameID = $this->DatabaseHandler->EscapeString($GameID);
+        $PlatformID = $this->DatabaseHandler->EscapeString($PlatformID);
 
         $Query = "SELECT 
-                pltfrm.Name as Platform_Name,
-                pltfrm.Link as Platform_Link,
+                Name,
+                Link,
                 imgs.Image as Icon_blob,
                 imgs.Name as Icon_Name,
-                gms.ID,
-                gms.Name,
-                gms.IconID,
-                gms.PlatformID,
-                gms.LaunchDate,
-                gms.Link
             FROM
-                $this->table gms
+                $this->table pltfrm
             LEFT JOIN
-                images imgs ON gms.IconID = imgs.ID
-            LEFT JOIN
-                platforms pltfrm ON gms.PlatformID = pltfrm.ID
+                pltfrm.IconID = imgs.ID
             WHERE
-                gms.ID = $GameID
+                pltfrm.ID = $PlatformID
             ";
 
         return $this->DatabaseHandler->ExecuteQuery($Query);
@@ -74,32 +59,20 @@ class GameController
         }
 
         $GameName = $CreateData['Name'];
-        $Description = $CreateData['Description'];
         $IconID = $CreateData['IconID'];
-        $PlatformID = $CreateData['PlatformID'];
-        $LaunchDate = $CreateData['LaunchDate'];
-        $GameLink = $CreateData['Link'];
-        $Visible = $CreateData['Visible'];
+        $Link = $CreateData['Link'];
 
         $Query = "INSERT 
                 INTO $this->table 
                 (
                     'Name',
-                    'Description'
                     'IconID',
-                    'PlatformID',
                     'Link',
-                    'LaunchDate'
-                    'Visible'
                 )
                 VALUES (
                     $GameName,
-                    $Description,
                     $IconID, 
-                    $PlatformID,
-                    $LaunchDate,
-                    $GameLink,
-                    $Visible
+                    $Link
                 )
             ";
 
@@ -130,11 +103,8 @@ class GameController
 
         $UpdateString = "";
         $UpdateString = CheckandAddToString($UpdateData['Name'], 'Name', $UpdateString);
-        $UpdateString = CheckandAddToString($UpdateData['LaunchDate'], 'LaunchDate', $UpdateString);
         $UpdateString = CheckandAddToString($UpdateData['Link'], 'Link', $UpdateString);
-        $UpdateString = CheckandAddToString($UpdateData['PlatformID'], 'PlatformID', $UpdateString);
         $UpdateString = CheckandAddToString($UpdateData['IconID'], 'IconID', $UpdateString);
-        $UpdateString = CheckandAddToString($UpdateData['Description'], 'Description', $UpdateString);
         $ID = $UpdateData['ID'];
 
         $Query = "UPDATE $this->table 
@@ -148,10 +118,10 @@ class GameController
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 
-    public function Delete($GameID)
+    public function Delete($PlatformID)
     {
-        $GameID = $this->DatabaseHandler->EscapeString($GameID);
-        $Query = "DELETE FROM $this->table WHERE ID = $GameID";
+        $PlatformID = $this->DatabaseHandler->EscapeString($PlatformID);
+        $Query = "DELETE FROM $this->table WHERE ID = $PlatformID";
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 }

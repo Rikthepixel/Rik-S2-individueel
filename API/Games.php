@@ -8,65 +8,56 @@ $Models = "$Objects/Models";
 include_once "$Models/API/ApiResponse.php";
 include_once "$Models/GameController.php";
 include_once "$Objects/URLParameter.php";
-include_once "$Root/Database/DatabaseHandler.php";
 
-
-//URL parameters
-$GamesActionValue = URLParameter::getParam("Games.php");
-
-//Objects
-$DBHandler = new DatabaseHandler();
-$DBHandler->Connect();
-
-function GetSingleGame($DatabaseHandler, $GameID)
+function GetSingleGame($GameID)
 {
-    $GameObject = new GameController($DatabaseHandler);
+    $GameObject = new GameController();
     $ListOfGames = $GameObject->GetSingle($GameID);
-    $ValidationResult = $DatabaseHandler->ValidateSQLResponse($ListOfGames);
+    $ValidationResult = ApiResponse::GenerateResponse($ListOfGames);
 
     $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfGames);
     $ApiResponse->EchoResponse();
 }
-function GetAllGames($DatabaseHandler)
+function GetAllGames()
 {
-    $GameObject = new GameController($DatabaseHandler);
+    $GameObject = new GameController();
     $ListOfGames = $GameObject->GetAll();
-    $ValidationResult = $DatabaseHandler->ValidateSQLResponse($ListOfGames);
+    $ValidationResult = ApiResponse::GenerateResponse($ListOfGames);
 
     $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfGames);
     $ApiResponse->EchoResponse();
 }
-function CreatNewGame($DatabaseHandler, $CreateData)
+function CreatNewGame($CreateData)
 {
-    $GameObject = new Game($DatabaseHandler);
+    $GameObject = new GameController();
     $Response = $GameObject->Create($CreateData);
-    $ValidationResult = $DatabaseHandler->ValidateSQLResponse($Response);
+    $ValidationResult = ApiResponse::GenerateResponse($Response);
 
     $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
     $ApiResponse->EchoResponse();
 }
-function UpdateGame($DatabaseHandler, $UpdateData)
+function UpdateGame($UpdateData)
 {
-    $GameObject = new GameController($DatabaseHandler);
+    $GameObject = new GameController();
     $Response = $GameObject->Update($UpdateData);
-    $ValidationResult = $DatabaseHandler->ValidateSQLResponse($Response);
+    $ValidationResult = ApiResponse::GenerateResponse($Response);
 
     $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
     $ApiResponse->EchoResponse();
 }
 
-function DeleteGame($DatabaseHandler, $GameID) {
+function DeleteGame($GameID) {
     if ( isset($DatabaseHandler) && isset($GameID)) {
         $GameObject = new GameController($DatabaseHandler);
 
         $Response = $GameObject->Delete($GameID);
         if ($Response != null){
-            $ValidationResult = $DatabaseHandler->ValidateSQLResponse($Response);
+            $ValidationResult = ApiResponse::GenerateResponse($Response);
             $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
             $ApiResponse->EchoResponse();
         }
         else {
-            $ValidationResult = $DatabaseHandler->ValidateSQLResponse(false);
+            $ValidationResult = ApiResponse::GenerateResponse(false);
             $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], false);
             $ApiResponse->EchoResponse();
         }
@@ -76,20 +67,19 @@ function DeleteGame($DatabaseHandler, $GameID) {
     }
 }
 
+//URL parameters
+$GamesActionValue = URLParameter::getParam("Games.php");
 if (isset($GamesActionValue) && $GamesActionValue != null) {
     //user wants to do something with a specific game
 
     if (is_numeric($GamesActionValue)) {
 
         $ActionValue = URLParameter::getParam("Games.php/$GamesActionValue");
-        echo $ActionValue;
         if ($ActionValue != null) {
 
             if($ActionValue == "Update") {
                 //Update the game  
-
-                echo "Update";
-                UpdateGame($DatabaseHandler, array(
+                UpdateGame(array(
                     "ID" => $GamesActionValue,
                     "Name" => $_GET["Name"],
                     "Description" => $_GET["Description"],
@@ -101,16 +91,15 @@ if (isset($GamesActionValue) && $GamesActionValue != null) {
             }
             elseif ($ActionValue == "Delete") {
                 //Delete the game from the page
-                echo "Deleting";
-                DeleteGame($DBHandler, $GamesActionValue);
+                DeleteGame($GamesActionValue);
             }
         }
         else {
-            GetSingleGame($DBHandler, $GamesActionValue);
+            GetSingleGame($GamesActionValue);
         }
     } elseif ($GamesActionValue == "Create") {
         //Create a new game
-        CreatNewGame($DatabaseHandler, array(
+        CreatNewGame(array(
             "Name" => $_GET["Name"],
             "Description" => $_GET["Description"],
             "Link" => $_GET["Link"],
@@ -121,5 +110,5 @@ if (isset($GamesActionValue) && $GamesActionValue != null) {
     }
 } else {
     //Get All games
-    GetAllGames($DBHandler);
+    GetAllGames();
 }

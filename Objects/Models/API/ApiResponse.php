@@ -23,6 +23,28 @@
             }
         }
 
+        public static function GenerateResponse($ResultValue)
+        {
+            $ReturnValue = array(
+                "Result" => false,
+                "Message" => "Unknown Error"
+            );
+    
+            if (isset($ResultValue)) {
+                if (!$ResultValue) {
+                    $ReturnValue["Result"] = false;
+                    $ReturnValue["Message"] = "Database query failed";
+                } else {
+                    $ReturnValue["Result"] = true;
+                    $ReturnValue["Message"] = "No Errors";
+                }
+            } else {
+                $ReturnValue["Result"] = false;
+                $ReturnValue["Message"] = "Error while retrieving data";
+            }
+            return $ReturnValue;
+        }
+
         public function EchoResponse(){
             $Array = array(
                 "Result" => $this->Result,

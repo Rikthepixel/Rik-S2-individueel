@@ -1,17 +1,14 @@
 <?php
-
-
-$Root = "../";
-$Objects = "$Root/Objects";
+$Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = "$Objects/Models";
-
 include_once "$Models/API/ApiResponse.php";
 include_once "$Models/PlatformController.php";
 include_once "$Objects/URLParameter.php";
+$PlatformObject = new PlatformController();
 
 function GetSinglePlatform($PlatformID)
 {
-    $PlatformObject = new PlatformController();
+    global $PlatformObject;
     $ListOfPlatforms = $PlatformObject->GetSingle($PlatformID);
     $ValidationResult = ApiResponse::GenerateResponse($ListOfPlatforms);
 
@@ -20,7 +17,7 @@ function GetSinglePlatform($PlatformID)
 }
 function GetAllPlatforms()
 {
-    $PlatformObject = new PlatformController();
+    global $PlatformObject;
     $ListOfPlatforms = $PlatformObject->GetAll();
     $ValidationResult = ApiResponse::GenerateResponse($ListOfPlatforms);
 
@@ -29,7 +26,7 @@ function GetAllPlatforms()
 }
 function CreatNewPlatform($CreateData)
 {
-    $PlatformObject = new PlatformController();
+    global $PlatformObject;
     $Response = $PlatformObject->Create($CreateData);
     $ValidationResult = ApiResponse::GenerateResponse($Response);
 
@@ -38,7 +35,7 @@ function CreatNewPlatform($CreateData)
 }
 function UpdatePlatform($UpdateData)
 {
-    $PlatformObject = new PlatformController();
+    global $PlatformObject;
     $Response = $PlatformObject->Update($UpdateData);
     $ValidationResult = ApiResponse::GenerateResponse($Response);
 
@@ -46,11 +43,11 @@ function UpdatePlatform($UpdateData)
     $ApiResponse->EchoResponse();
 }
 
-function DeletePlatform($GameID) {
-    if ( isset($DatabaseHandler) && isset($GameID)) {
-        $PlatformObject = new PlatformController($DatabaseHandler);
+function DeletePlatform($PlatformID) {
+    if (isset($PlatformID)) {
+        global $PlatformObject;
 
-        $Response = $PlatformObject->Delete($GameID);
+        $Response = $PlatformObject->Delete($PlatformID);
         if ($Response != null){
             $ValidationResult = ApiResponse::GenerateResponse($Response);
             $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
@@ -58,12 +55,13 @@ function DeletePlatform($GameID) {
         }
         else {
             $ValidationResult = ApiResponse::GenerateResponse(false);
-            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], false);
+            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], "");
             $ApiResponse->EchoResponse();
         }
     }
     else{
-        echo "Undefinedvariable";
+        $ApiResponse = new ApiResponse(false, "UndefinedVariable", "");
+        $ApiResponse->EchoResponse();
     }
 }
 
@@ -81,9 +79,9 @@ if (isset($PlatformActionValue) && $PlatformActionValue != null) {
                 //Update the game  
                 UpdatePlatform(array(
                     "ID" => $PlatformActionValue,
-                    "Name" => $_GET["Name"],
-                    "Link" => $_GET["Link"],
-                    "IconID" => $_GET["IconID"]
+                    "Name" => $_POST["Name"],
+                    "Link" => $_POST["Link"],
+                    "IconID" => $_POST["IconID"]
                 ));
             }
             elseif ($ActionValue == "Delete") {
@@ -97,9 +95,9 @@ if (isset($PlatformActionValue) && $PlatformActionValue != null) {
     } elseif ($PlatformActionValue == "Create") {
         //Create a new game
         CreatNewPlatform(array(
-            "Name" => $_GET["Name"],
-            "Link" => $_GET["Link"],
-            "IconID" => $_GET["IconID"]
+            "Name" => $_POST["Name"],
+            "Link" => $_POST["Link"],
+            "IconID" => $_POST["IconID"]
         ));
     }
 } else {

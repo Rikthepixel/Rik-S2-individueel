@@ -1,9 +1,8 @@
 <?php
-include_once "../../Database/DatabaseHandler.php";
-
+include_once $_SERVER['DOCUMENT_ROOT']."/Database/DatabaseHandler.php";
 class PlatformController
 {
-
+    
     //Private
     private $DatabaseHandler;
     private $table = "platforms";
@@ -11,20 +10,20 @@ class PlatformController
     function __construct()
     {
         $this->DatabaseHandler = new DatabaseHandler();
-        $this->DatabaseHandler->Connect();
+        $this->DatabaseHandler->TestConnect();
     }
 
     public function GetAll()
     {
         $Query = "SELECT 
-                Name,
-                Link,
+                pltfrm.Name,
+                pltfrm.Link,
                 imgs.Image as Icon_blob,
-                imgs.Name as Icon_Name,
+                imgs.Name as Icon_Name
             FROM
                 $this->table pltfrm
             LEFT JOIN
-                pltfrm.IconID = imgs.ID
+                images imgs ON pltfrm.IconID = imgs.ID
             ORDER BY 
             pltfrm.ID DESC
             ";
@@ -36,14 +35,14 @@ class PlatformController
         $PlatformID = $this->DatabaseHandler->EscapeString($PlatformID);
 
         $Query = "SELECT 
-                Name,
-                Link,
+                pltfrm.Name,
+                pltfrm.Link,
                 imgs.Image as Icon_blob,
-                imgs.Name as Icon_Name,
+                imgs.Name as Icon_Name
             FROM
                 $this->table pltfrm
             LEFT JOIN
-                pltfrm.IconID = imgs.ID
+                images imgs ON pltfrm.IconID = imgs.ID
             WHERE
                 pltfrm.ID = $PlatformID
             ";
@@ -125,3 +124,4 @@ class PlatformController
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 }
+?>

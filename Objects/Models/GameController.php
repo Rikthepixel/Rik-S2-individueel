@@ -1,6 +1,5 @@
 <?php
-include_once "../../Database/DatabaseHandler.php";
-
+include_once $_SERVER['DOCUMENT_ROOT']."/Database/DatabaseHandler.php";
 class GameController
 {
 
@@ -11,7 +10,7 @@ class GameController
     function __construct()
     {
         $this->DatabaseHandler = new DatabaseHandler();
-        $this->DatabaseHandler->Connect();
+        $this->DatabaseHandler->TestConnect();
     }
 
     public function GetAll()
@@ -64,83 +63,60 @@ class GameController
 
     public function Create($CreateData)
     {
+        $ValuesString = "";
+        $NamesString = "";
+        $CreateDataKeys = array_keys($CreateData);
+        echo count($CreateData);
+        for ($i = 0; count($CreateData) > $i; $i++) {
+            echo "Loopty";
+            $Key = $CreateDataKeys[$i];
+            $UpdateData[$Key] = $this->DatabaseHandler->EscapeString($CreateData[$Key]);
 
-        for ($i = 0; $i <= count($CreateData); $i++) {
-            $CreateData[$i] = $this->DatabaseHandler->EscapeString($CreateData[$i]);
+            if ($i != 0) {
+                $ValuesString = $ValuesString.",";
+                $NamesString = $NamesString.",";
+            }
+            $ValuesString = $ValuesString."$UpdateData[$Key]";
+            $NamesString = $NamesString."$Key";
         }
-
-        $GameName = $CreateData['Name'];
-        $Description = $CreateData['Description'];
-        $IconID = $CreateData['IconID'];
-        $PlatformID = $CreateData['PlatformID'];
-        $LaunchDate = $CreateData['LaunchDate'];
-        $GameLink = $CreateData['Link'];
-        $Visible = $CreateData['Visible'];
 
         $Query = "INSERT 
                 INTO $this->table 
                 (
-                    'Name',
-                    'Description'
-                    'IconID',
-                    'PlatformID',
-                    'Link',
-                    'LaunchDate'
-                    'Visible'
+                    $NamesString
                 )
                 VALUES (
-                    $GameName,
-                    $Description,
-                    $IconID, 
-                    $PlatformID,
-                    $LaunchDate,
-                    $GameLink,
-                    $Visible
+                    $ValuesString
                 )
             ";
-
+        echo $Query;
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 
     public function Update($UpdateData)
     {
-
-        for ($i = 0; $i <= count($UpdateData); $i++) {
-            $UpdateData[$i] = $this->DatabaseHandler->EscapeString($UpdateData[$i]);
-        }
-
-        function IsValidvalue($Value){
-            if (isset($Value) && $Value != null) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function CheckandAddToString($Value, $CollumName, $StringtoAddTo){
-            if (IsValidvalue($Value)) {
-                return "$StringtoAddTo, $CollumName = $Value";
-            }
-        }
-
-
         $UpdateString = "";
-        $UpdateString = CheckandAddToString($UpdateData['Name'], 'Name', $UpdateString);
-        $UpdateString = CheckandAddToString($UpdateData['LaunchDate'], 'LaunchDate', $UpdateString);
-        $UpdateString = CheckandAddToString($UpdateData['Link'], 'Link', $UpdateString);
-        $UpdateString = CheckandAddToString($UpdateData['PlatformID'], 'PlatformID', $UpdateString);
-        $UpdateString = CheckandAddToString($UpdateData['IconID'], 'IconID', $UpdateString);
-        $UpdateString = CheckandAddToString($UpdateData['Description'], 'Description', $UpdateString);
         $ID = $UpdateData['ID'];
+        unset($UpdateData['ID']);
+        $UpdateDataKeys = array_keys($UpdateData);
+        for ($i = 0; count($UpdateData) > $i; $i++) {
+            $Key = $UpdateDataKeys[$i];
+            $UpdateData[$Key] = $this->DatabaseHandler->EscapeString($UpdateData[$Key]);
+
+            if ($i != 0) {
+                $UpdateString = $UpdateString.",";
+            }
+            $UpdateString = $UpdateString."$Key = $UpdateData[$Key]";
+        }
+        
 
         $Query = "UPDATE $this->table 
                 SET
-                    $UpdateString
-                )
+                $UpdateString
                 WHERE
                     ID = $ID
             ";
-
+        echo $Query;
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 
@@ -151,3 +127,4 @@ class GameController
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 }
+?>

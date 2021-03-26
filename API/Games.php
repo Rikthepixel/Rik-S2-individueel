@@ -1,8 +1,5 @@
 <?php
-
-
-$Root = "../";
-$Objects = "$Root/Objects";
+$Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = "$Objects/Models";
 
 include_once "$Models/API/ApiResponse.php";
@@ -47,8 +44,8 @@ function UpdateGame($UpdateData)
 }
 
 function DeleteGame($GameID) {
-    if ( isset($DatabaseHandler) && isset($GameID)) {
-        $GameObject = new GameController($DatabaseHandler);
+    if (isset($GameID)) {
+        $GameObject = new GameController();
 
         $Response = $GameObject->Delete($GameID);
         if ($Response != null){
@@ -63,7 +60,8 @@ function DeleteGame($GameID) {
         }
     }
     else{
-        echo "Undefinedvariable";
+        $ApiResponse = new ApiResponse(false, "Undefined Variable", "");
+        $ApiResponse->EchoResponse();
     }
 }
 
@@ -79,15 +77,25 @@ if (isset($GamesActionValue) && $GamesActionValue != null) {
 
             if($ActionValue == "Update") {
                 //Update the game  
-                UpdateGame(array(
+                $UpdateArray = array(
                     "ID" => $GamesActionValue,
-                    "Name" => $_GET["Name"],
-                    "Description" => $_GET["Description"],
-                    "Link" => $_GET["Link"],
-                    "PlatformID" => $_GET["PlatformID"],
-                    "IconID" => $_GET["IconID"],
-                    "LaunchDate" => $_GET["LaunchDate"]
-                ));
+                );
+                if (array_key_exists("Name", $_POST)) {
+                    $UpdateArray["Name"] = $_POST["Name"];
+                }
+                if (array_key_exists("Description", $_POST)) {
+                    $UpdateArray["Description"] = $_POST["Description"];
+                }
+                if (array_key_exists("PlatformID", $_POST)) {
+                    $UpdateArray["PlatformID"] = $_POST["PlatformID"];
+                }
+                if (array_key_exists("IconID", $_POST)) {
+                    $UpdateArray["IconID"] = $_POST["IconID"];
+                }
+                if (array_key_exists("LaunchDate", $_POST)) {
+                    $UpdateArray["LaunchDate"] = $_POST["LaunchDate"];
+                }
+                UpdateGame($UpdateArray);
             }
             elseif ($ActionValue == "Delete") {
                 //Delete the game from the page
@@ -99,14 +107,26 @@ if (isset($GamesActionValue) && $GamesActionValue != null) {
         }
     } elseif ($GamesActionValue == "Create") {
         //Create a new game
-        CreatNewGame(array(
-            "Name" => $_GET["Name"],
-            "Description" => $_GET["Description"],
-            "Link" => $_GET["Link"],
-            "PlatformID" => $_GET["PlatformID"],
-            "IconID" => $_GET["IconID"],
-            "LaunchDate" => $_GET["LaunchDate"]
-        ));
+        $CreateArray = array();
+        if (array_key_exists("Name", $_POST)) {
+            $CreateArray["Name"] = $_POST["Name"];
+        }
+        if (array_key_exists("Description", $_POST)) {
+            $CreateArray["Description"] = $_POST["Description"];
+        }
+        if (array_key_exists("Link", $_POST)) {
+            $CreateArray["Link"] = $_POST["Link"];
+        }
+        if (array_key_exists("PlatformID", $_POST)) {
+            $CreateArray["PlatformID"] = $_POST["PlatformID"];
+        }
+        if (array_key_exists("IconID", $_POST)) {
+            $CreateArray["IconID"] = $_POST["IconID"];
+        }
+        if (array_key_exists("LaunchDate", $_POST)) {
+            $CreateArray["LaunchDate"] = $_POST["LaunchDate"];
+        }
+        CreatNewGame($CreateArray);
     }
 } else {
     //Get All games

@@ -10,7 +10,7 @@ class GameController
     function __construct()
     {
         $this->DatabaseHandler = new DatabaseHandler();
-        $this->DatabaseHandler->TestConnect();
+        $this->DatabaseHandler->Connect();
     }
 
     public function GetAll()
@@ -66,9 +66,7 @@ class GameController
         $ValuesString = "";
         $NamesString = "";
         $CreateDataKeys = array_keys($CreateData);
-        echo count($CreateData);
         for ($i = 0; count($CreateData) > $i; $i++) {
-            echo "Loopty";
             $Key = $CreateDataKeys[$i];
             $UpdateData[$Key] = $this->DatabaseHandler->EscapeString($CreateData[$Key]);
 
@@ -116,7 +114,6 @@ class GameController
                 WHERE
                     ID = $ID
             ";
-        echo $Query;
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 

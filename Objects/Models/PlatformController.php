@@ -2,15 +2,15 @@
 include_once $_SERVER['DOCUMENT_ROOT']."/Database/DatabaseHandler.php";
 class PlatformController
 {
-    
+
     //Private
     private $DatabaseHandler;
-    private $table = "platforms";
+    private $table = "games";
 
     function __construct()
     {
         $this->DatabaseHandler = new DatabaseHandler();
-        $this->DatabaseHandler->TestConnect();
+        $this->DatabaseHandler->Connect();
     }
 
     public function GetAll()
@@ -25,102 +25,93 @@ class PlatformController
             LEFT JOIN
                 images imgs ON pltfrm.IconID = imgs.ID
             ORDER BY 
-            pltfrm.ID DESC
-            ";
+                pltfrm.ID DESC
+        ";
+
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 
-    public function GetSingle($PlatformID)
+    public function GetSingle($GameID)
     {
-        $PlatformID = $this->DatabaseHandler->EscapeString($PlatformID);
+        $GameID = $this->DatabaseHandler->EscapeString($GameID);
+
 
         $Query = "SELECT 
-                pltfrm.Name,
-                pltfrm.Link,
-                imgs.Image as Icon_blob,
-                imgs.Name as Icon_Name
-            FROM
-                $this->table pltfrm
-            LEFT JOIN
-                images imgs ON pltfrm.IconID = imgs.ID
-            WHERE
-                pltfrm.ID = $PlatformID
-            ";
+                    pltfrm.Name,
+                    pltfrm.Link,
+                    imgs.Image as Icon_blob,
+                    imgs.Name as Icon_Name
+                FROM
+                    $this->table pltfrm
+                LEFT JOIN
+                    images imgs ON pltfrm.IconID = imgs.ID
+                WHERE
+                    pltfrm.ID = $GameID
+                ";
 
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 
     public function Create($CreateData)
     {
+        $ValuesString = "";
+        $NamesString = "";
+        $CreateDataKeys = array_keys($CreateData);
+        for ($i = 0; count($CreateData) > $i; $i++) {
+            $Key = $CreateDataKeys[$i];
+            $UpdateData[$Key] = $this->DatabaseHandler->EscapeString($CreateData[$Key]);
 
-        for ($i = 0; $i <= count($CreateData); $i++) {
-            $CreateData[$i] = $this->DatabaseHandler->EscapeString($CreateData[$i]);
+            if ($i != 0) {
+                $ValuesString = $ValuesString.",";
+                $NamesString = $NamesString.",";
+            }
+            $ValuesString = $ValuesString."$UpdateData[$Key]";
+            $NamesString = $NamesString."$Key";
         }
-
-        $GameName = $CreateData['Name'];
-        $IconID = $CreateData['IconID'];
-        $Link = $CreateData['Link'];
 
         $Query = "INSERT 
                 INTO $this->table 
                 (
-                    'Name',
-                    'IconID',
-                    'Link',
+                    $NamesString
                 )
                 VALUES (
-                    $GameName,
-                    $IconID, 
-                    $Link
+                    $ValuesString
                 )
             ";
-
+        echo $Query;
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 
     public function Update($UpdateData)
     {
-
-        for ($i = 0; $i <= count($UpdateData); $i++) {
-            $UpdateData[$i] = $this->DatabaseHandler->EscapeString($UpdateData[$i]);
-        }
-
-        function IsValidvalue($Value){
-            if (isset($Value) && $Value != null) {
-                return true;
-            } else {
-                return false;
-            }
-        }
-
-        function CheckandAddToString($Value, $CollumName, $StringtoAddTo){
-            if (IsValidvalue($Value)) {
-                return "$StringtoAddTo, $CollumName = $Value";
-            }
-        }
-
-
         $UpdateString = "";
-        $UpdateString = CheckandAddToString($UpdateData['Name'], 'Name', $UpdateString);
-        $UpdateString = CheckandAddToString($UpdateData['Link'], 'Link', $UpdateString);
-        $UpdateString = CheckandAddToString($UpdateData['IconID'], 'IconID', $UpdateString);
         $ID = $UpdateData['ID'];
+        unset($UpdateData['ID']);
+        $UpdateDataKeys = array_keys($UpdateData);
+        for ($i = 0; count($UpdateData) > $i; $i++) {
+            $Key = $UpdateDataKeys[$i];
+            $UpdateData[$Key] = $this->DatabaseHandler->EscapeString($UpdateData[$Key]);
+
+            if ($i != 0) {
+                $UpdateString = $UpdateString.",";
+            }
+            $UpdateString = $UpdateString."$Key = $UpdateData[$Key]";
+        }
+        
 
         $Query = "UPDATE $this->table 
                 SET
-                    $UpdateString
-                )
+                $UpdateString
                 WHERE
                     ID = $ID
             ";
-
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 
-    public function Delete($PlatformID)
+    public function Delete($GameID)
     {
-        $PlatformID = $this->DatabaseHandler->EscapeString($PlatformID);
-        $Query = "DELETE FROM $this->table WHERE ID = $PlatformID";
+        $GameID = $this->DatabaseHandler->EscapeString($GameID);
+        $Query = "DELETE FROM $this->table WHERE ID = $GameID";
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 }

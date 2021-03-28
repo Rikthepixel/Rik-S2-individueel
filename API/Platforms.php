@@ -1,53 +1,53 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = "$Objects/Models";
+
 include_once "$Models/API/ApiResponse.php";
 include_once "$Models/PlatformController.php";
 include_once "$Objects/URLParameter.php";
-$PlatformObject = new PlatformController();
 
-function GetSinglePlatform($PlatformID)
+function GetSingle($GameID)
 {
-    global $PlatformObject;
-    $ListOfPlatforms = $PlatformObject->GetSingle($PlatformID);
-    $ValidationResult = ApiResponse::GenerateResponse($ListOfPlatforms);
+    $GameObject = new PlatformController();
+    $ListOfGames = $GameObject->GetSingle($GameID);
+    $ValidationResult = ApiResponse::GenerateResponse($ListOfGames);
 
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfPlatforms);
+    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfGames);
     $ApiResponse->EchoResponse();
 }
-function GetAllPlatforms()
+function GetAll()
 {
-    global $PlatformObject;
-    $ListOfPlatforms = $PlatformObject->GetAll();
-    $ValidationResult = ApiResponse::GenerateResponse($ListOfPlatforms);
+    $GameObject = new PlatformController();
+    $ListOfGames = $GameObject->GetAll();
+    $ValidationResult = ApiResponse::GenerateResponse($ListOfGames);
 
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfPlatforms);
+    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfGames);
     $ApiResponse->EchoResponse();
 }
-function CreatNewPlatform($CreateData)
+function CreatNew($CreateData)
 {
-    global $PlatformObject;
-    $Response = $PlatformObject->Create($CreateData);
+    $GameObject = new PlatformController();
+    $Response = $GameObject->Create($CreateData);
     $ValidationResult = ApiResponse::GenerateResponse($Response);
 
     $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
     $ApiResponse->EchoResponse();
 }
-function UpdatePlatform($UpdateData)
+function Update($UpdateData)
 {
-    global $PlatformObject;
-    $Response = $PlatformObject->Update($UpdateData);
+    $GameObject = new PlatformController();
+    $Response = $GameObject->Update($UpdateData);
     $ValidationResult = ApiResponse::GenerateResponse($Response);
 
     $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
     $ApiResponse->EchoResponse();
 }
 
-function DeletePlatform($PlatformID) {
-    if (isset($PlatformID)) {
-        global $PlatformObject;
+function Delete($GameID) {
+    if (isset($GameID)) {
+        $GameObject = new PlatformController();
 
-        $Response = $PlatformObject->Delete($PlatformID);
+        $Response = $GameObject->Delete($GameID);
         if ($Response != null){
             $ValidationResult = ApiResponse::GenerateResponse($Response);
             $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
@@ -55,52 +55,65 @@ function DeletePlatform($PlatformID) {
         }
         else {
             $ValidationResult = ApiResponse::GenerateResponse(false);
-            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], "");
+            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], false);
             $ApiResponse->EchoResponse();
         }
     }
     else{
-        $ApiResponse = new ApiResponse(false, "UndefinedVariable", "");
+        $ApiResponse = new ApiResponse(false, "Undefined Variable", "");
         $ApiResponse->EchoResponse();
     }
 }
 
 //URL parameters
-$PlatformActionValue = URLParameter::getParam("Platforms.php");
-if (isset($PlatformActionValue) && $PlatformActionValue != null) {
+$FirstActionValue = URLParameter::getParam("Platform.php");
+if (isset($FirstActionValue) && $FirstActionValue != null) {
     //user wants to do something with a specific game
 
-    if (is_numeric($PlatformActionValue)) {
+    if (is_numeric($FirstActionValue)) {
 
-        $ActionValue = URLParameter::getParam("Platforms.php/$PlatformActionValue");
-        if ($ActionValue != null) {
+        $SecondActionValue = URLParameter::getParam("Platform.php/$FirstActionValue");
+        if ($SecondActionValue != null) {
 
-            if($ActionValue == "Update") {
+            if($SecondActionValue == "Update") {
                 //Update the game  
-                UpdatePlatform(array(
-                    "ID" => $PlatformActionValue,
-                    "Name" => $_POST["Name"],
-                    "Link" => $_POST["Link"],
-                    "IconID" => $_POST["IconID"]
-                ));
+                $UpdateArray = array(
+                    "ID" => $FirstActionValue,
+                );
+                if (array_key_exists("Name", $_POST)) {
+                    $UpdateArray["Name"] = $_POST["Name"];
+                }
+                if (array_key_exists("Link", $_POST)) {
+                    $UpdateArray["Link"] = $_POST["Link"];
+                }
+                if (array_key_exists("IconID", $_POST)) {
+                    $UpdateArray["IconID"] = $_POST["IconID"];
+                }
+                Update($UpdateArray);
             }
-            elseif ($ActionValue == "Delete") {
+            elseif ($SecondActionValue == "Delete") {
                 //Delete the game from the page
-                DeletePlatform($PlatformActionValue);
+                Delete($FirstActionValue);
             }
         }
         else {
-            GetSinglePlatform($PlatformActionValue);
+            GetSingle($FirstActionValue);
         }
-    } elseif ($PlatformActionValue == "Create") {
+    } elseif ($FirstActionValue == "Create") {
         //Create a new game
-        CreatNewPlatform(array(
-            "Name" => $_POST["Name"],
-            "Link" => $_POST["Link"],
-            "IconID" => $_POST["IconID"]
-        ));
+        $CreateArray = array();
+        if (array_key_exists("Name", $_POST)) {
+            $CreateArray["Name"] = $_POST["Name"];
+        }
+        if (array_key_exists("Link", $_POST)) {
+            $CreateArray["Link"] = $_POST["Link"];
+        }
+        if (array_key_exists("IconID", $_POST)) {
+            $CreateArray["IconID"] = $_POST["IconID"];
+        }
+        CreatNew($CreateArray);
     }
 } else {
     //Get All games
-    GetAllPlatforms();
+    GetAll();
 }

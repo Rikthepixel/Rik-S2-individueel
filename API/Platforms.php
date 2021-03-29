@@ -101,7 +101,6 @@ if (isset($PlatformsActionValue) && $PlatformsActionValue != null) {
         }
     } elseif ($PlatformsActionValue == "Create") {
         //Create a new Platform
-        echo "Create";
         $CreateArray = array();
         if (array_key_exists("Name", $_POST)) {
             $CreateArray["Name"] = $_POST["Name"];
@@ -116,6 +115,5 @@ if (isset($PlatformsActionValue) && $PlatformsActionValue != null) {
     }
 } else {
     //Get All Platforms
-    echo "Get all";
     GetAll();
 }

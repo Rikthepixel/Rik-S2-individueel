@@ -3,7 +3,7 @@ $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = "$Objects/Models";
 
 include_once "$Models/API/ApiResponse.php";
-include_once "$Models/UpdateController.php";
+include_once "$Models/Controllers/UpdateController.php";
 include_once "$Objects/URLParameter.php";
 
 function GetSingle($UpdateID)

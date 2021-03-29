@@ -3,7 +3,7 @@ $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = "$Objects/Models";
 
 include_once "$Models/API/ApiResponse.php";
-include_once "$Models/PlatformController.php";
+include_once "$Models/Controllers/PlatformController.php";
 include_once "$Objects/URLParameter.php";
 
 function GetSingle($PlatformID)

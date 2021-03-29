@@ -1,6 +1,8 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT']."/Database/DatabaseHandler.php";
-class GameController
+include_once "ObjectController.php";
+
+class GameController extends ObjectController
 {
 
     //Private
@@ -36,9 +38,9 @@ class GameController
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 
-    public function GetSingle($GameID)
+    public function GetSingle($ID)
     {
-        $GameID = $this->DatabaseHandler->EscapeString($GameID);
+        $ID = $this->DatabaseHandler->EscapeString($ID);
 
         $Query = "SELECT 
                 pltfrm.Name as Platform_Name,
@@ -55,7 +57,7 @@ class GameController
             LEFT JOIN
                 platforms pltfrm ON gms.PlatformID = pltfrm.ID
             WHERE
-                gms.ID = $GameID
+                gms.ID = $ID
             ";
 
         return $this->DatabaseHandler->ExecuteQuery($Query);
@@ -87,7 +89,6 @@ class GameController
                     $ValuesString
                 )
             ";
-        echo $Query;
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 

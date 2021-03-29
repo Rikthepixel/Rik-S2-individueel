@@ -1,11 +1,13 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT']."/Database/DatabaseHandler.php";
-class PlatformController
+include_once "ObjectController.php";
+
+class PlatformController extends ObjectController
 {
 
     //Private
     private $DatabaseHandler;
-    private $table = "games";
+    private $table = "platforms";
 
     function __construct()
     {
@@ -34,8 +36,6 @@ class PlatformController
     public function GetSingle($GameID)
     {
         $GameID = $this->DatabaseHandler->EscapeString($GameID);
-
-
         $Query = "SELECT 
                     pltfrm.Name,
                     pltfrm.Link,

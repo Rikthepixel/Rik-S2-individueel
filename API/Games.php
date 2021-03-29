@@ -83,6 +83,9 @@ if (isset($GamesActionValue) && $GamesActionValue != null) {
                 if (array_key_exists("Name", $_POST)) {
                     $UpdateArray["Name"] = $_POST["Name"];
                 }
+                if (array_key_exists("Link", $_POST)) {
+                    $CreateArray["Link"] = $_POST["Link"];
+                }
                 if (array_key_exists("Description", $_POST)) {
                     $UpdateArray["Description"] = $_POST["Description"];
                 }

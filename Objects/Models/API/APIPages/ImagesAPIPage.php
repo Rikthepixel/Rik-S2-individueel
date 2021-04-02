@@ -9,7 +9,7 @@ class ImagesAPIPage extends APIPage
     function __construct()
     {
         parent::__construct();
-        $this->Controller = new PlatformController();
+        $this->Controller = new ImageController();
     }
 
     public function GetSingle($ImageID) {

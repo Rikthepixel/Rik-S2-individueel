@@ -1,7 +1,7 @@
 <?php
     class URLParameter{
 
-        public static function getParam($variableName, $default = null) {
+        public static function getParam($variableName, $Offset = 0, $default = null) {
 
             // Was the variable actually part of the request
             if(array_key_exists($variableName, $_REQUEST))
@@ -15,12 +15,16 @@
 
             //$VariableEndPos = (strpos($ReplacedString, '/', $VariableStartPos + 1));
             
-            $PositionOffset = 1;
-
+            $PositionOffset = 1 + $Offset;
+            $CharacterArray = str_split($variableName);
+            for ($i = 1; $i < count($CharacterArray); $i++) {
+                if ($CharacterArray[$i] == '/') {
+                    $PositionOffset += 1;
+                }
+            }
             if(strpos($variableName, '/')) {
                 $EndPosition = strpos($variableName, '/');
                 $variableName = substr($variableName, 0, $EndPosition);
-                $PositionOffset += 1;
             }
 
 

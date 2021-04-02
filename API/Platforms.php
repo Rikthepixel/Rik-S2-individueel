@@ -1,7 +1,6 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
-$Models = "$Objects/Models";
-include_once "$Models/API/APIPages/PlatformsAPIPage.php";
+include_once "$Objects/API/APIPages/PlatformsAPIPage.php";
 $APIPage = new PlatformsAPIPage();
 
 //Decide which response the API should give

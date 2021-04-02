@@ -1,7 +1,6 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
-$Models = "$Objects/Models";
-include_once "$Models/API/APIPages/GamesAPIPage.php";
+include_once "$Objects/API/APIPages/GamesAPIPage.php";
 
 $APIPage = new GamesAPIPage();
 

@@ -20,10 +20,10 @@ class GamesAPIPage extends APIPage
     //
     public function GetSingleGame($GameID)
     {
-        $ListOfGames = $this->Controller->GetSingle($GameID);
-        $ValidationResult = $this->APIResponse::GenerateResponse($ListOfGames);
+        $Game = $this->Controller->GetSingle($GameID);
+        $ValidationResult = $this->APIResponse::GenerateResponse($Game);
 
-        $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfGames);
+        $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Game);
     }
     public function GetAllGames()
     {

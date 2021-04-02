@@ -13,10 +13,10 @@ class PlatformsAPIPage extends APIPage
     }
     public function GetSingle($PlatformID) {
         
-        $ListOfPlatforms = $this->Controller->GetSingle($PlatformID);
-        $ValidationResult = $this->APIResponse::GenerateResponse($ListOfPlatforms);
+        $Platform = $this->Controller->GetSingle($PlatformID);
+        $ValidationResult = $this->APIResponse::GenerateResponse($Platform);
     
-        $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfPlatforms);
+        $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Platform);
         
     }
     public function GetAll() {

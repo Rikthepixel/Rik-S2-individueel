@@ -1,78 +1,17 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = "$Objects/Models";
+include_once "$Models/API/APIPages/PlatformsAPIPage.php";
+$APIPage = new PlatformsAPIPage();
 
-include_once "$Models/API/ApiResponse.php";
-include_once "$Models/Controllers/PlatformController.php";
-include_once "$Objects/URLParameter.php";
-
-function GetSingle($PlatformID)
-{
-    $PlatformObject = new PlatformController();
-    $ListOfPlatforms = $PlatformObject->GetSingle($PlatformID);
-    $ValidationResult = ApiResponse::GenerateResponse($ListOfPlatforms);
-
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfPlatforms);
-    $ApiResponse->EchoResponse();
-}
-function GetAll()
-{
-    $PlatformObject = new PlatformController();
-    $ListOfPlatforms = $PlatformObject->GetAll();
-    $ValidationResult = ApiResponse::GenerateResponse($ListOfPlatforms);
-
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfPlatforms);
-    $ApiResponse->EchoResponse();
-}
-function CreatNew($CreateData)
-{
-    $PlatformObject = new PlatformController();
-    $Response = $PlatformObject->Create($CreateData);
-    $ValidationResult = ApiResponse::GenerateResponse($Response);
-    
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
-    $ApiResponse->EchoResponse();
-}
-function Update($UpdateData)
-{
-    $PlatformObject = new PlatformController();
-    $Response = $PlatformObject->Update($UpdateData);
-    $ValidationResult = ApiResponse::GenerateResponse($Response);
-
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
-    $ApiResponse->EchoResponse();
-}
-
-function Delete($PlatformID) {
-    if (isset($PlatformID)) {
-        $PlatformObject = new PlatformController();
-
-        $Response = $PlatformObject->Delete($PlatformID);
-        if ($Response != null){
-            $ValidationResult = ApiResponse::GenerateResponse($Response);
-            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
-            $ApiResponse->EchoResponse();
-        }
-        else {
-            $ValidationResult = ApiResponse::GenerateResponse(false);
-            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], false);
-            $ApiResponse->EchoResponse();
-        }
-    }
-    else{
-        $ApiResponse = new ApiResponse(false, "Undefined Variable", "");
-        $ApiResponse->EchoResponse();
-    }
-}
-
-//URL parameters
-$PlatformsActionValue = URLParameter::getParam("Platforms.php");
+//Decide which response the API should give
+$PlatformsActionValue = $APIPage->URLParameter::getParam("Platforms.php");
 if (isset($PlatformsActionValue) && $PlatformsActionValue != null) {
     //user wants to do something with a specific Platform
 
     if (is_numeric($PlatformsActionValue)) {
 
-        $ActionValue = URLParameter::getParam("Platforms.php/$PlatformsActionValue");
+        $ActionValue = $APIPage->URLParameter::getParam("Platforms.php", 1);
         if ($ActionValue != null) {
 
             if($ActionValue == "Update") {
@@ -89,15 +28,15 @@ if (isset($PlatformsActionValue) && $PlatformsActionValue != null) {
                 if (array_key_exists("IconID", $_POST)) {
                     $UpdateArray["IconID"] = $_POST["IconID"];
                 }
-                Update($UpdateArray);
+                $APIPage->Update($UpdateArray);
             }
             elseif ($ActionValue == "Delete") {
                 //Delete the Platform from the page
-                Delete($PlatformsActionValue);
+                $APIPage->Delete($PlatformsActionValue);
             }
         }
         else {
-            GetSingle($PlatformsActionValue);
+            $APIPage->GetSingle($PlatformsActionValue);
         }
     } elseif ($PlatformsActionValue == "Create") {
         //Create a new Platform
@@ -111,9 +50,12 @@ if (isset($PlatformsActionValue) && $PlatformsActionValue != null) {
         if (array_key_exists("IconID", $_POST)) {
             $CreateArray["IconID"] = $_POST["IconID"];
         }
-        CreatNew($CreateArray);
+        $APIPage->CreateNew($CreateArray);
     }
 } else {
     //Get All Platforms
-    GetAll();
+    $APIPage->GetAll();
 }
+
+//Print the API response that was generated
+$APIPage->APIResponse->EchoResponse();

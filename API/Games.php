@@ -1,118 +1,17 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = "$Objects/Models";
+include_once "$Models/API/APIPages/GamesAPIPage.php";
 
-include_once "$Models/API/ApiResponse.php";
-include_once "$Models/Controllers/GameController.php";
-include_once "$Models/Controllers/UpdateController.php";
-include_once "$Objects/URLParameter.php";
+$APIPage = new GamesAPIPage();
 
-function GetSingleGame($GameID)
-{
-    $GameObject = new GameController();
-    $ListOfGames = $GameObject->GetSingle($GameID);
-    $ValidationResult = ApiResponse::GenerateResponse($ListOfGames);
-
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfGames);
-    $ApiResponse->EchoResponse();
-}
-function GetAllGames()
-{
-    $GameObject = new GameController();
-    $ListOfGames = $GameObject->GetAll();
-    $ValidationResult = ApiResponse::GenerateResponse($ListOfGames);
-
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfGames);
-    $ApiResponse->EchoResponse();
-}
-function CreatNewGame($CreateData)
-{
-    $GameObject = new GameController();
-    $Response = $GameObject->Create($CreateData);
-    $ValidationResult = ApiResponse::GenerateResponse($Response);
-
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
-    $ApiResponse->EchoResponse();
-}
-function UpdateGame($UpdateData)
-{
-    $GameObject = new GameController();
-    $Response = $GameObject->Update($UpdateData);
-    $ValidationResult = ApiResponse::GenerateResponse($Response);
-
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
-    $ApiResponse->EchoResponse();
-}
-
-function DeleteGame($GameID) {
-    if (isset($GameID)) {
-        $GameObject = new GameController();
-
-        $Response = $GameObject->Delete($GameID);
-        if ($Response != null){
-            $ValidationResult = ApiResponse::GenerateResponse($Response);
-            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
-            $ApiResponse->EchoResponse();
-        }
-        else {
-            $ValidationResult = ApiResponse::GenerateResponse(false);
-            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], false);
-            $ApiResponse->EchoResponse();
-        }
-    }
-    else{
-        $ApiResponse = new ApiResponse(false, "Undefined Variable", "");
-        $ApiResponse->EchoResponse();
-    }
-}
-
-function GetSingleUpdate($GameID, $UpdateID) {
-
-}
-function GetAllUpdates($GameID) {
-
-}
-function CreateNewUpdate($GameID, $CreateData) {
-
-}
-function ChangeUpdate($UpdateData) {
-    $GameObject = new UpdateController();
-    $Response = $GameObject->Update($UpdateData);
-    $ValidationResult = ApiResponse::GenerateResponse($Response);
-
-    $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
-    $ApiResponse->EchoResponse();
-}
-function DeleteUpdate($GameID, $UpdateID) {
-    if (isset($GameID) && isset($UpdateID)) {
-        $GameObject = new UpdateController();
-
-        $Response = $GameObject->DeleteGameUpdate($GameID, $UpdateID);
-        if ($Response != null){
-            $ValidationResult = ApiResponse::GenerateResponse($Response);
-            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
-            $ApiResponse->EchoResponse();
-        }
-        else {
-            $ValidationResult = ApiResponse::GenerateResponse(false);
-            $ApiResponse = new ApiResponse($ValidationResult["Result"], $ValidationResult["Message"], false);
-            $ApiResponse->EchoResponse();
-        }
-    }
-    else{
-        $ApiResponse = new ApiResponse(false, "Undefined Variable", "");
-        $ApiResponse->EchoResponse();
-    }
-}
-
-//URL parameters
-$GamesActionValue = URLParameter::getParam("Games.php");
+//Decide which response the API should give
+$GamesActionValue = $APIPage->URLParameter::getParam("Games.php");
 if (isset($GamesActionValue) && $GamesActionValue != null) {
     //user wants to do something with a specific game
-
     if (is_numeric($GamesActionValue)) {
 
-        $ActionValue = URLParameter::getParam("Games.php/$GamesActionValue");
+        $ActionValue = $APIPage->URLParameter::getParam("Games.php", 1);
         if ($ActionValue != null) {
 
             if($ActionValue == "Update") {
@@ -138,19 +37,19 @@ if (isset($GamesActionValue) && $GamesActionValue != null) {
                 if (array_key_exists("LaunchDate", $_POST)) {
                     $UpdateArray["LaunchDate"] = $_POST["LaunchDate"];
                 }
-                UpdateGame($UpdateArray);
+                $APIPage->UpdateGame($UpdateArray);
             }
             elseif ($ActionValue == "Delete") {
                 //Delete the game from the page
-                DeleteGame($GamesActionValue);
+                $APIPage->DeleteGame($GamesActionValue);
             }
             elseif ($ActionValue == "Updates") {
                 //Game Updates
-                $UpdateAction = URLParameter::getParam("Games.php/$GamesActionValue/Updates");
+                $UpdateAction = $APIPage->URLParameter::getParam("Games.php", 2);
                 if (isset($UpdateAction) && $UpdateAction != null) {
                     if (is_numeric($UpdateAction)) {
                         //If Updates is a number aka an index value
-                        $UpdateActionValue = URLParameter::getParam("Games.php/$GamesActionValue/Updates/$UpdateAction");
+                        $UpdateActionValue = $APIPage->URLParameter::getParam("Games.php", 3);
                         if ($UpdateActionValue != null) {
                             if ($UpdateActionValue == "Update") {
                                 $UpdateArray = array(
@@ -169,21 +68,20 @@ if (isset($GamesActionValue) && $GamesActionValue != null) {
                                 if (array_key_exists("Visible", $_POST)) {
                                     $UpdateArray["Visible"] = $_POST["Visible"];
                                 }
-                                ChangeUpdate($UpdateArray);
+                                $APIPage->ChangeUpdate($UpdateArray);
                             }
                             elseif ($UpdateActionValue == "Delete") {
-                                DeleteUpdate($GamesActionValue, $UpdateAction);
+                                $APIPage->DeleteUpdate($GamesActionValue, $UpdateAction);
                             }
                         }
                         else {
-                            GetSingleUpdate($GamesActionValue, $UpdateAction);
+                            $APIPage->GetSingleUpdate($GamesActionValue, $UpdateAction);
                         }
                     }
                     elseif ($UpdateAction == "Create") {
-                        $CreateArray = array();
-                        if (array_key_exists("GameID", $_POST)) {
-                            $CreateArray["GameID"] = $_POST["GameID"];
-                        }
+                        $CreateArray = array(
+                            "GameID" => $GamesActionValue
+                        );
                         if (array_key_exists("Name", $_POST)) {
                             $CreateArray["Name"] = $_POST["Name"];
                         }
@@ -199,17 +97,18 @@ if (isset($GamesActionValue) && $GamesActionValue != null) {
                         if (array_key_exists("WebsiteAdminID", $_POST)) {
                             $CreateArray["WebsiteAdminID"] = $_POST["WebsiteAdminID"];
                         }
-                        CreateNewUpdate($GamesActionValue, $CreateArray);
+                        //INSERT INTO `updates` ( `GameID`, `Name`, `Description`, `WebsiteAdminID`) VALUES ('1','Duel Update', 'A new update', '0'); 
+                        ($CreateArray);
                     }
                 }
                 else {
                     //Get all updates from game
-                    GetAllUpdates($GamesActionValue);
+                    $APIPage->GetAllUpdates($GamesActionValue);
                 }
             }
         }
         else {
-            GetSingleGame($GamesActionValue);
+            $APIPage->GetSingleGame($GamesActionValue);
         }
     } elseif ($GamesActionValue == "Create") {
         //Create a new game
@@ -232,9 +131,12 @@ if (isset($GamesActionValue) && $GamesActionValue != null) {
         if (array_key_exists("LaunchDate", $_POST)) {
             $CreateArray["LaunchDate"] = $_POST["LaunchDate"];
         }
-        CreatNewGame($CreateArray);
+        $APIPage->CreateNewGame($CreateArray);
     }
 } else {
     //Get All games
-    GetAllGames();
+    $APIPage->GetAllGames();
 }
+
+//Print the API response that was generated
+$APIPage->APIResponse->EchoResponse();

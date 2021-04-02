@@ -5,13 +5,11 @@ class UpdateController extends ObjectController
 {
 
     //Private
-    private $DatabaseHandler;
     private $table = "updates";
 
     function __construct()
     {
-        $this->DatabaseHandler = new DatabaseHandler();
-        $this->DatabaseHandler->Connect();
+        parent::__construct();
     }
 
     public function GetAll()
@@ -42,10 +40,10 @@ class UpdateController extends ObjectController
                 updt.WebsiteAdminID
             FROM
                 $this->table updt
-            ORDER BY 
-                updt.ReleaseDate DESC
             WHERE
                 updt.GameID = $ID
+            ORDER BY 
+                updt.ReleaseDate DESC
         ";
 
         return $this->DatabaseHandler->ExecuteQuery($Query);
@@ -65,6 +63,27 @@ class UpdateController extends ObjectController
                     $this->table updt
                 WHERE
                     updt.ID = $ID
+                ";
+
+        return $this->DatabaseHandler->ExecuteQuery($Query);
+    }
+
+    public function GetSingleGameUpdate($GameID, $UpdateID)
+    {
+        $GameID = $this->DatabaseHandler->EscapeString($GameID);
+        $UpdateID = $this->DatabaseHandler->EscapeString($UpdateID);
+
+        $Query = "SELECT 
+                    updt.Name,
+                    updt.Description,
+                    updt.GameID,
+                    updt.ReleaseDate,
+                    updt.WebsiteAdminID
+                FROM
+                    $this->table updt
+                WHERE
+                    updt.GameID = $GameID AND
+                    updt.UpdateID = $UpdateID
                 ";
 
         return $this->DatabaseHandler->ExecuteQuery($Query);
@@ -97,7 +116,6 @@ class UpdateController extends ObjectController
                     $ValuesString
                 )
             ";
-            echo $Query;
             return $this->DatabaseHandler->ExecuteQuery($Query);
         }
         else {
@@ -125,7 +143,7 @@ class UpdateController extends ObjectController
             }
 
 
-            $Query = "UPDATE $this->table 
+            $Query = "UPDATE $this->table
                     SET
                     $UpdateString
                     WHERE

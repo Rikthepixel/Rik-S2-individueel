@@ -6,13 +6,11 @@ class GameController extends ObjectController
 {
 
     //Private
-    private $DatabaseHandler;
     private $table = "games";
 
     function __construct()
     {
-        $this->DatabaseHandler = new DatabaseHandler();
-        $this->DatabaseHandler->Connect();
+        parent::__construct();
     }
 
     public function GetAll()

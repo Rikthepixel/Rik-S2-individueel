@@ -6,13 +6,11 @@ class ImageController extends ObjectController
 {
 
     //Private
-    private $DatabaseHandler;
     private $table = "images";
 
     function __construct()
     {
-        $this->DatabaseHandler = new DatabaseHandler();
-        $this->DatabaseHandler->Connect();
+        parent::__construct();
     }
 
     public function GetAll()

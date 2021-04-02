@@ -1,7 +1,7 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
-$Controllers = $Objects."/Controllers";
-include_once $Controllers."/PlatformController.php";
+$Models = $Objects."/Models";
+include_once $Models."/PlatformController.php";
 include_once $Objects."/API/APIPages/APIPage.php";
 
 class PlatformsAPIPage extends APIPage
@@ -9,11 +9,11 @@ class PlatformsAPIPage extends APIPage
     function __construct()
     {
         parent::__construct();
-        $this->Controller = new PlatformController();
+        $this->Model = new PlatformModel();
     }
     public function GetSingle($PlatformID) {
         
-        $Platform = $this->Controller->GetSingle($PlatformID);
+        $Platform = $this->Model->GetSingle($PlatformID);
         $ValidationResult = $this->APIResponse::GenerateResponse($Platform);
     
         $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Platform);
@@ -21,14 +21,14 @@ class PlatformsAPIPage extends APIPage
     }
     public function GetAll() {
 
-        $ListOfPlatforms = $this->Controller->GetAll();
+        $ListOfPlatforms = $this->Model->GetAll();
         $ValidationResult = $this->APIResponse::GenerateResponse($ListOfPlatforms);
     
         $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfPlatforms);
     }
     public function CreateNew($CreateData) {
         
-        $Response = $this->Controller->Create($CreateData);
+        $Response = $this->Model->Create($CreateData);
         $ValidationResult = $this->APIResponse::GenerateResponse($Response);
         
         $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
@@ -36,7 +36,7 @@ class PlatformsAPIPage extends APIPage
     }
     public function Update($UpdateData) {
         
-        $Response = $this->Controller->Update($UpdateData);
+        $Response = $this->Model->Update($UpdateData);
         $ValidationResult = $this->APIResponse::GenerateResponse($Response);
     
         $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
@@ -46,7 +46,7 @@ class PlatformsAPIPage extends APIPage
         if (isset($PlatformID)) {
             
     
-            $Response = $this->Controller->Delete($PlatformID);
+            $Response = $this->Model->Delete($PlatformID);
             if ($Response != null){
                 $ValidationResult = $this->APIResponse::GenerateResponse($Response);
                 $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);

@@ -11,8 +11,8 @@ class GamesAPIPage extends APIPage
     function __construct()
     {
         parent::__construct();
-        $this->Controller = new GameController();
-        $this->UpdateController = new UpdateController();
+        $this->Model = new GameModel();
+        $this->UpdateController = new UpdateModel();
     }
 
     //
@@ -20,21 +20,21 @@ class GamesAPIPage extends APIPage
     //
     public function GetSingleGame($GameID)
     {
-        $Game = $this->Controller->GetSingle($GameID);
+        $Game = $this->Model->GetSingle($GameID);
         $ValidationResult = $this->APIResponse::GenerateResponse($Game);
 
         $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Game);
     }
     public function GetAllGames()
     {
-        $ListOfGames = $this->Controller->GetAll();
+        $ListOfGames = $this->Model->GetAll();
         $ValidationResult = $this->APIResponse::GenerateResponse($ListOfGames);
 
         $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfGames);
     }
     public function CreateNewGame($CreateData)
     {
-        $Response = $this->Controller->Create($CreateData);
+        $Response = $this->Model->Create($CreateData);
         $ValidationResult = $this->APIResponse::GenerateResponse($Response);
 
         $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
@@ -42,7 +42,7 @@ class GamesAPIPage extends APIPage
     }
     public function UpdateGame($UpdateData)
     {
-        $Response = $this->Controller->Update($UpdateData);
+        $Response = $this->Model->Update($UpdateData);
         $ValidationResult = $this->APIResponse::GenerateResponse($Response);
 
         $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
@@ -51,9 +51,9 @@ class GamesAPIPage extends APIPage
     public function DeleteGame($GameID)
     {
         if (isset($GameID)) {
-            $this->Controller = new GameController();
+            $this->Model = new GameController();
 
-            $Response = $this->Controller->Delete($GameID);
+            $Response = $this->Model->Delete($GameID);
             if ($Response != null) {
                 $ValidationResult = $this->APIResponse::GenerateResponse($Response);
                 $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
@@ -75,7 +75,7 @@ class GamesAPIPage extends APIPage
     public function GetSingleUpdate($GameID, $UpdateID)
     {
         if (isset($GameID) && isset($UpdateID)) {
-            $Update = $this->UpdateController->GetSingleGameUpdate($GameID, $UpdateID);
+            $Update = $this->UpdateModel->GetSingleGameUpdate($GameID, $UpdateID);
             $ValidationResult = $this->APIResponse::GenerateResponse($Update);
 
             $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Update);
@@ -86,7 +86,7 @@ class GamesAPIPage extends APIPage
     }
     public function GetAllUpdates($GameID)
     {
-        $ListOfUpdates = $this->UpdateController->GetAllByGame($GameID);
+        $ListOfUpdates = $this->UpdateModel->GetAllByGame($GameID);
         $ValidationResult = $this->APIResponse::GenerateResponse($ListOfUpdates);
 
         $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $ListOfUpdates);
@@ -94,7 +94,7 @@ class GamesAPIPage extends APIPage
     }
     public function CreateNewUpdate($CreateData)
     {
-        $Response = $this->UpdateController->Create($CreateData);
+        $Response = $this->UpdateModel->Create($CreateData);
         $ValidationResult = $this->APIResponse::GenerateResponse($Response);
 
         $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
@@ -102,7 +102,7 @@ class GamesAPIPage extends APIPage
     }
     public function ChangeUpdate($UpdateData)
     {
-        $Response = $this->UpdateController->Update($UpdateData);
+        $Response = $this->UpdateModel->Update($UpdateData);
         $ValidationResult = $this->APIResponse::GenerateResponse($Response);
 
         $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);
@@ -112,7 +112,7 @@ class GamesAPIPage extends APIPage
     {
         if (isset($GameID) && isset($UpdateID)) {
 
-            $Response = $this->UpdateController->DeleteGameUpdate($GameID, $UpdateID);
+            $Response = $this->UpdateModel->DeleteGameUpdate($GameID, $UpdateID);
             if ($Response != null) {
                 $ValidationResult = $this->APIResponse::GenerateResponse($Response);
                 $this->APIResponse->ChangeResponse($ValidationResult["Result"], $ValidationResult["Message"], $Response);

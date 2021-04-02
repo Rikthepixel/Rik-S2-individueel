@@ -5,7 +5,7 @@ include_once $_SERVER['DOCUMENT_ROOT']."/Objects/URLParameter.php";
 class APIPage {
     public $APIResponse;
     public $URLParameter;
-    protected $Controller;
+    protected $Model;
 
     function __construct() {
         $this->APIResponse = new ApiResponse(null, null, null);

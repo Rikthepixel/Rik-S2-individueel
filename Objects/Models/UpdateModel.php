@@ -1,7 +1,7 @@
 <?php
 require_once "ObjectController.php";
 
-class UpdateController extends ObjectController
+class UpdateModel extends ObjectModel
 {
 
     //Private

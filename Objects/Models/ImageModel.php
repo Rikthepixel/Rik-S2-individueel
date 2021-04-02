@@ -1,7 +1,7 @@
 <?php
 require_once "ObjectController.php";
 
-class ImageController extends ObjectController
+class ImageModel extends ObjectModel
 {
 
     //Private

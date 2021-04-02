@@ -1,8 +1,8 @@
 <?php
-$Models = $_SERVER['DOCUMENT_ROOT']."/Objects/Models";
-$Controllers = $Models."/Controllers";
+$Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
+$Controllers = $Objects."/Controllers";
 include_once $Controllers."/ImageController.php";
-include_once $Models."/API/APIPages/APIPage.php";
+include_once $Objects."/API/APIPages/APIPage.php";
 
 class ImagesAPIPage extends APIPage
 {
@@ -51,7 +51,7 @@ class ImagesAPIPage extends APIPage
             }
         }
         else{
-            $this->APIResponse->ChangeResponse(false, "Undefined Variable", "");
+            $this->APIResponse->ChangeResponse(false, "Undefined Variable", false);
         }
     }
 }

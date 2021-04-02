@@ -1,12 +1,9 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/Database/DatabaseHandler.php";
-include_once "ObjectController.php";
-
-class PlatformController extends ObjectController
+class GameController extends ObjectController
 {
 
     //Private
-    private $table = "platforms";
+    private $table = "games";
 
     function __construct()
     {
@@ -16,36 +13,47 @@ class PlatformController extends ObjectController
     public function GetAll()
     {
         $Query = "SELECT 
-                pltfrm.Name,
-                pltfrm.Link,
+                pltfrm.Name as Platform_Name,
+                pltfrm.Link as Platform_Link,
                 imgs.Image as Icon_blob,
-                imgs.Name as Icon_Name
+                imgs.Name as Icon_Name,
+                gms.Name,
+                gms.LaunchDate,
+                gms.Link
             FROM
-                $this->table pltfrm
+                $this->table gms
             LEFT JOIN
-                images imgs ON pltfrm.IconID = imgs.ID
+                images imgs ON gms.IconID = imgs.ID
+            LEFT JOIN
+                platforms pltfrm ON gms.PlatformID = pltfrm.ID
             ORDER BY 
-                pltfrm.ID DESC
-        ";
+                gms.LaunchDate DESC
+            ";
 
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 
-    public function GetSingle($GameID)
+    public function GetSingle($ID)
     {
-        $GameID = $this->DatabaseHandler->EscapeString($GameID);
+        $ID = $this->DatabaseHandler->EscapeString($ID);
+
         $Query = "SELECT 
-                    pltfrm.Name,
-                    pltfrm.Link,
-                    imgs.Image as Icon_blob,
-                    imgs.Name as Icon_Name
-                FROM
-                    $this->table pltfrm
-                LEFT JOIN
-                    images imgs ON pltfrm.IconID = imgs.ID
-                WHERE
-                    pltfrm.ID = $GameID
-                ";
+                pltfrm.Name as Platform_Name,
+                pltfrm.Link as Platform_Link,
+                imgs.Image as Icon_blob,
+                imgs.Name as Icon_Name,
+                gms.Name,
+                gms.LaunchDate,
+                gms.Link
+            FROM
+                $this->table gms
+            LEFT JOIN
+                images imgs ON gms.IconID = imgs.ID
+            LEFT JOIN
+                platforms pltfrm ON gms.PlatformID = pltfrm.ID
+            WHERE
+                gms.ID = $ID
+            ";
 
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
@@ -76,7 +84,6 @@ class PlatformController extends ObjectController
                     $ValuesString
                 )
             ";
-        echo $Query;
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 

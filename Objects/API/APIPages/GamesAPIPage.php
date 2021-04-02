@@ -1,9 +1,9 @@
 <?php
-$Models = $_SERVER['DOCUMENT_ROOT']."/Objects/Models";
-$Controllers = $Models."/Controllers";
+$Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
+$Controllers = $Objects."/Controllers";
 include_once $Controllers."/GameController.php";
 include_once $Controllers."/UpdateController.php";
-include_once $Models."/API/APIPages/APIPage.php";
+include_once $Objects."/API/APIPages/APIPage.php";
 
 class GamesAPIPage extends APIPage
 {

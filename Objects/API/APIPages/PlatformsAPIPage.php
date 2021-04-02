@@ -1,8 +1,8 @@
 <?php
-$Models = $_SERVER['DOCUMENT_ROOT']."/Objects/Models";
-$Controllers = $Models."/Controllers";
+$Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
+$Controllers = $Objects."/Controllers";
 include_once $Controllers."/PlatformController.php";
-include_once $Models."/API/APIPages/APIPage.php";
+include_once $Objects."/API/APIPages/APIPage.php";
 
 class PlatformsAPIPage extends APIPage
 {

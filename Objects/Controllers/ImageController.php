@@ -1,5 +1,4 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/Database/DatabaseHandler.php";
 include_once "ObjectController.php";
 
 class ImageController extends ObjectController

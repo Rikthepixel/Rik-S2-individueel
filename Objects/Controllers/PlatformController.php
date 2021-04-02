@@ -1,4 +1,6 @@
 <?php
+require_once "ObjectController.php";
+
 class PlatformController extends ObjectController
 {
 

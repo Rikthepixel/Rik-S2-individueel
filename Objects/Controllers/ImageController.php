@@ -1,5 +1,5 @@
 <?php
-include_once "ObjectController.php";
+require_once "ObjectController.php";
 
 class ImageController extends ObjectController
 {

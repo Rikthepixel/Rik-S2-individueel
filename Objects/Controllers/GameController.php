@@ -1,4 +1,6 @@
 <?php
+require_once "ObjectController.php";
+
 class GameController extends ObjectController
 {
 

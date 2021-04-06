@@ -1,5 +1,5 @@
 <?php
-require_once "ObjectController.php";
+require_once "ObjectModel.php";
 
 class PlatformModel extends ObjectModel
 {
@@ -95,30 +95,49 @@ class PlatformModel extends ObjectModel
         }
     }
 
-    public function Update($UpdateData)
-    {
-        $UpdateString = "";
-        $ID = $UpdateData['ID'];
-        unset($UpdateData['ID']);
-        $UpdateDataKeys = array_keys($UpdateData);
-        for ($i = 0; count($UpdateData) > $i; $i++) {
-            $Key = $UpdateDataKeys[$i];
-            $UpdateData[$Key] = $this->DatabaseHandler->EscapeInjection($UpdateData[$Key]);
+    public function Update($UpdateData) {
+        if (array_key_exists("ID", $UpdateData)) {
 
-            if ($i != 0) {
-                $UpdateString = $UpdateString.",";
+            $ID = $UpdateData['ID'];
+            $UpdateString = "";
+
+            $Parameters = array();
+            $ParameterCount = 0;
+            function AddToString($Key, $Value, $UpdateString, $ParameterCount)
+            {
+                $ParameterName = ":$Key";
+
+                if ($ParameterCount > 1) $UpdateString += ", ";
+                $ParameterCount += 1;
+
+                $UpdateString += "$Key = $ParameterName";
+                $Parameters[$ParameterName] = $Value;
             }
-            $UpdateString = $UpdateString."$Key = $UpdateData[$Key]";
-        }
-        
 
-        $Query = "UPDATE $this->table 
-                SET
-                $UpdateString
-                WHERE
-                    ID = $ID
-            ";
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+            if (isset($UpdateData["Name"])) AddToString("Name", $this->DatabaseHandler->EscapeInjection($UpdateData["Name"]), $UpdateString, $ParameterCount);
+            if (isset($UpdateData["Description"])) AddToString("Description", $this->DatabaseHandler->EscapeInjection($UpdateData["Description"]), $UpdateString, $ParameterCount);
+            if (isset($UpdateData["LaunchDate"])) AddToString("LaunchDate", $this->DatabaseHandler->EscapeInjection($UpdateData["LaunchDate"]), $UpdateString, $ParameterCount);
+            if (isset($UpdateData["Visible"])) AddToString("Visible", $this->DatabaseHandler->EscapeInjection($UpdateData["Visible"]), $UpdateString, $ParameterCount);
+            if (isset($UpdateData["PlatformID"])) AddToString("PlatformID", $this->DatabaseHandler->EscapeInjection($UpdateData["PlatformID"]), $UpdateString, $ParameterCount);
+            if (isset($UpdateData["Link"])) AddToString("Link", $this->DatabaseHandler->EscapeInjection($UpdateData["Link"]), $UpdateString, $ParameterCount);
+            if (isset($UpdateData["IconID"])) AddToString("IconID", $this->DatabaseHandler->EscapeInjection($UpdateData["IconID"]), $UpdateString, $ParameterCount);
+
+            $Query = "UPDATE $this->table
+                    SET
+                    $UpdateString
+                    WHERE
+                        ID = :IDnumber
+                ";
+
+            $Statement = $this->DatabaseHandler->CreateStatement($Query);
+            $Statement->bindParam(":IDnumber", $ID);
+
+            $this->DatabaseHandler->BindAllParams($Statement, $Parameters);
+
+            return $this->DatabaseHandler->ExecuteStatement($Statement);
+        } else {
+            return false;
+        }
     }
 
     public function Delete($GameID)

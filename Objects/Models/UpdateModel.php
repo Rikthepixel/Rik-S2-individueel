@@ -1,5 +1,5 @@
 <?php
-require_once "ObjectController.php";
+require_once "ObjectModel.php";
 
 class UpdateModel extends ObjectModel
 {

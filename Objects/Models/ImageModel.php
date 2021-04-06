@@ -1,5 +1,5 @@
 <?php
-require_once "ObjectController.php";
+require_once "ObjectModel.php";
 
 class ImageModel extends ObjectModel
 {
@@ -23,7 +23,7 @@ class ImageModel extends ObjectModel
             ORDER BY 
                 imgs.DateUploaded DESC
         ";
-        
+
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement);
     }

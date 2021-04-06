@@ -1,5 +1,5 @@
 <?php
-require_once "ObjectController.php";
+require_once "ObjectModel.php";
 
 class GameModel extends ObjectModel
 {
@@ -111,8 +111,7 @@ class GameModel extends ObjectModel
         }
     }
 
-    public function Update($UpdateData)
-    {
+    public function Update($UpdateData) {
         if (array_key_exists("ID", $UpdateData)) {
 
             $ID = $UpdateData['ID'];

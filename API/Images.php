@@ -1,6 +1,6 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
-include_once "$Objects/API/APIPages/ImagesAPIView.php";
+include_once "$Objects/API/APIView/ImagesAPIView.php";
 $APIPage = new ImagesAPIView();
 
 //Decide which response the API should give

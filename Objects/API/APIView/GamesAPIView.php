@@ -3,7 +3,7 @@ $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = $Objects."/Models";
 include_once $Models."/GameModel.php";
 include_once $Models."/UpdateModel.php";
-include_once $Objects."/API/APIPages/APIPage.php";
+include_once $Objects."/API/APIView/APIPage.php";
 
 class GamesAPIView extends APIView
 {

@@ -2,9 +2,9 @@
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = $Objects."/Models";
 include_once $Models."/ImageModel.php";
-include_once $Models."/API/APIPages/APIPage.php";
+include_once $Objects."/API/APIView/APIPage.php";
 
-class ImagesAPIPage extends APIPage
+class ImagesAPIView extends APIView
 {
     function __construct()
     {

@@ -1,6 +1,6 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
-include_once "$Objects/API/APIPages/GamesAPIView.php";
+include_once "$Objects/API/APIView/GamesAPIView.php";
 
 $APIPage = new GamesAPIView();
 

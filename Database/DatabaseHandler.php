@@ -4,8 +4,7 @@ class DatabaseHandler
 {
     private $DatabaseConnection;
 
-    public function Connect()
-    {
+    public function Connect() {
         $this->DatabaseConnection = null;
         try {
             $Host = DBInfo::$DBServer;
@@ -20,8 +19,7 @@ class DatabaseHandler
         }
     }
     
-    public function TestConnect()
-    {
+    public function TestConnect() {
         $this->DatabaseConnection = null;
         try {
             $DBHost = DBInfo::$TestDBServer;
@@ -41,8 +39,7 @@ class DatabaseHandler
         //}
     }
 
-    public function ExecuteQuery($Query)
-    {
+    public function ExecuteQuery($Query) {
         $Response = $this->DatabaseConnection->query($Query);
         if ($Response != null) {
             if (gettype($Response) == "boolean") {
@@ -80,7 +77,7 @@ class DatabaseHandler
 
     }
 
-    public function EscapeString($UnsafeVariable)
+    public function ExecuteStatement($Statement) {
     {
         return $this->DatabaseConnection->quote($UnsafeVariable);
     }

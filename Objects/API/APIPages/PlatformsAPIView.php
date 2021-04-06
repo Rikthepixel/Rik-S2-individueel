@@ -1,7 +1,7 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = $Objects."/Models";
-include_once $Models."/PlatformController.php";
+include_once $Models."/PlatformModel.php";
 include_once $Objects."/API/APIPages/APIPage.php";
 
 class PlatformsAPIPage extends APIPage

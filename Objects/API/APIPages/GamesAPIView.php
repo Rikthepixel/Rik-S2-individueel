@@ -1,13 +1,13 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
-$Controllers = $Objects."/Controllers";
-include_once $Controllers."/GameController.php";
-include_once $Controllers."/UpdateController.php";
+$Models = $Objects."/Models";
+include_once $Models."/GameModel.php";
+include_once $Models."/UpdateModel.php";
 include_once $Objects."/API/APIPages/APIPage.php";
 
-class GamesAPIPage extends APIPage
+class GamesAPIView extends APIView
 {
-    protected $UpdateController;
+    protected $UpdateModel;
     function __construct()
     {
         parent::__construct();
@@ -51,8 +51,6 @@ class GamesAPIPage extends APIPage
     public function DeleteGame($GameID)
     {
         if (isset($GameID)) {
-            $this->Model = new GameController();
-
             $Response = $this->Model->Delete($GameID);
             if ($Response != null) {
                 $ValidationResult = $this->APIResponse::GenerateResponse($Response);

@@ -2,7 +2,7 @@
 include_once $_SERVER['DOCUMENT_ROOT']."/Objects/API/ApiResponse.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/Objects/URLParameter.php";
 
-class APIPage {
+class APIView {
     public $APIResponse;
     public $URLParameter;
     protected $Model;

@@ -1,7 +1,7 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
-include_once "$Objects/API/APIPages/PlatformsAPIPage.php";
-$APIPage = new PlatformsAPIPage();
+include_once "$Objects/API/APIPages/PlatformsAPIView.php";
+$APIPage = new PlatformsAPIView();
 
 //Decide which response the API should give
 $PlatformsActionValue = $APIPage->URLParameter::getParam("Platforms.php");

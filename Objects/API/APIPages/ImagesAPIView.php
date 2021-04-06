@@ -1,7 +1,7 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = $Objects."/Models";
-include_once $Models."/ImageController.php";
+include_once $Models."/ImageModel.php";
 include_once $Models."/API/APIPages/APIPage.php";
 
 class ImagesAPIPage extends APIPage

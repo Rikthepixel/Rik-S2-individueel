@@ -1,7 +1,7 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
-include_once "$Objects/API/APIPages/ImagesAPIPage.php";
-$APIPage = new ImagesAPIPage();
+include_once "$Objects/API/APIPages/ImagesAPIView.php";
+$APIPage = new ImagesAPIView();
 
 //Decide which response the API should give
 $ImagesActionValue = $APIPage->URLParameter::getParam("Images.php");

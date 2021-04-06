@@ -78,7 +78,32 @@ class DatabaseHandler
     }
 
     public function ExecuteStatement($Statement) {
-    {
+        $ExecutedSuccesfully = $this->DatabaseConnection->execute($Statement);
+        if ($ExecutedSuccesfully) {
+                $StatementResultData = $Statement->fetchAll(PDO::FETCH_ASSOC);
+                if ($StatementResultData == false) {
+                    return $ExecutedSuccesfully;
+                }
+                else {
+                    if (count($StatementResultData) == 0) {
+                        return $ExecutedSuccesfully;
+                    }
+                    else {
+                        return $StatementResultData;
+                    }
+                }
+
+        } else {
+            return false;
+        }
+
+    }
+
+    public function CreateStatement($Query) {
+        return $this->DatabaseConnection->prepare($Query);
+    }
+
+    public function EscapeString($UnsafeVariable) {
         return $this->DatabaseConnection->quote($UnsafeVariable);
     }
 }

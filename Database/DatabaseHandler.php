@@ -103,6 +103,15 @@ class DatabaseHandler
         return $this->DatabaseConnection->prepare($Query);
     }
 
+    public function BindAllParams($Statement, $ArrayOfParams){
+
+        //binds Given parameters
+        $ParametersKeys = array_keys($ArrayOfParams);
+        for ($i = 0; $i < count($ArrayOfParams); $i++) {
+            $Statement->bindParam($ParametersKeys[$i], $ArrayOfParams[$i]);
+        }
+    }
+
     public function EscapeInjection($UnsafeVariable) {
         return htmlspecialchars_decode(strip_tags($this->DatabaseConnection->quote($UnsafeVariable)));
     }

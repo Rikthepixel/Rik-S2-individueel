@@ -77,24 +77,21 @@ class DatabaseHandler
 
     }
 
-    public function ExecuteStatement($Statement) {
-        $ExecutedSuccesfully = $this->DatabaseConnection->execute($Statement);
+    public function ExecuteStatement($Statement, $Parameters = null) {
+        if ($Parameters != null) {
+            $ExecutedSuccesfully = $Statement->execute($Parameters);
+        } else {
+            $ExecutedSuccesfully = $Statement->execute();
+        }
         if ($ExecutedSuccesfully) {
-                $StatementResultData = $Statement->fetchAll(PDO::FETCH_ASSOC);
-                if ($StatementResultData == false) {
-                    return $ExecutedSuccesfully;
-                }
-                else {
-                    if (count($StatementResultData) == 0) {
-                        return $ExecutedSuccesfully;
-                    }
-                    else {
-                        return $StatementResultData;
-                    }
-                }
+            $FetchedArray = $Statement->fetchAll(PDO::FETCH_ASSOC);
+            if (count($FetchedArray) == 0) {
+                return $ExecutedSuccesfully;
+            }
+            return $FetchedArray;
 
         } else {
-            return false;
+            return $ExecutedSuccesfully;
         }
 
     }
@@ -113,6 +110,6 @@ class DatabaseHandler
     }
 
     public function EscapeInjection($UnsafeVariable) {
-        return htmlspecialchars_decode(strip_tags($this->DatabaseConnection->quote($UnsafeVariable)));
+        return trim(htmlspecialchars_decode(strip_tags($UnsafeVariable)));
     }
 }

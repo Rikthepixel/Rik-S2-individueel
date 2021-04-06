@@ -58,7 +58,6 @@ class GameModel extends ObjectModel
 
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         $Statement->bindParam(":IDnumber", $ID);
-        
         return $this->DatabaseHandler->ExecuteStatement($Statement);
     }
 

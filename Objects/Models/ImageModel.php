@@ -23,13 +23,14 @@ class ImageModel extends ObjectModel
             ORDER BY 
                 imgs.DateUploaded DESC
         ";
-
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+        
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        return $this->DatabaseHandler->ExecuteStatement($Statement);
     }
 
     public function GetSingle($ID)
     {
-        $ID = $this->DatabaseHandler->EscapeString($ID);
+        $ID = $this->DatabaseHandler->EscapeInjection($ID);
 
         $Query = "SELECT 
                 imgs.Name,
@@ -38,29 +39,41 @@ class ImageModel extends ObjectModel
             FROM
                 $this->table imgs
             WHERE 
-                imgs.ID = $ID
+                imgs.ID = :IDnumber
         ";
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $Statement->bindParam(":IDnumber", $ID);
+
+        return $this->DatabaseHandler->ExecuteStatement($Statement);
     }
 
-    public function Create($CreateData)
-    {
-        $ValuesString = "";
-        $NamesString = "";
-        $CreateDataKeys = array_keys($CreateData);
-        for ($i = 0; count($CreateData) > $i; $i++) {
-            $Key = $CreateDataKeys[$i];
-            $ImageData[$Key] = $this->DatabaseHandler->EscapeString($CreateData[$Key]);
+    public function Create($CreateData) {
+        if (array_key_exists("Name", $CreateData)) {
+            $ValuesString = "";
+            $NamesString = "";
 
-            if ($i != 0) {
-                $ValuesString = $ValuesString.",";
-                $NamesString = $NamesString.",";
+            $Parameters = array();
+            $ParameterCount = 0;
+            function AddToString($Key, $Value, $ValuesString, $NamesString, $ParameterCount) {
+                $ParameterName = ":$Key";
+
+                if ($ParameterCount > 1) {
+                    $ValuesString += ", ";
+                    $NamesString += ", ";
+                }
+                $ParameterCount += 1;
+
+                $NamesString += $Key;
+                $ValuesString += $ParameterName;
+
+                $Parameters[$ParameterName] = $Value;
             }
-            $ValuesString = $ValuesString."$ImageData[$Key]";
-            $NamesString = $NamesString."$Key";
-        }
 
-        $Query = "INSERT 
+            if (isset($UpdateData["Name"])) AddToString("Name", $this->DatabaseHandler->EscapeInjection($CreateData["Name"]), $ValuesString, $NamesString, $ParameterCount);
+            if (isset($UpdateData["Image"])) AddToString("Image", $this->DatabaseHandler->EscapeInjection($CreateData["Image"]), $ValuesString, $NamesString, $ParameterCount);
+        
+            $Query = "INSERT 
                 INTO $this->table 
                 (
                     $NamesString
@@ -69,41 +82,64 @@ class ImageModel extends ObjectModel
                     $ValuesString
                 )
             ";
-        echo $Query;
-        return $this->DatabaseHandler->ExecuteQuery($Query);
-    }
+            $Statement = $this->DatabaseHandler->CreateStatement($Query);
 
-    public function Update($ImageData)
-    {
-        $ImageString = "";
-        $ID = $ImageData['ID'];
-        unset($ImageData['ID']);
-        $ImageDataKeys = array_keys($ImageData);
-        for ($i = 0; count($ImageData) > $i; $i++) {
-            $Key = $ImageDataKeys[$i];
-            $ImageData[$Key] = $this->DatabaseHandler->EscapeString($ImageData[$Key]);
+            $this->DatabaseHandler->BindAllParams($Statement, $Parameters);
 
-            if ($i != 0) {
-                $ImageString = $ImageString.",";
-            }
-            $ImageString = $ImageString."$Key = $ImageData[$Key]";
+            return $this->DatabaseHandler->ExecuteStatement($Statement);
+        } else {
+            return false;
         }
-        
-
-        $Query = "Image $this->table 
-                SET
-                $ImageString
-                WHERE
-                    ID = $ID
-            ";
-        return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 
-    public function Delete($ID)
-    {
-        $ID = $this->DatabaseHandler->EscapeString($ID);
-        $Query = "DELETE FROM $this->table WHERE ID = $ID";
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+    public function Update($UpdateData) {
+        if (array_key_exists("ID", $UpdateData)) {
+
+            $ID = $UpdateData['ID'];
+            $UpdateString = "";
+
+            $Parameters = array();
+            $ParameterCount = 0;
+            function AddToString($Key, $Value, $UpdateString, $ParameterCount)
+            {
+                $ParameterName = ":$Key";
+
+                if ($ParameterCount > 1) $UpdateString += ", ";
+                $ParameterCount += 1;
+
+                $UpdateString += "$Key = $ParameterName";
+                $Parameters[$ParameterName] = $Value;
+            }
+
+            if (isset($UpdateData["Name"])) AddToString("Name", $this->DatabaseHandler->EscapeInjection($UpdateData["Name"]), $UpdateString, $ParameterCount);
+
+            $Query = "UPDATE $this->table
+                    SET
+                    $UpdateString
+                    WHERE
+                        ID = :IDnumber
+                ";
+
+            $Statement = $this->DatabaseHandler->CreateStatement($Query);
+            $Statement->bindParam(":IDnumber", $ID);
+
+            $this->DatabaseHandler->BindAllParams($Statement, $Parameters);
+
+            return $this->DatabaseHandler->ExecuteStatement($Statement);
+        } else {
+            return false;
+        }
+    }
+
+    public function Delete($ID) {
+        $ID = $this->DatabaseHandler->EscapeInjection($ID);
+        
+        $Query = "DELETE FROM $this->table WHERE ID = :IDnumber";
+        
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $Statement->bindParam(":IDnumber", $ID);
+
+        return $this->DatabaseHandler->ExecuteStatement($Query);
     }
 }
 ?>

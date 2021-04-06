@@ -26,12 +26,15 @@ class UpdateModel extends ObjectModel
                 updt.ReleaseDate DESC
         ";
 
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+
+        return $this->DatabaseHandler->ExecuteStatement($Statement);
     }
 
     public function GetAllByGame($ID)
     {
-        $ID = $this->DatabaseHandler->EscapeString($ID);
+        $ID = $this->DatabaseHandler->EscapeInjection($ID);
+
         $Query = "SELECT 
                 updt.Name,
                 updt.Description,
@@ -41,17 +44,20 @@ class UpdateModel extends ObjectModel
             FROM
                 $this->table updt
             WHERE
-                updt.GameID = $ID
+                updt.GameID = :GameID
             ORDER BY 
                 updt.ReleaseDate DESC
         ";
 
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $Statement->bindParam(":GameID", $ID);
+
+        return $this->DatabaseHandler->ExecuteStatement($Statement);
     }
 
     public function GetSingle($ID)
     {
-        $ID = $this->DatabaseHandler->EscapeString($ID);
+        $ID = $this->DatabaseHandler->EscapeInjection($ID);
 
         $Query = "SELECT 
                     updt.Name,
@@ -62,16 +68,19 @@ class UpdateModel extends ObjectModel
                 FROM
                     $this->table updt
                 WHERE
-                    updt.ID = $ID
+                    updt.ID = :IDnumber
                 ";
 
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $Statement->bindParam(":IDnumber", $ID);
+
+        return $this->DatabaseHandler->ExecuteStatement($Statement);
     }
 
     public function GetSingleGameUpdate($GameID, $UpdateID)
     {
-        $GameID = $this->DatabaseHandler->EscapeString($GameID);
-        $UpdateID = $this->DatabaseHandler->EscapeString($UpdateID);
+        $GameID = $this->DatabaseHandler->EscapeInjection($GameID);
+        $UpdateID = $this->DatabaseHandler->EscapeInjection($UpdateID);
 
         $Query = "SELECT 
                     updt.Name,
@@ -82,11 +91,15 @@ class UpdateModel extends ObjectModel
                 FROM
                     $this->table updt
                 WHERE
-                    updt.GameID = $GameID AND
-                    updt.UpdateID = $UpdateID
+                    updt.GameID = :GameID AND
+                    updt.UpdateID = :UpdateID $UpdateID
                 ";
 
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $Statement->bindParam(":GameID", $GameID);
+        $Statement->bindParam(":UpdateID", $UpdateID);
+
+        return $this->DatabaseHandler->ExecuteStatement($Statement);
     }
 
     public function Create($CreateData)
@@ -94,18 +107,29 @@ class UpdateModel extends ObjectModel
         if (array_key_exists("GameID", $CreateData) && array_key_exists("Name", $CreateData)) {
             $ValuesString = "";
             $NamesString = "";
-            $CreateDataKeys = array_keys($CreateData);
-            for ($i = 0; count($CreateData) > $i; $i++) {
-                $Key = $CreateDataKeys[$i];
-                $UpdateData[$Key] = $this->DatabaseHandler->EscapeString($CreateData[$Key]);
 
-                if ($i != 0) {
-                    $ValuesString = $ValuesString . ",";
-                    $NamesString = $NamesString . ",";
+            $Parameters = array();
+            $ParameterCount = 0;
+            function AddToString($Key, $Value, $ValuesString, $NamesString, $ParameterCount) {
+                $ParameterName = ":$Key";
+
+                if ($ParameterCount > 1) {
+                    $ValuesString += ", ";
+                    $NamesString += ", ";
                 }
-                $ValuesString = $ValuesString . "$UpdateData[$Key]";
-                $NamesString = $NamesString . "$Key";
+                $ParameterCount += 1;
+
+                $NamesString += $Key;
+                $ValuesString += $ParameterName;
+
+                $Parameters[$ParameterName] = $Value;
             }
+
+            if (isset($UpdateData["Name"])) AddToString("Name", $this->DatabaseHandler->EscapeInjection($CreateData["Name"]), $ValuesString, $NamesString, $ParameterCount);
+            if (isset($UpdateData["Description"])) AddToString("Description", $this->DatabaseHandler->EscapeInjection($CreateData["Description"]), $ValuesString, $NamesString, $ParameterCount);
+            if (isset($UpdateData["ReleaseDate"])) AddToString("ReleaseDate", $this->DatabaseHandler->EscapeInjection($CreateData["ReleaseDate"]), $ValuesString, $NamesString, $ParameterCount);
+            if (isset($UpdateData["WebsiteAdminID"])) AddToString("WebsiteAdminID", $this->DatabaseHandler->EscapeInjection($CreateData["WebsiteAdminID"]), $ValuesString, $NamesString, $ParameterCount);
+            if (isset($UpdateData["Visible"])) AddToString("Visible", $this->DatabaseHandler->EscapeInjection($CreateData["Visible"]), $ValuesString, $NamesString, $ParameterCount);
 
             $Query = "INSERT 
                 INTO $this->table 
@@ -116,9 +140,12 @@ class UpdateModel extends ObjectModel
                     $ValuesString
                 )
             ";
-            return $this->DatabaseHandler->ExecuteQuery($Query);
-        }
-        else {
+            $Statement = $this->DatabaseHandler->CreateStatement($Query);
+
+            $this->DatabaseHandler->BindAllParams($Statement, $Parameters);
+
+            return $this->DatabaseHandler->ExecuteStatement($Statement);
+        } else {
             return false;
         }
     }
@@ -126,31 +153,43 @@ class UpdateModel extends ObjectModel
     public function Update($UpdateData)
     {
         if (array_key_exists("GameID", $UpdateData) && array_key_exists("UpdateID", $UpdateData)) {
-            $UpdateString = "";
+
             $ID = $UpdateData['GameID'];
             $UpdateID = $UpdateData['UpdateID'];
-            unset($UpdateData['GameID']);
-            unset($UpdateData['UpdateID']);
-            $UpdateDataKeys = array_keys($UpdateData);
-            for ($i = 0; count($UpdateData) > $i; $i++) {
-                $Key = $UpdateDataKeys[$i];
-                $UpdateData[$Key] = $this->DatabaseHandler->EscapeString($UpdateData[$Key]);
+            $UpdateString = "";
 
-                if ($i != 0) {
-                    $UpdateString = $UpdateString . ",";
-                }
-                $UpdateString = $UpdateString . "$Key = $UpdateData[$Key]";
+            $Parameters = array();
+            $ParameterCount = 0;
+            function AddToString($Key, $Value, $UpdateString, $ParameterCount)
+            {
+                $ParameterName = ":$Key";
+
+                if ($ParameterCount > 1) $UpdateString += ", ";
+                $ParameterCount += 1;
+
+                $UpdateString += "$Key = $ParameterName";
+                $Parameters[$ParameterName] = $Value;
             }
 
-
+            if (isset($UpdateData["Name"])) AddToString("Name", $this->DatabaseHandler->EscapeInjection($UpdateData["Name"]), $UpdateString, $ParameterCount);
+            if (isset($UpdateData["Link"])) AddToString("Link", $this->DatabaseHandler->EscapeInjection($UpdateData["Link"]), $UpdateString, $ParameterCount);
+            if (isset($UpdateData["IconID"])) AddToString("IconID", $this->DatabaseHandler->EscapeInjection($UpdateData["IconID"]), $UpdateString, $ParameterCount);
+            
             $Query = "UPDATE $this->table
                     SET
                     $UpdateString
                     WHERE
-                        GameID = $ID AND
-                        UpdateID = $UpdateID
+                        GameID = :IDnumber AND
+                        UpdateID = :UpdateIDnumber
                 ";
-            return $this->DatabaseHandler->ExecuteQuery($Query);
+
+            $Statement = $this->DatabaseHandler->CreateStatement($Query);
+            $Statement->bindParam(":IDnumber", $ID);
+            $Statement->bindParam(":UpdateIDnumber", $UpdateID);
+
+            $this->DatabaseHandler->BindAllParams($Statement, $Parameters);
+
+            return $this->DatabaseHandler->ExecuteStatement($Statement);
         } else {
             return false;
         }
@@ -158,21 +197,32 @@ class UpdateModel extends ObjectModel
 
     public function Delete($ID)
     {
-        $ID = $this->DatabaseHandler->EscapeString($ID);
-        $Query = "DELETE FROM $this->table WHERE ID = $ID";
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+        $ID = $this->DatabaseHandler->EscapeInjection($ID);
+        $Query = "DELETE FROM $this->table WHERE ID = :IDnumber";
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $Statement->bindParam(":IDnumber", $ID);
+        return $this->DatabaseHandler->ExecuteStatement($Query);
     }
-    public function DeleteGame($GameID)
+    public function DeleteAllGameUpdates($GameID)
     {
-        $GameID = $this->DatabaseHandler->EscapeString($GameID);
-        $Query = "DELETE FROM $this->table WHERE GameID = $GameID";
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+        $GameID = $this->DatabaseHandler->EscapeInjection($GameID);
+
+        $Query = "DELETE FROM $this->table WHERE GameID = :GameID";
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $Statement->bindParam(":GameID", $GameID);
+
+        return $this->DatabaseHandler->ExecuteStatement($Statement);
     }
     public function DeleteGameUpdate($GameID, $UpdateID)
     {
-        $GameID = $this->DatabaseHandler->EscapeString($GameID);
-        $UpdateID = $this->DatabaseHandler->EscapeString($UpdateID);
-        $Query = "DELETE FROM $this->table WHERE GameID = $GameID AND UpdateID = $UpdateID";
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+        $GameID = $this->DatabaseHandler->EscapeInjection($GameID);
+        $UpdateID = $this->DatabaseHandler->EscapeInjection($UpdateID);
+
+        $Query = "DELETE FROM $this->table WHERE GameID = :GameID AND UpdateID = :UpdateID";
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $Statement->bindParam(":GameID", $GameID);
+        $Statement->bindParam(":UpdateID", $UpdateID);
+
+        return $this->DatabaseHandler->ExecuteStatement($Statement);
     }
 }

@@ -12,8 +12,7 @@ class PlatformModel extends ObjectModel
         parent::__construct();
     }
 
-    public function GetAll()
-    {
+    public function GetAll() {
         $Query = "SELECT 
                 pltfrm.Name,
                 pltfrm.Link,
@@ -27,12 +26,12 @@ class PlatformModel extends ObjectModel
                 pltfrm.ID DESC
         ";
 
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        return $this->DatabaseHandler->ExecuteStatement($Statement);
     }
 
-    public function GetSingle($GameID)
-    {
-        $GameID = $this->DatabaseHandler->EscapeString($GameID);
+    public function GetSingle($PlaftormID) {
+        $PlaftormID = $this->DatabaseHandler->EscapeInjection($PlaftormID);
         $Query = "SELECT 
                     pltfrm.Name,
                     pltfrm.Link,
@@ -43,30 +42,41 @@ class PlatformModel extends ObjectModel
                 LEFT JOIN
                     images imgs ON pltfrm.IconID = imgs.ID
                 WHERE
-                    pltfrm.ID = $GameID
+                    pltfrm.ID = :IDnumber
                 ";
 
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $Statement->bindParam(":IDnumber", $PlaftormID);
+        return $this->DatabaseHandler->ExecuteStatement($Statement);
     }
 
-    public function Create($CreateData)
-    {
-        $ValuesString = "";
-        $NamesString = "";
-        $CreateDataKeys = array_keys($CreateData);
-        for ($i = 0; count($CreateData) > $i; $i++) {
-            $Key = $CreateDataKeys[$i];
-            $UpdateData[$Key] = $this->DatabaseHandler->EscapeString($CreateData[$Key]);
+    public function Create($CreateData) {
+        if (array_key_exists("Name", $CreateData)) {
+            $ValuesString = "";
+            $NamesString = "";
 
-            if ($i != 0) {
-                $ValuesString = $ValuesString.",";
-                $NamesString = $NamesString.",";
+            $Parameters = array();
+            $ParameterCount = 0;
+            function AddToString($Key, $Value, $ValuesString, $NamesString, $ParameterCount) {
+                $ParameterName = ":$Key";
+
+                if ($ParameterCount > 1) {
+                    $ValuesString += ", ";
+                    $NamesString += ", ";
+                }
+                $ParameterCount += 1;
+
+                $NamesString += $Key;
+                $ValuesString += $ParameterName;
+
+                $Parameters[$ParameterName] = $Value;
             }
-            $ValuesString = $ValuesString."$UpdateData[$Key]";
-            $NamesString = $NamesString."$Key";
-        }
 
-        $Query = "INSERT 
+            if (isset($UpdateData["Name"])) AddToString("Name", $this->DatabaseHandler->EscapeInjection($CreateData["Name"]), $ValuesString, $NamesString, $ParameterCount);
+            if (isset($UpdateData["IconID"])) AddToString("IconID", $this->DatabaseHandler->EscapeInjection($CreateData["IconID"]), $ValuesString, $NamesString, $ParameterCount);
+            if (isset($UpdateData["Link"])) AddToString("Link", $this->DatabaseHandler->EscapeInjection($CreateData["Link"]), $ValuesString, $NamesString, $ParameterCount);
+            
+            $Query = "INSERT 
                 INTO $this->table 
                 (
                     $NamesString
@@ -75,8 +85,14 @@ class PlatformModel extends ObjectModel
                     $ValuesString
                 )
             ";
-        echo $Query;
-        return $this->DatabaseHandler->ExecuteQuery($Query);
+            $Statement = $this->DatabaseHandler->CreateStatement($Query);
+
+            $this->DatabaseHandler->BindAllParams($Statement, $Parameters);
+
+            return $this->DatabaseHandler->ExecuteStatement($Statement);
+        } else {
+            return false;
+        }
     }
 
     public function Update($UpdateData)
@@ -87,7 +103,7 @@ class PlatformModel extends ObjectModel
         $UpdateDataKeys = array_keys($UpdateData);
         for ($i = 0; count($UpdateData) > $i; $i++) {
             $Key = $UpdateDataKeys[$i];
-            $UpdateData[$Key] = $this->DatabaseHandler->EscapeString($UpdateData[$Key]);
+            $UpdateData[$Key] = $this->DatabaseHandler->EscapeInjection($UpdateData[$Key]);
 
             if ($i != 0) {
                 $UpdateString = $UpdateString.",";
@@ -107,7 +123,7 @@ class PlatformModel extends ObjectModel
 
     public function Delete($GameID)
     {
-        $GameID = $this->DatabaseHandler->EscapeString($GameID);
+        $GameID = $this->DatabaseHandler->EscapeInjection($GameID);
         $Query = "DELETE FROM $this->table WHERE ID = $GameID";
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }

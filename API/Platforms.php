@@ -15,19 +15,9 @@ if (isset($PlatformsActionValue) && $PlatformsActionValue != null) {
 
             if($ActionValue == "Update") {
                 //Update the Platform  
-                $UpdateArray = array(
-                    "ID" => $PlatformsActionValue,
-                );
-                if (array_key_exists("Name", $_POST)) {
-                    $UpdateArray["Name"] = $_POST["Name"];
-                }
-                if (array_key_exists("Link", $_POST)) {
-                    $CreateArray["Link"] = $_POST["Link"];
-                }
-                if (array_key_exists("IconID", $_POST)) {
-                    $UpdateArray["IconID"] = $_POST["IconID"];
-                }
-                $APIPage->Update($UpdateArray);
+                $PostData = $_POST;
+                $PostData["ID"] = $PlatformsActionValue;
+                $APIPage->Update($PostData);
             }
             elseif ($ActionValue == "Delete") {
                 //Delete the Platform from the page
@@ -39,17 +29,8 @@ if (isset($PlatformsActionValue) && $PlatformsActionValue != null) {
         }
     } elseif ($PlatformsActionValue == "Create") {
         //Create a new Platform
-        $CreateArray = array();
-        if (array_key_exists("Name", $_POST)) {
-            $CreateArray["Name"] = $_POST["Name"];
-        }
-        if (array_key_exists("Link", $_POST)) {
-            $CreateArray["Link"] = $_POST["Link"];
-        }
-        if (array_key_exists("IconID", $_POST)) {
-            $CreateArray["IconID"] = $_POST["IconID"];
-        }
-        $APIPage->CreateNew($CreateArray);
+        $PostData = $_POST;
+        $APIPage->CreateNew($PostData);
     }
 } else {
     //Get All Platforms

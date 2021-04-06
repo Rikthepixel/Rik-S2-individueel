@@ -103,7 +103,7 @@ class DatabaseHandler
         return $this->DatabaseConnection->prepare($Query);
     }
 
-    public function EscapeString($UnsafeVariable) {
-        return $this->DatabaseConnection->quote($UnsafeVariable);
+    public function EscapeInjection($UnsafeVariable) {
+        return htmlspecialchars_decode(strip_tags($this->DatabaseConnection->quote($UnsafeVariable)));
     }
 }

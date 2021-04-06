@@ -2,7 +2,7 @@
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = $Objects."/Models";
 include_once $Models."/PlatformModel.php";
-include_once $Objects."/API/APIView/APIPage.php";
+include_once $Objects."/API/APIView/APIView.php";
 
 class PlatformsAPIView extends APIView
 {

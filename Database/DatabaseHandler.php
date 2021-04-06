@@ -31,6 +31,7 @@ class DatabaseHandler
         }
         if ($this->DatabaseConnection != null) {
             $this->DatabaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->DatabaseConnection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
         }
 
         //$this->DatabaseConnection = mysqli_connect(DBInfo::$TestDBServer, DBInfo::$TestDBUser, DBInfo::$TestDBPassword, DBInfo::$TestDBName);
@@ -49,7 +50,7 @@ class DatabaseHandler
                 try {
                     $ReturnArray = array();
 
-                    while ($Row = $Response->fetch(PDO::FETCH_ASSOC)) {   //$Response->FETCH_ASSOC()
+                    while ($Row = $Response->fetch()) {   //$Response->FETCH_ASSOC()
                         array_push($ReturnArray, $Row);
                     }
                     
@@ -84,7 +85,7 @@ class DatabaseHandler
             $ExecutedSuccesfully = $Statement->execute();
         }
         if ($ExecutedSuccesfully) {
-            $FetchedArray = $Statement->fetchAll(PDO::FETCH_ASSOC);
+            $FetchedArray = $Statement->fetchAll();
             if (count($FetchedArray) == 0) {
                 return $ExecutedSuccesfully;
             }

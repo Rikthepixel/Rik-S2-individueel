@@ -1,8 +1,8 @@
 <?php
 $Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
 $Models = $Objects."/Models";
-include_once $Models."/ImageModel.php";
-include_once $Objects."/API/APIView/APIView.php";
+include_once $Models."/ImageController.php";
+include_once "/APIView.php";
 
 class ImagesAPIView extends APIView
 {

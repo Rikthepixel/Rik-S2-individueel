@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/Objects/API/ApiResponse.php";
+include_once "/ApiResponse.php";
 include_once $_SERVER['DOCUMENT_ROOT']."/Objects/URLParameter.php";
 
 class APIView {

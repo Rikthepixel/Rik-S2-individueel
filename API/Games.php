@@ -1,8 +1,10 @@
 <?php
-$Objects = $_SERVER['DOCUMENT_ROOT']."/Objects";
-include_once "$Objects/API/APIView/GamesAPIView.php";
+$Controllers = $_SERVER['DOCUMENT_ROOT']."/Objects/Controllers";
+include_once "$Controllers/GameController.php";
+include_once "$Controllers/UpdateController.php";
 
-$APIPage = new GamesAPIView();
+$GameController = new GameController();
+$UpdateController = new UpdateController();
 
 //Decide which response the API should give
 $GamesActionValue = $APIPage->URLParameter::getParam("Games.php");

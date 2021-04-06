@@ -1,7 +1,7 @@
 <?php
 include_once $_SERVER['DOCUMENT_ROOT']."/Database/DatabaseHandler.php";
 
-abstract class ObjectModel {
+abstract class ObjectRepo {
     
     protected $DatabaseHandler;
     function __construct()

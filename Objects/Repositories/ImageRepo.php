@@ -1,5 +1,6 @@
 <?php
 require_once "ObjectRepo.php";
+require_once $_SERVER['DOCUMENT_ROOT']."Objects/Models/ImageModel";
 
 class ImageModel extends ObjectRepo
 {
@@ -32,10 +33,11 @@ class ImageModel extends ObjectRepo
     {
         $ID = $this->DatabaseHandler->EscapeInjection($ID);
 
-        $Query = "SELECT 
+        $Query = "SELECT
+                imgs.ID
                 imgs.Name,
                 imgs.Image,
-                imgs.DateUploaded
+                imgs.Date_Created
             FROM
                 $this->table imgs
             WHERE 
@@ -45,7 +47,12 @@ class ImageModel extends ObjectRepo
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         $Statement->bindParam(":IDnumber", $ID);
 
-        return $this->DatabaseHandler->ExecuteStatement($Statement);
+        $ReturnedImage = $this->DatabaseHandler->ExecuteStatement($Statement);
+        if ($ReturnedImage) {
+            return new ImageModel($ReturnedImage["ID"], $ReturnedImage["Name"], $ReturnedImage["Image"], $ReturnedImage["Date_Created"]);
+        }else{
+            return null;
+        }
     }
 
     public function Create($CreateData) {

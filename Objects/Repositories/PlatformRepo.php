@@ -1,5 +1,6 @@
 <?php
 require_once "ObjectRepo.php";
+require_once $_SERVER['DOCUMENT_ROOT']."Objects/Models/PlatformModel";
 
 class PlatformModel extends ObjectRepo
 {
@@ -14,6 +15,7 @@ class PlatformModel extends ObjectRepo
 
     public function GetAll() {
         $Query = "SELECT 
+                pltfrm.ID,
                 pltfrm.Name,
                 pltfrm.Link,
                 imgs.Image as Icon_blob,
@@ -27,14 +29,28 @@ class PlatformModel extends ObjectRepo
         ";
 
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
-        return $this->DatabaseHandler->ExecuteStatement($Statement);
+        $PlatformsReturned = $this->DatabaseHandler->ExecuteStatement($Statement);
+
+        if ($PlatformsReturned){
+            $Platforms = array();
+            for ($i=0; $i < count($PlatformsReturned); $i++) { 
+                $Platforms[$i] = new PlatformModel($PlatformsReturned[$i]);
+            }
+    
+            return $Platforms;
+        }else{
+            return null;
+        }
+
     }
 
     public function GetSingle($PlaftormID) {
         $PlaftormID = $this->DatabaseHandler->EscapeInjection($PlaftormID);
         $Query = "SELECT 
+                    pltfrm.ID
                     pltfrm.Name,
                     pltfrm.Link,
+                    imgs.ID as Icon_ID
                     imgs.Image as Icon_blob,
                     imgs.Name as Icon_Name
                 FROM
@@ -47,7 +63,13 @@ class PlatformModel extends ObjectRepo
 
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         $Statement->bindParam(":IDnumber", $PlaftormID);
-        return $this->DatabaseHandler->ExecuteStatement($Statement);
+        $ReturnedPlatform = $this->DatabaseHandler->ExecuteStatement($Statement);
+        if ($ReturnedPlatform) {
+            return new PlatformModel($ReturnedPlatform);
+        }else{
+            return null;
+        }
+       
     }
 
     public function Create($CreateData) {

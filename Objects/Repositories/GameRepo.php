@@ -1,7 +1,8 @@
 <?php
 require_once "ObjectRepo.php";
+require_once $_SERVER['DOCUMENT_ROOT']."Objects/Models/GameModel";
 
-class GameModel extends ObjectRepo
+class GameRepo extends ObjectRepo
 {
 
     //Private
@@ -14,8 +15,11 @@ class GameModel extends ObjectRepo
 
     public function GetAll() {
         $Query = "SELECT 
+                gms.PlatformID as Platform_ID
                 pltfrm.Name as Platform_Name,
                 pltfrm.Link as Platform_Link,
+                
+                gms.IconID as Icon_ID
                 imgs.Image as Icon_blob,
                 imgs.Name as Icon_Name,
                 gms.Name,

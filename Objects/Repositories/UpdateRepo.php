@@ -1,5 +1,6 @@
 <?php
 require_once "ObjectRepo.php";
+require_once $_SERVER['DOCUMENT_ROOT']."Objects/Models/UpdateModel";
 
 class UpdateModel extends ObjectRepo
 {
@@ -15,9 +16,11 @@ class UpdateModel extends ObjectRepo
     public function GetAll()
     {
         $Query = "SELECT 
+                updt.ID,
+                updt.GameID,
+                updt.UpdateID,
                 updt.Name,
                 updt.Description,
-                updt.GameID,
                 updt.ReleaseDate,
                 updt.WebsiteAdminID
             FROM
@@ -27,8 +30,19 @@ class UpdateModel extends ObjectRepo
         ";
 
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $UpdatesReturned = $this->DatabaseHandler->ExecuteStatement($Statement);
 
-        return $this->DatabaseHandler->ExecuteStatement($Statement);
+        if ($UpdatesReturned) {
+            $Updates = array();
+            for ($i=0; $i < count($UpdatesReturned); $i++) { 
+                $Updates[$i] = new UpdateModel($UpdatesReturned[$i]);
+            }
+    
+            return $Updates;
+        }else{
+            return null;
+        }
+
     }
 
     public function GetAllByGame($ID)
@@ -36,9 +50,11 @@ class UpdateModel extends ObjectRepo
         $ID = $this->DatabaseHandler->EscapeInjection($ID);
 
         $Query = "SELECT 
+                updt.ID,
+                updt.GameID,
+                updt.UpdateID,
                 updt.Name,
                 updt.Description,
-                updt.GameID,
                 updt.ReleaseDate,
                 updt.WebsiteAdminID
             FROM
@@ -52,7 +68,18 @@ class UpdateModel extends ObjectRepo
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         $Statement->bindParam(":GameID", $ID);
 
-        return $this->DatabaseHandler->ExecuteStatement($Statement);
+        $UpdatesReturned = $this->DatabaseHandler->ExecuteStatement($Statement);
+
+        if ($UpdatesReturned) {
+            $Updates = array();
+            for ($i=0; $i < count($UpdatesReturned); $i++) { 
+                $Updates[$i] = new UpdateModel($UpdatesReturned[$i]);
+            }
+    
+            return $Updates;
+        }else{
+            return null;
+        }
     }
 
     public function GetSingle($ID)
@@ -60,9 +87,11 @@ class UpdateModel extends ObjectRepo
         $ID = $this->DatabaseHandler->EscapeInjection($ID);
 
         $Query = "SELECT 
+                    updt.ID,
+                    updt.GameID,
+                    updt.UpdateID,
                     updt.Name,
                     updt.Description,
-                    updt.GameID,
                     updt.ReleaseDate,
                     updt.WebsiteAdminID
                 FROM
@@ -73,8 +102,13 @@ class UpdateModel extends ObjectRepo
 
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         $Statement->bindParam(":IDnumber", $ID);
-
-        return $this->DatabaseHandler->ExecuteStatement($Statement);
+        $ReturnedUpdate = $this->DatabaseHandler->ExecuteStatement($Statement);
+        
+        if ($ReturnedUpdate) {
+            return new UpdateModel($ReturnedUpdate);
+        }else{
+            return null;
+        }
     }
 
     public function GetSingleGameUpdate($GameID, $UpdateID)
@@ -82,10 +116,12 @@ class UpdateModel extends ObjectRepo
         $GameID = $this->DatabaseHandler->EscapeInjection($GameID);
         $UpdateID = $this->DatabaseHandler->EscapeInjection($UpdateID);
 
-        $Query = "SELECT 
+        $Query = "SELECT
+                    updt.ID,
+                    updt.GameID,
+                    updt.UpdateID,
                     updt.Name,
                     updt.Description,
-                    updt.GameID,
                     updt.ReleaseDate,
                     updt.WebsiteAdminID
                 FROM
@@ -99,7 +135,9 @@ class UpdateModel extends ObjectRepo
         $Statement->bindParam(":GameID", $GameID);
         $Statement->bindParam(":UpdateID", $UpdateID);
 
-        return $this->DatabaseHandler->ExecuteStatement($Statement);
+        $ReturnedUpdate = $this->DatabaseHandler->ExecuteStatement($Statement);
+        
+        return new UpdateModel($ReturnedUpdate);
     }
 
     public function Create($CreateData)

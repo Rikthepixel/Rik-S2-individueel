@@ -26,8 +26,18 @@ class ImageModel extends ObjectRepo
         ";
 
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
-        return $this->DatabaseHandler->ExecuteStatement($Statement);
+        $ImagesReturned = $this->DatabaseHandler->ExecuteStatement($Statement);
+
+        if ($ImagesReturned == false) return null;
+
+        $Images = array();
+        for ($i=0; $i < count($ImagesReturned); $i++) { 
+            $Images[$i] = new GameModel($ImagesReturned[$i]);
+        }
+    
+        return $Images;
     }
+    
 
     public function GetSingle($ID)
     {
@@ -48,11 +58,9 @@ class ImageModel extends ObjectRepo
         $Statement->bindParam(":IDnumber", $ID);
 
         $ReturnedImage = $this->DatabaseHandler->ExecuteStatement($Statement);
-        if ($ReturnedImage) {
-            return new ImageModel($ReturnedImage["ID"], $ReturnedImage["Name"], $ReturnedImage["Image"], $ReturnedImage["Date_Created"]);
-        }else{
-            return null;
-        }
+        if ($ReturnedImage == false) return null;
+
+        return new ImageModel($ReturnedImage["ID"], $ReturnedImage["Name"], $ReturnedImage["Image"], $ReturnedImage["Date_Created"]);
     }
 
     public function Create($CreateData) {

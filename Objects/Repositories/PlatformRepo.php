@@ -1,6 +1,6 @@
 <?php
 require_once "ObjectRepo.php";
-require_once $_SERVER['DOCUMENT_ROOT']."Objects/Models/PlatformModel";
+require_once $_SERVER['DOCUMENT_ROOT'] . "Objects/Models/PlatformModel";
 
 class PlatformModel extends ObjectRepo
 {
@@ -13,7 +13,8 @@ class PlatformModel extends ObjectRepo
         parent::__construct();
     }
 
-    public function GetAll() {
+    public function GetAll()
+    {
         $Query = "SELECT 
                 pltfrm.ID,
                 pltfrm.Name,
@@ -31,20 +32,18 @@ class PlatformModel extends ObjectRepo
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         $PlatformsReturned = $this->DatabaseHandler->ExecuteStatement($Statement);
 
-        if ($PlatformsReturned){
-            $Platforms = array();
-            for ($i=0; $i < count($PlatformsReturned); $i++) { 
-                $Platforms[$i] = new PlatformModel($PlatformsReturned[$i]);
-            }
-    
-            return $Platforms;
-        }else{
-            return null;
+        if ($PlatformsReturned == null) return null;
+
+        $Platforms = array();
+        for ($i = 0; $i < count($PlatformsReturned); $i++) {
+            $Platforms[$i] = new PlatformModel($PlatformsReturned[$i]);
         }
 
+        return $Platforms;
     }
 
-    public function GetSingle($PlaftormID) {
+    public function GetSingle($PlaftormID)
+    {
         $PlaftormID = $this->DatabaseHandler->EscapeInjection($PlaftormID);
         $Query = "SELECT 
                     pltfrm.ID
@@ -66,20 +65,21 @@ class PlatformModel extends ObjectRepo
         $ReturnedPlatform = $this->DatabaseHandler->ExecuteStatement($Statement);
         if ($ReturnedPlatform) {
             return new PlatformModel($ReturnedPlatform);
-        }else{
+        } else {
             return null;
         }
-       
     }
 
-    public function Create($CreateData) {
+    public function Create($CreateData)
+    {
         if (array_key_exists("Name", $CreateData)) {
             $ValuesString = "";
             $NamesString = "";
 
             $Parameters = array();
             $ParameterCount = 0;
-            function AddToString($Key, $Value, $ValuesString, $NamesString, $ParameterCount) {
+            function AddToString($Key, $Value, $ValuesString, $NamesString, $ParameterCount)
+            {
                 $ParameterName = ":$Key";
 
                 if ($ParameterCount > 1) {
@@ -97,7 +97,7 @@ class PlatformModel extends ObjectRepo
             if (isset($UpdateData["Name"])) AddToString("Name", $this->DatabaseHandler->EscapeInjection($CreateData["Name"]), $ValuesString, $NamesString, $ParameterCount);
             if (isset($UpdateData["IconID"])) AddToString("IconID", $this->DatabaseHandler->EscapeInjection($CreateData["IconID"]), $ValuesString, $NamesString, $ParameterCount);
             if (isset($UpdateData["Link"])) AddToString("Link", $this->DatabaseHandler->EscapeInjection($CreateData["Link"]), $ValuesString, $NamesString, $ParameterCount);
-            
+
             $Query = "INSERT 
                 INTO $this->table 
                 (
@@ -117,7 +117,8 @@ class PlatformModel extends ObjectRepo
         }
     }
 
-    public function Update($UpdateData) {
+    public function Update($UpdateData)
+    {
         if (array_key_exists("ID", $UpdateData)) {
 
             $ID = $UpdateData['ID'];
@@ -169,4 +170,3 @@ class PlatformModel extends ObjectRepo
         return $this->DatabaseHandler->ExecuteQuery($Query);
     }
 }
-?>

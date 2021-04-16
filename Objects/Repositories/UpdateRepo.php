@@ -69,17 +69,14 @@ class UpdateModel extends ObjectRepo
         $Statement->bindParam(":GameID", $ID);
 
         $UpdatesReturned = $this->DatabaseHandler->ExecuteStatement($Statement);
-
-        if ($UpdatesReturned) {
-            $Updates = array();
-            for ($i=0; $i < count($UpdatesReturned); $i++) { 
-                $Updates[$i] = new UpdateModel($UpdatesReturned[$i]);
-            }
-    
-            return $Updates;
-        }else{
-            return null;
+        if ($UpdatesReturned == false) return null;
+        
+        $Updates = array();
+        for ($i=0; $i < count($UpdatesReturned); $i++) { 
+            $Updates[$i] = new UpdateModel($UpdatesReturned[$i]);
         }
+    
+        return $Updates;
     }
 
     public function GetSingle($ID)
@@ -104,11 +101,8 @@ class UpdateModel extends ObjectRepo
         $Statement->bindParam(":IDnumber", $ID);
         $ReturnedUpdate = $this->DatabaseHandler->ExecuteStatement($Statement);
         
-        if ($ReturnedUpdate) {
-            return new UpdateModel($ReturnedUpdate);
-        }else{
-            return null;
-        }
+        if ($ReturnedUpdate == false) return null;
+        return new UpdateModel($ReturnedUpdate);
     }
 
     public function GetSingleGameUpdate($GameID, $UpdateID)

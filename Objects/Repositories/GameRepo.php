@@ -1,6 +1,6 @@
 <?php
-require_once "ObjectRepo.php";
-require_once $_SERVER['DOCUMENT_ROOT']."Objects/Models/GameModel";
+include_once "/ObjectRepo.php";
+include_once $_SERVER['DOCUMENT_ROOT']."/Objects/Models/GameModel.php";
 
 class GameRepo extends ObjectRepo
 {
@@ -36,7 +36,16 @@ class GameRepo extends ObjectRepo
             ";
 
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
-        return $this->DatabaseHandler->ExecuteStatement($Statement);
+        $GamesReturned = $this->DatabaseHandler->ExecuteStatement($Statement);
+
+        if ($GamesReturned == false) return null;
+
+        $Games = array();
+        for ($i=0; $i < count($GamesReturned); $i++) { 
+            $Games[$i] = new GameModel($GamesReturned[$i]);
+        }
+    
+        return $Games;
     }
 
     public function GetSingle($ID) {
@@ -62,7 +71,11 @@ class GameRepo extends ObjectRepo
 
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         $Statement->bindParam(":IDnumber", $ID);
-        return $this->DatabaseHandler->ExecuteStatement($Statement);
+        $GameReturned = $this->DatabaseHandler->ExecuteStatement($Statement);
+
+        if ($GameReturned == false) return null;
+
+        return new GameModel($GameReturned);
     }
 
     public function Create($CreateData) {

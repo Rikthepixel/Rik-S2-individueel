@@ -1,7 +1,7 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Models/ProjectModel.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Models/ImageModel.php";
 
-class ProjectRepository extends ObjectRepository
+class UpdateRepository extends ObjectRepository
 {
 
     function __construct()
@@ -19,21 +19,15 @@ class ProjectRepository extends ObjectRepository
         
     }
 
-    public function Create($ProjectModel)
+    public function Create($ImageModel)
     {
         
     }
 
-    public function Update($ProjectModel)
+    public function Update($ImageModel)
     {
         
     }
-
-    public function SetVisibility($Project, $Visible)
-    {
-
-    }
- 
 
     public function Delete($id)
     {

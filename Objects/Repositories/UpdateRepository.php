@@ -1,4 +1,5 @@
 <?php
+include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Models/UpdateModel.php";
 
 class UpdateRepository extends ObjectRepository
 {
@@ -8,27 +9,33 @@ class UpdateRepository extends ObjectRepository
         parent::__construct();
     }
 
-    function GetAll()
+    public function GetAll()
     {
         
     }
 
-    function GetSingle($id)
+    public function GetSingle($id)
     {
         
     }
 
-    function Create($data)
+    public function Create($UpdateModel)
     {
         
     }
 
-    function Update($data)
+    public function Update($UpdateModel)
     {
         
     }
 
-    function Delete($id)
+    public function SetVisibility($UpdateModel, $Visible)
+    {
+
+    }
+ 
+
+    public function Delete($id)
     {
         
     }

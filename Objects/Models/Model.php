@@ -1,6 +1,6 @@
 <?php
 
-interface IModel
+abstract class Model
 {
     public int $id;
 }

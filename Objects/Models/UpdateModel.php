@@ -1,7 +1,7 @@
 <?php 
-include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Models/IModel.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Models/Model.php";
 
-class UpdateModel implements IModel
+class UpdateModel extends Model
 {
     public int $project_id;
     public string $name;

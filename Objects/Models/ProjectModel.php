@@ -1,19 +1,23 @@
 <?php 
-include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Models/IModel.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Models/Model.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Models/ImageModel.php";
 
-class ProjectModel implements IModel
+class ProjectModel extends Model
 {
     public string $name;
     public string $description;
     public string $link;
     public bool $visible;
+    public ImageModel $image;
 
-    function __construct(int $id, string $name, string $description, string $link, bool $visible)
+    function __construct(int $id, string $name, string $description, string $link, bool $visible, ImageModel $image)
     {
         $this->id = $id;
         $this->name = $name;
         $this->description = $description;
         $this->link = $link;
         $this->visible = $visible;
+
+        $this->image = $image;
     }
 }

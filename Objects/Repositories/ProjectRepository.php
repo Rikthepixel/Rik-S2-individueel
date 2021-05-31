@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Models/ProjectModel.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Repositories/ObjectRepository.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Models/ProjectModel.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Repositories/ObjectRepository.php";
 
 class ProjectRepository extends ObjectRepository
 {
@@ -18,7 +18,7 @@ class ProjectRepository extends ObjectRepository
         $Data = $this->DatabaseHandler->ExecuteStatement($Statement);
 
         $Projects = array();
-        if ($Data) 
+        if ($Data != null && gettype($Data) == "array") 
         {
             for ($i=0; $i < count($Data); $i++) { 
                 $Project = new ProjectModel($Data[$i]->id, $Data[$i]->name, $Data[$i]->description, $Data[$i]->link, $Data[$i]->visible, 

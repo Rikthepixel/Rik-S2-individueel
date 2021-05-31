@@ -1,5 +1,5 @@
 <?php 
-include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Models/Model.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Models/Model.php";
 
 class UpdateModel extends Model
 {

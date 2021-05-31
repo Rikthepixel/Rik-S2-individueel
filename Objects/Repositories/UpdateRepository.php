@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Models/UpdateModel.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."Objects/Repositories/ObjectRepository.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Models/UpdateModel.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Repositories/ObjectRepository.php";
 
 class UpdateRepository extends ObjectRepository
 {

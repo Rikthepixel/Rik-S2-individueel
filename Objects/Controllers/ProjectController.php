@@ -25,13 +25,13 @@ class ProjectController extends ObjectController
     public function GetProjectApi(Request $request)
     {
         if (!isset($request->id)){
-            $ApiResponse = new ApiResponse(false, "no id provided", array());
+            $ApiResponse = new ApiResponse(false, "no id provided");
             $ApiResponse->EchoResponse();
         }
 
-        $Projects = $this->Repository->GetSingle($request->id);
+        $Project = $this->Repository->GetSingle($request->id);
 
-        $ApiResponse = new ApiResponse(true, "fetched projects successfully", $Projects);
+        $ApiResponse = new ApiResponse(true, "fetched project successfully", $Project);
         $ApiResponse->EchoResponse();
     }
 }

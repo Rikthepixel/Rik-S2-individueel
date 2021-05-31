@@ -7,5 +7,3 @@ $request = new Request();
 $request->GetRequestVariables();
 
 $projectController->GetProjectApi($request);
-
-echo $request;

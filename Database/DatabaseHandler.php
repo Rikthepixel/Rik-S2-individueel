@@ -90,7 +90,11 @@ class DatabaseHandler
             if (gettype($FetchedArray) != "array") {
                 return $ExecutedSuccesfully;
             }
-            
+
+            for ($i=0; $i < count($FetchedArray); $i++) { 
+                $FetchedArray[$i] = (object)$FetchedArray[$i];
+            }
+
             return $FetchedArray;
 
         } else {

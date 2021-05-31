@@ -87,7 +87,7 @@ class DatabaseHandler
         if ($ExecutedSuccesfully) {
             $FetchedArray = $Statement->fetchAll();
 
-            if (count($FetchedArray) == 0) {
+            if (gettype($FetchedArray) != "array") {
                 return $ExecutedSuccesfully;
             }
             

@@ -13,7 +13,7 @@ class ProjectRepository extends ObjectRepository
 
     public function GetAll()
     {
-        $Query = "SELECT projects.*, imgs.name FROM $this->table projects LEFT JOIN images imgs ON projects.id ORDER BY projects.id DESC";
+        $Query = "SELECT projects.*, imgs.name as image_name, imgs.created_at as image_created_at FROM $this->table projects LEFT JOIN images imgs ON projects.id ORDER BY projects.id DESC";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         $Data = $this->DatabaseHandler->ExecuteStatement($Statement);
 
@@ -21,8 +21,17 @@ class ProjectRepository extends ObjectRepository
         if ($Data != null && gettype($Data) == "array") 
         {
             for ($i=0; $i < count($Data); $i++) { 
+
+                if ($Data[$i]->image_name == null){
+                    $Data[$i]->image_name = "";
+                }
+
+                if ($Data[$i]->image_created_at == null){
+                    $Data[$i]->image_created_at = "";
+                }
+
                 $Project = new ProjectModel($Data[$i]->id, $Data[$i]->name, $Data[$i]->description, $Data[$i]->link, $Data[$i]->visible, 
-                    new ImageModel($Data[$i]->image_id, $Data[$i]->image_name, $Data[$i]->image_created_at));
+                    new ImageModel((int)$Data[$i]->image_id, $Data[$i]->image_name, $Data[$i]->image_created_at));
 
                 array_push($Projects, $Project);
             }
@@ -33,17 +42,26 @@ class ProjectRepository extends ObjectRepository
 
     public function GetSingle($id)
     {
-        $Query = "SELECT projects.*, imgs.name as image_name, imgs.created_at as image_created_at FROM $this->table projects LEFT JOIN images imgs ON projects.id WHERE project.id = ?id";
+        $Query = "SELECT projects.*, imgs.name as image_name, imgs.created_at as image_created_at FROM $this->table projects LEFT JOIN images imgs ON projects.id WHERE projects.id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         
-        $Data = $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?id" => $id
-        ]);
+        $Data = $this->DatabaseHandler->ExecuteStatement($Statement, array(
+            ":id" => $id
+        ));
 
         $Project = null;
         if ($Data) 
         {
             for ($i=0; $i < count($Data); $i++) { 
+
+                if ($Data[$i]->image_name == null){
+                    $Data[$i]->image_name = "";
+                }
+
+                if ($Data[$i]->image_created_at == null){
+                    $Data[$i]->image_created_at = "";
+                }
+
                 $Project = new ProjectModel($Data[$i]->id, $Data[$i]->name, $Data[$i]->description, $Data[$i]->link, $Data[$i]->visible, 
                     new ImageModel($Data[$i]->image_id, $Data[$i]->image_name, $Data[$i]->image_created_at));
             }
@@ -55,48 +73,48 @@ class ProjectRepository extends ObjectRepository
  
     public function Create(Model $ProjectModel)
     {
-        $Query = "INSERT INTO $this->table ('name', 'description', 'link', 'visible', 'image_id') VALUES ('?name', '?description', '?link', '?visible', '?image_id' )";
+        $Query = "INSERT INTO $this->table ('name', 'description', 'link', 'visible', 'image_id') VALUES (':name', ':description', ':link', ':visible', ':image_id' )";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?name" => $ProjectModel->name,
-            "?description" => $ProjectModel->descriptionm,
-            "?link" => $ProjectModel->link,
-            "?visible" => $ProjectModel->visible,
-            "?image_id" => $ProjectModel->image->id
+            ":name" => $ProjectModel->name,
+            ":description" => $ProjectModel->descriptionm,
+            ":link" => $ProjectModel->link,
+            ":visible" => $ProjectModel->visible,
+            ":image_id" => $ProjectModel->image->id
         ]);
     }
 
     public function Update(Model $ProjectModel)
     {
-        $Query = "UPDATE $this->table SET 'name' = '?name', 'description' = '?description', 'link' = '?link', 'image_id' = '?image_id', 'visible' = '?visible' WHERE id = ?id";
+        $Query = "UPDATE $this->table SET 'name' = ':name', 'description' = ':description', 'link' = ':link', 'image_id' = ':image_id', 'visible' = ':visible' WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?id" => $ProjectModel->id,
-            "?name" => $ProjectModel->name,
-            "?description" => $ProjectModel->descriptionm,
-            "?link" => $ProjectModel->link,
-            "?visible" => $ProjectModel->visible,
-            "?image_id" => $ProjectModel->image->id
+            ":id" => $ProjectModel->id,
+            ":name" => $ProjectModel->name,
+            ":description" => $ProjectModel->descriptionm,
+            ":link" => $ProjectModel->link,
+            ":visible" => $ProjectModel->visible,
+            ":image_id" => $ProjectModel->image->id
         ]);
     }
 
     public function SetVisibility(Model $ProjectModel, $Visible)
     {
-        $Query = "UPDATE $this->table SET visible = ?visible WHERE id = ?id";
+        $Query = "UPDATE $this->table SET visible = :visible WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?id" => $ProjectModel->id,
-            "?visible" => $Visible,
+            ":id" => $ProjectModel->id,
+            ":visible" => $Visible,
         ]);
     }
  
 
     public function Delete($id)
     {
-        $Query = "DELETE FROM $this->table WHERE id = ?id";
+        $Query = "DELETE FROM $this->table WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?id" => $id
+            ":id" => $id
         ]);
     }
 }

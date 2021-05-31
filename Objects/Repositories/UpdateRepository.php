@@ -31,11 +31,11 @@ class UpdateRepository extends ObjectRepository
 
     public function GetSingle($id)
     {
-        $Query = "SELECT updates.* FROM $this->table updates WHERE updates.id = ?id";
+        $Query = "SELECT updates.* FROM $this->table updates WHERE updates.id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         
         $Data = $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?id" => $id
+            ":id" => $id
         ]);
 
         $Update = null;
@@ -51,10 +51,10 @@ class UpdateRepository extends ObjectRepository
 
     public function GetAllByProject($project_id)
     {
-        $Query = "SELECT updates.* FROM $this->table updates WHERE updates.project_id = ?project_id ORDER BY updates.id DESC";
+        $Query = "SELECT updates.* FROM $this->table updates WHERE updates.project_id = :project_id ORDER BY updates.id DESC";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         $Data = $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?project_id" => $project_id
+            ":project_id" => $project_id
         ]);
 
         $Updates = array();
@@ -71,46 +71,46 @@ class UpdateRepository extends ObjectRepository
     
     public function Create(Model $UpdateModel)
     {
-        $Query = "INSERT INTO $this->table ('name', 'description', 'visible', 'project_id') VALUES ('?name', '?description', '?visible', '?project_id')";
+        $Query = "INSERT INTO $this->table ('name', 'description', 'visible', 'project_id') VALUES (':name', ':description', ':visible', ':project_id')";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             "project_id" => $UpdateModel->project_id,
-            "?name" => $UpdateModel->name,
-            "?description" => $UpdateModel->descriptionm,
-            "?visible" => $UpdateModel->visible,
+            ":name" => $UpdateModel->name,
+            ":description" => $UpdateModel->descriptionm,
+            ":visible" => $UpdateModel->visible,
         ]);
     }
 
     public function Update(Model $UpdateModel)
     {
-        $Query = "UPDATE $this->table SET 'name' = '?name', 'project_id' = '?project_id', 'description' = '?description', 'visible' = '?visible' WHERE id = ?id";
+        $Query = "UPDATE $this->table SET 'name' = ':name', 'project_id' = ':project_id', 'description' = ':description', 'visible' = ':visible' WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?id" => $UpdateModel->id,
-            "?project_id" => $UpdateModel->project_id,
-            "?name" => $UpdateModel->name,
-            "?description" => $UpdateModel->descriptionm,
-            "?visible" => $UpdateModel->visible,
+            ":id" => $UpdateModel->id,
+            ":project_id" => $UpdateModel->project_id,
+            ":name" => $UpdateModel->name,
+            ":description" => $UpdateModel->descriptionm,
+            ":visible" => $UpdateModel->visible,
         ]);
     }
 
     public function SetVisibility(Model $UpdateModel, $Visible)
     {
-        $Query = "UPDATE $this->table SET 'visible' = '?visible' WHERE id = ?id";
+        $Query = "UPDATE $this->table SET 'visible' = ':visible' WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?id" => $UpdateModel->id,
-            "?visible" => $Visible,
+            ":id" => $UpdateModel->id,
+            ":visible" => $Visible,
         ]);
     }
  
 
     public function Delete($id)
     {
-        $Query = "DELETE FROM $this->table WHERE id = ?id";
+        $Query = "DELETE FROM $this->table WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?id" => $id
+            ":id" => $id
         ]);
     }
 }

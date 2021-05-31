@@ -31,11 +31,11 @@ class ImageRepository extends ObjectRepository
 
     public function GetSingle($id)
     {
-        $Query = "SELECT images.* FROM $this->table images WHERE images.id = ?id";
+        $Query = "SELECT images.* FROM $this->table images WHERE images.id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         
         $Data = $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?id" => $id
+            ":id" => $id
         ]);
 
         $Image = null;
@@ -51,11 +51,11 @@ class ImageRepository extends ObjectRepository
 
     public function GetSingleByName($Name)
     {
-        $Query = "SELECT images.* FROM $this->table images WHERE images.name = ?name";
+        $Query = "SELECT images.* FROM $this->table images WHERE images.name = :name";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         
         $Data = $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?name" => $Name
+            ":name" => $Name
         ]);
 
         $Image = null;
@@ -71,29 +71,29 @@ class ImageRepository extends ObjectRepository
     
     public function Create(Model $ImageModel)
     {
-        $Query = "INSERT INTO $this->table ('name') VALUES ('?name')";
+        $Query = "INSERT INTO $this->table ('name') VALUES (':name')";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?name" => $ImageModel->name,
+            ":name" => $ImageModel->name,
         ]);
     }
 
     public function Update(Model $ImageModel)
     {
-        $Query = "UPDATE $this->table SET 'name' = '?name' WHERE id = ?id";
+        $Query = "UPDATE $this->table SET 'name' = ':name' WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?id" => $ImageModel->id,
-            "?name" => $ImageModel->name,
+            ":id" => $ImageModel->id,
+            ":name" => $ImageModel->name,
         ]);
     }
 
     public function Delete($id)
     {
-        $Query = "DELETE FROM $this->table WHERE id = ?id";
+        $Query = "DELETE FROM $this->table WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "?id" => $id
+            ":id" => $id
         ]);
     }
 }

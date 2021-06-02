@@ -6,6 +6,6 @@ class ImageController extends ObjectController
 {
     function __construct()
     {
-        $this->Repository = new ImageRepository();
+        parent::$Repository = new ImageRepository();
     }
 }

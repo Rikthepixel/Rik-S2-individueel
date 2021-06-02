@@ -6,6 +6,6 @@ class UpdateController extends ObjectController
 {
     function __construct()
     {
-        $this->Repository = new UpdateRepository();
+        parent::$Repository = new UpdateRepository();
     }
 }

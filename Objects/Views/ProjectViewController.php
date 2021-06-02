@@ -9,8 +9,6 @@ class ProjectViewController
         $request = new Request();
         $request->GetRequestVariables();
 
-        $projectController = new ProjectController();
-
         if (!isset($request->id)) {
             
             include $_SERVER["DOCUMENT_ROOT"]."/Objects/Views/ApiViews/Projects/Get.php";
@@ -18,7 +16,7 @@ class ProjectViewController
         }
         else {
 
-            $Project = $projectController->GetProject($request->id);
+            $Project = ProjectController::GetProject($request->id);
             include $_SERVER["DOCUMENT_ROOT"]."/Objects/Views/ApiViews/Projects/Get.php";
 
         }
@@ -26,9 +24,8 @@ class ProjectViewController
 
     public static function GetAllApi()
     {
-
-        $projectController = new ProjectController();
-        $Projects = $projectController->GetAllProjects();
+        
+        $Projects = ProjectController::GetAllProjects();
         include $_SERVER["DOCUMENT_ROOT"]."/Objects/Views/ApiViews/Projects/GetAll.php";
         
     }

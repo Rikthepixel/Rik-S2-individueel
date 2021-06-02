@@ -1,23 +1,13 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Controllers/ProjectController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Request.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Views/ApiResponse.php";
 
-$request = new Request();
-$request->GetRequestVariables();
-
-$projectController = new ProjectController();
-
-if (!isset($request->id)) {
-    
-    $ApiResponse = new ApiResponse(false, "no id provided", null);
+if (isset($Project)) {
+    $ApiResponse = new ApiResponse(true, "fetched project successfully", $Project);
     $ApiResponse->EchoResponse();
-    
 }
 else {
 
-    $Project = $projectController->GetProject($request->id);
-    $ApiResponse = new ApiResponse(true, "fetched project successfully", $Project);
+    $ApiResponse = new ApiResponse(false, "failed to fetch project", null);
     $ApiResponse->EchoResponse();
 
 }
-

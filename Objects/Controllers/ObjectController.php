@@ -3,6 +3,5 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Repositories/ObjectRepository.p
 
 class ObjectController 
 {
-    protected ObjectRepository $Repository;
-
+    protected $Repository;
 }

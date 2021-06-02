@@ -1,11 +1,7 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Controllers/ObjectController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Views/ApiViews/ApiResponse.php";
-
-include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Request.php";
-
 include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Repositories/ProjectRepository.php";
-
+include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Models/ProjectModel.php";
 
 class ProjectController extends ObjectController
 {
@@ -14,24 +10,18 @@ class ProjectController extends ObjectController
         $this->Repository = new ProjectRepository();
     }
 
-    public function GetAllProjectsApi()
+    public function GetAllProjects()
     {
-        $Projects = $this->Repository->GetAll();
-
-        $ApiResponse = new ApiResponse(true, "fetched projects successfully", $Projects);
-        $ApiResponse->EchoResponse();
+        return $this->Repository->GetAll();;
     }
 
-    public function GetProjectApi(Request $request)
+    public function GetProject(int $id)
     {
-        if (!isset($request->id)){
-            $ApiResponse = new ApiResponse(false, "no id provided");
-            $ApiResponse->EchoResponse();
-        }
+        return $this->Repository->GetSingle($id);
+    }
 
-        $Project = $this->Repository->GetSingle($request->id);
-
-        $ApiResponse = new ApiResponse(true, "fetched project successfully", $Project);
-        $ApiResponse->EchoResponse();
+    public function SetProjectVisiblilty(ProjectModel $project, bool $visible)
+    {
+        $this->Repository->SetVisibility($project->id, $visible);
     }
 }

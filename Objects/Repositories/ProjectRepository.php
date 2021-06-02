@@ -98,12 +98,12 @@ class ProjectRepository extends ObjectRepository
         ]);
     }
 
-    public function SetVisibility(Model $ProjectModel, $Visible)
+    public function SetVisibility(int $id, $Visible)
     {
         $Query = "UPDATE $this->table SET visible = :visible WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            ":id" => $ProjectModel->id,
+            ":id" => $id,
             ":visible" => $Visible,
         ]);
     }

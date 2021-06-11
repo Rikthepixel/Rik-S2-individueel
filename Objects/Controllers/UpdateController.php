@@ -8,4 +8,9 @@ class UpdateController extends ObjectController
     {
         parent::$Repository = new UpdateRepository();
     }
+
+    public static function GetUpdates(int $Project_id)
+    {
+        return parent::$Repository->GetAllByProject($Project_id);
+    }
 }

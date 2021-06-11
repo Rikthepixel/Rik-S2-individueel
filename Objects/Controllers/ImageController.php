@@ -6,12 +6,12 @@ class ImageController extends ObjectController
 {
     function __construct()
     {
-        parent::$Repository = new ImageRepository();
+        $this->Repository = new ImageRepository();
     }
 
     public function GetImageSource(ImageModel $Image)
     {
-        return parent::$Repository->GetSource($Image->id);
+        return $this->Repository->GetSource($Image->id);
     }
 
     public function GetImage(int $id)

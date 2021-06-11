@@ -6,11 +6,11 @@ class UpdateController extends ObjectController
 {
     function __construct()
     {
-        parent::$Repository = new UpdateRepository();
+        $this->Repository = new UpdateRepository();
     }
 
     public function GetUpdates(int $Project_id)
     {
-        return parent::$Repository->GetAllByProject($Project_id);
+        return $this->Repository->GetAllByProject($Project_id);
     }
 }

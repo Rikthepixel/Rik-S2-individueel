@@ -9,6 +9,7 @@ class ImageRepository extends ObjectRepository
     {
         parent::__construct();
         $this->table = "images";
+        $this->storagePath = $_SERVER["DOCUMENT_ROOT"]."/Storage/Images";
     }
 
     public function GetAll()
@@ -48,31 +49,14 @@ class ImageRepository extends ObjectRepository
 
         return $Image;
     }
-
-    public function GetSingleByName($Name)
-    {
-        $Query = "SELECT images.* FROM $this->table images WHERE images.name = :name";
-        $Statement = $this->DatabaseHandler->CreateStatement($Query);
-        
-        $Data = $this->DatabaseHandler->ExecuteStatement($Statement, [
-            ":name" => $Name
-        ]);
-
-        $Image = null;
-        if ($Data) 
-        {
-            for ($i=0; $i < count($Data); $i++) { 
-                $Image = new ImageModel($Data[$i]->id, $Data[$i]->name, $Data[$i]->created_at);
-            }
-        }
-
-        return $Image;
-    }
     
     public function Create(Model $ImageModel)
     {
         $Query = "INSERT INTO $this->table ('name') VALUES (':name')";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
+
+
+
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":name" => $ImageModel->name,
         ]);
@@ -95,5 +79,65 @@ class ImageRepository extends ObjectRepository
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":id" => $id
         ]);
+    }
+    
+    public function GetSingleByName($Name)
+    {
+        $Query = "SELECT images.* FROM $this->table images WHERE images.name = :name";
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        
+        $Data = $this->DatabaseHandler->ExecuteStatement($Statement, [
+            ":name" => $Name
+        ]);
+
+        $Image = null;
+        if ($Data) 
+        {
+            for ($i=0; $i < count($Data); $i++) { 
+                $Image = new ImageModel($Data[$i]->id, $Data[$i]->name, $Data[$i]->created_at);
+            }
+        }
+
+        return $Image;
+    }
+
+    public function GetMaxId()
+    {
+        $Query = "SELECT MAX(id) FROM `images`";
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        
+        $ImageId = $this->DatabaseHandler->ExecuteStatement($Statement);
+        if ($ImageId)
+        {
+            for ($i=0; $i < count($ImageId); $i++) { 
+                return $ImageId[$i];
+            }
+        }
+    }
+
+    public function StoreImage($File)
+    {
+        if (!$File)
+        {
+            return null;
+        }
+
+        $Name = basename($File["name"]);
+        $this->Create(new ImageModel(0, $Name, 0));
+        $id = $this->GetMaxId();
+
+        $newPath = $this->storagePath."/".$id;
+        move_uploaded_file($File["tmp_name"],  $newPath);
+
+        return $newPath;
+    }
+
+    public function GetSource(int $id)
+    {
+        $ImageSource = $this->storagePath."/".$id;
+        if (file_exists($ImageSource))
+        {
+            return $ImageSource;
+        }
     }
 }

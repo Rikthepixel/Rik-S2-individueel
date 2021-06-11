@@ -6,14 +6,21 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Request.php";
 
 class HomeViewController
 {
-    public static function GetFrontPage()
+    public function __construct()
+    {
+        $this->ProjectController = new ProjectController();
+        $this->ImageController = new ImageController();
+        $this->UpdateController = new UpdateController();
+    }
+    
+    public function GetFrontPage()
     {
         $Projects = array();
 
-        $VisibleProjects = ProjectController::GetAllProjects();
+        $VisibleProjects = $this->ProjectController->GetAllProjects();
         for ($i=0; $i < count($VisibleProjects); $i++) { 
             $Project = $VisibleProjects[$i];
-            $IconSource = ImageController::GetImageSource($Project->image);
+            $IconSource = $this->ImageController->GetImageSource($Project->image);
 
             array_push($Projects, [
                 "project_info" => $Project,
@@ -24,14 +31,14 @@ class HomeViewController
         include $_SERVER["DOCUMENT_ROOT"]."/Objects/Views/MainView/Frontpage.php";
     }
 
-    public static function GetProjectPage()
+    public function GetProjectPage()
     {
         $request = new Request();
         $request->GetRequestVariables();
 
-        $Projectinfo = ProjectController::GetProject($request->id);
-        $Updates = UpdateController::GetUpdates($Projectinfo->id);
-        $IconSource = ImageController::GetImageSource($Projectinfo->image);
+        $Projectinfo = $this->ProjectController->GetProject($request->id);
+        $Updates = $this->UpdateController->GetUpdates($Projectinfo->id);
+        $IconSource = $this->ImageController->GetImageSource($Projectinfo->image);
 
         $Project = array(
             "project_info" => $Projectinfo,

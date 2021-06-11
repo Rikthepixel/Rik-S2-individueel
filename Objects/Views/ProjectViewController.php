@@ -4,7 +4,12 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Request.php";
 
 class ProjectViewController
 {
-    public static function GetApi()
+    public function __construct()
+    {
+        $this->ProjectController = new ProjectController();    
+    }
+
+    public function GetApi()
     {
         $request = new Request();
         $request->GetRequestVariables();
@@ -16,16 +21,16 @@ class ProjectViewController
         }
         else {
 
-            $Project = ProjectController::GetProject($request->id);
+            $Project = $this->ProjectController->GetProject($request->id);
             include $_SERVER["DOCUMENT_ROOT"]."/Objects/Views/ApiViews/Projects/Get.php";
 
         }
     }
 
-    public static function GetAllApi()
+    public function GetAllApi()
     {
         
-        $Projects = ProjectController::GetAllProjects();
+        $Projects = $this->ProjectController->GetAllProjects();
         include $_SERVER["DOCUMENT_ROOT"]."/Objects/Views/ApiViews/Projects/GetAll.php";
         
     }

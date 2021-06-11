@@ -9,17 +9,17 @@ class ImageController extends ObjectController
         parent::$Repository = new ImageRepository();
     }
 
-    public static function GetImageSource(ImageModel $Image)
+    public function GetImageSource(ImageModel $Image)
     {
         return parent::$Repository->GetSource($Image->id);
     }
 
-    public static function GetImage(int $id)
+    public function GetImage(int $id)
     {
 
     }
 
-    public static function GetAllImages()
+    public function GetAllImages()
     {
         
     }

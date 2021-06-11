@@ -10,17 +10,17 @@ class ProjectController extends ObjectController
         parent::$Repository = new ProjectRepository();
     }
 
-    public static function GetAllProjects()
+    public function GetAllProjects()
     {
         return parent::$Repository->GetAll();;
     }
 
-    public static function GetProject(int $id)
+    public function GetProject(int $id)
     {
         return parent::$Repository->GetSingle($id);
     }
 
-    public static function SetProjectVisiblilty(ProjectModel $project, bool $visible)
+    public function SetProjectVisiblilty(ProjectModel $project, bool $visible)
     {
         parent::$Repository->SetVisibility($project->id, $visible);
     }

@@ -9,7 +9,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/Objects/Views/inc/header.html";
             
             echo '<div class="project">';
             echo "<img src=".$Project["project_icon"]." class='project_image' alt='project'>";
-            echo "<a class='project_name' href='/Project.php?id=$Project->id'>";
+            echo "<a class='project_name' href='/Project.php?id='".$Project['project_info']->id.">";
             echo $Project["project_info"]->name;
             echo "</a>";
             echo "</div>";

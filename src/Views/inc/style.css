@@ -18,7 +18,7 @@ html, body {
     padding: 0;
     padding-left: 1%;
     height: 5%;
-    width: 100%;
+    width: auto;
     vertical-align: middle;
     
     display: flex;
@@ -71,10 +71,18 @@ html, body {
     text-decoration: underline;
 }
 
-.project_image {
+.project_image_large {
     aspect-ratio: 1/1;
-    height: 80%;
+    height: auto;
     width: 80%;
+
+    border-radius: 20%;
+}
+
+.project_image_medium {
+    aspect-ratio: 1/1;
+    height: auto;
+    width: 50%;
 
     border-radius: 20%;
 }
@@ -90,5 +98,131 @@ html, body {
     
     color: black;
     
+    width: 100%;
+}
+
+.project_name_large {
+
+    text-decoration: none;
+    
+    display: block;
+    font-family: var(--fontFamily);
+    font-size: 200%;
+    font-weight: bold;
+    
+    color: black;
+    
+    width: 100%;
+}
+
+.project_info {
+    margin: 0;
+    margin-top: 10%;
+    margin-bottom: 10%;
+
+    text-align: center;
+    display: flex;
+
+    align-items: center;
+}
+
+.project_info_name_and_image {
+    width: 40%;
+}
+
+.project_description {
+    display: inline-block;
+
+    width: 50%;
+    height: 100%;
+
+    text-align: left;
+    word-wrap: break-word;
+}
+
+.project_updates_wrapper{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.project_updates_container{
+    display: block;
+    text-align: center;
+
+    width: 90%;
+    height: auto;
+}
+
+.update_name {
+    width: 25%;
+}
+
+.update_version {
+    width: 10%;
+}
+
+.update_description {
+    display: inline-block;
+
+    text-align: left;
+    word-wrap: break-word;
+}
+
+.update_info_wrapper {
+    text-align: center;
+    display: flex;
+}
+
+.update_info {
+    width: 100%;
+    height: auto;
+
+    display: block;
+
+    margin-bottom: 3%;
+    margin-top: 3%;
+}
+
+.update_info_item {
+    margin-left: 1%;
+    margin-right: 1%;
+
+    width: 30%;
+
+    justify-content: center;
+}
+
+.update_info_item_label{
+    margin-left: 5%;
+    margin-right: 5%;
+}
+
+.update_info_item_value {
+    width: auto;
+}
+
+.update_info_header {
+    width: 100%;
+    height: 5%;
+    justify-content: center;
+}
+
+.thead{
+    background: var(--mainColor);
+    color: white;
+}
+.table{
+    border-bottom: 1px solid #d4d4d4;
+    background: #ffffff;
+    color: black;
+
+    width: 90%;
+}
+.trow{
+    border: 1px solid #d4d4d4;
+    background: #ffffff;
+
+    height: auto;
     width: 100%;
 }

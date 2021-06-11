@@ -31,7 +31,7 @@ html, body {
     margin-left: 0.5%;
     margin-right: 0.5%;
 
-    font-size: 150%;
+    font-size: 100%;
     font-family: var(--fontFamily);
     font-weight: bold;
 
@@ -48,6 +48,9 @@ html, body {
     flex-wrap: wrap;
 
     text-align: center;
+
+    margin-top: 5%;
+    padding: 1%;
 
     height: 100%;
     width: 100%;

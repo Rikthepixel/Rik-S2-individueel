@@ -3,6 +3,10 @@
     --mainColorHover: #1755a7;
     --mainColorSelected: rgb(32, 79, 141);
 
+    --secondaryColor: rgb(99, 99, 99);
+    
+    --tertiaryColor: rgb(150, 112, 160);
+
     --headerTextColor: #eeeeee;
     --headerTextColorHover: #ffffff;
     --fontFamily: Arial, Helvetica, sans-serif;
@@ -96,6 +100,9 @@ html, body {
 
 .project_link {
     display: block;
+    font-family: var(--fontFamily);
+
+    font-weight: bold;
 
     margin-top: 2%;
 }
@@ -150,6 +157,13 @@ html, body {
 
     width: 50%;
     height: auto;
+
+    padding: 1%;
+    border-radius: 1em;
+
+    font-family: var(--fontFamily);
+    background-color: var(--secondaryColor);
+    color: var(--headerTextColor);
 
     text-align: left;
     white-space: pre-line;

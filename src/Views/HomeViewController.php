@@ -44,6 +44,8 @@ class HomeViewController
             return null;
         }
 
+        $Projectinfo->description = ltrim(rtrim($Projectinfo->description));
+
         $Project = array(
             "project_info" => $Projectinfo,
             "project_updates" => $Updates,

@@ -198,7 +198,7 @@ html, body {
     display: block;
 
     text-align: left !important;
-    word-wrap: break-word;
+    white-space: pre-line;
     font-family: var(--fontFamily);
 
     margin-left: 2.5%;

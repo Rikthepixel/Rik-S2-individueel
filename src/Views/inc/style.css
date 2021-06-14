@@ -153,9 +153,8 @@ html, body {
 
 .project_updates_container{
     display: block;
-    text-align: center;
 
-    width: 90%;
+    width: 85%;
     height: auto;
 }
 
@@ -170,12 +169,38 @@ html, body {
 .update_description {
     display: inline-block;
 
-    text-align: left;
+    text-align: left !important;
     word-wrap: break-word;
+}
+
+.update_description_label {
+    display: block;
+
+    text-align: left !important;
+    word-wrap: break-word;
+
+    margin-left: 2%;
+
+    font-size: x-large;
+}
+
+.update_description_value {
+    display: block;
+
+    text-align: left !important;
+    word-wrap: break-word;
+
+    margin-left: 3%;
 }
 
 .update_info_wrapper {
     text-align: center;
+    display: flex;
+}
+
+.update_info_wrapper_left {
+    text-align: left;
+    justify-content: left;
     display: flex;
 }
 
@@ -197,16 +222,20 @@ html, body {
 
     width: 15%;
 
-    justify-content: center;
+    justify-content: left;
 }
 
 .update_info_item_label{
     margin-left: 3%;
     margin-right: 3%;
+
+    font-size: 150%;
 }
 
 .update_info_item_value {
     width: auto;
+
+    font-size: 150%;
 }
 
 .update_info_header {
@@ -228,6 +257,6 @@ html, body {
     font-size: xx-large;
     justify-content: left;
 
-    margin-left: 5%;
+    margin-left: 7.5%;
     margin-bottom: 1%;
 }

@@ -27,16 +27,20 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
                     
                     echo '<div class="update_info">';
                     echo '<div class="update_info_wrapper update_info_header" onclick="ExpandUpdate(event)">';
-                    echo '<div class="update_info_wrapper update_info_item">';
+                    echo '<div class="update_info_wrapper_left update_info_item">';
                     echo '<label class="update_info_item_label">Name:</label>';
                     echo '<div class="update_info_item_value">'.$Update->name.'</div>';
                     echo "</div>";
-                    echo '<div class="update_info_wrapper update_info_item">';
+                    echo '<div class="update_info_wrapper_left update_info_item">';
                     echo '<label class="update_info_item_label">Version:</label>';
                     echo '<div class="update_info_item_value">'.$Update->version.'</div>';
                     echo "</div>";
                     echo "</div>";
-                    echo "<div class='update_description'>".$Update->description."</div>";
+
+                    echo "<div class='update_description'>";
+                    echo "<div class='update_description_label'>Description: </div>";
+                    echo "<div class='update_description_value'>".$Update->description."</div>";
+                    echo "</div>";
                     echo "</div>";
                 }
             ?>

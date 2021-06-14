@@ -1,17 +1,9 @@
-<?xml version="1.0" encoding="UTF-9" />
+<?xml version="1.0" encoding="UTF-8" ?>
 
-<phpunit bootstrap="vendor/autoloader.php"
-    colors="true"
-    verbose="true"
-    stopOnFailure="true"
->
-
-    <testsuits>
-        <testsuit name="unit">
-
-            <directory>tests</directory>
-
-        </testsuit>
-    </testsuits>
-
+<phpunit bootstrap="vendor/autoload.php">
+  <testsuites>
+    <testsuite name="unit">
+      <directory>./tests/unit</directory>
+    </testsuite>
+  </testsuites>
 </phpunit>

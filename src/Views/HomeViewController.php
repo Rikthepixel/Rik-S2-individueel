@@ -40,6 +40,10 @@ class HomeViewController
         $Updates = $this->UpdateController->GetUpdates($Projectinfo->id);
         $IconSource = $this->ImageController->GetImageSource($Projectinfo->image);
 
+        if (!$Projectinfo->visible) {
+            return null;
+        }
+
         $Project = array(
             "project_info" => $Projectinfo,
             "project_updates" => $Updates,

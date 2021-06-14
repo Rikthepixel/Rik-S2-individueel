@@ -21,7 +21,7 @@ class UpdateRepository extends ObjectRepository
         if ($Data) 
         {
             for ($i=0; $i < count($Data); $i++) { 
-                $Update = new UpdateModel($Data[$i]->id, $Data[$i]->project_id, $Data[$i]->name, $Data[$i]->description, $Data[$i]->visible);
+                $Update = new UpdateModel($Data[$i]->id, $Data[$i]->project_id, $Data[$i]->name, $Data[$i]->description, $Data[$i]->visible, $Data[$i]->version);
                 array_push($Updates, $Update);
             }
         }
@@ -42,7 +42,7 @@ class UpdateRepository extends ObjectRepository
         if ($Data) 
         {
             for ($i=0; $i < count($Data); $i++) { 
-                $Update = new UpdateModel($Data[$i]->id, $Data[$i]->project_id, $Data[$i]->name, $Data[$i]->description, $Data[$i]->visible);
+                $Update = new UpdateModel($Data[$i]->id, $Data[$i]->project_id, $Data[$i]->name, $Data[$i]->description, $Data[$i]->visible, $Data[$i]->version);
             }
         }
 
@@ -61,7 +61,7 @@ class UpdateRepository extends ObjectRepository
         if ($Data) 
         {
             for ($i=0; $i < count($Data); $i++) { 
-                $Update = new UpdateModel($Data[$i]->id, $Data[$i]->project_id, $Data[$i]->name, $Data[$i]->description, $Data[$i]->visible);
+                $Update = new UpdateModel($Data[$i]->id, $Data[$i]->project_id, $Data[$i]->name, $Data[$i]->description, $Data[$i]->visible, $Data[$i]->version);
                 array_push($Updates, $Update);
             }
         }
@@ -71,19 +71,20 @@ class UpdateRepository extends ObjectRepository
     
     public function Create(Model $UpdateModel)
     {
-        $Query = "INSERT INTO $this->table ('name', 'description', 'visible', 'project_id') VALUES (':name', ':description', ':visible', ':project_id')";
+        $Query = "INSERT INTO $this->table ('name', 'description', 'visible', 'project_id', 'version') VALUES (':name', ':description', ':visible', ':project_id', ':version')";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             "project_id" => $UpdateModel->project_id,
             ":name" => $UpdateModel->name,
             ":description" => $UpdateModel->descriptionm,
             ":visible" => $UpdateModel->visible,
+            ":version" => $UpdateModel->version
         ]);
     }
 
     public function Update(Model $UpdateModel)
     {
-        $Query = "UPDATE $this->table SET 'name' = ':name', 'project_id' = ':project_id', 'description' = ':description', 'visible' = ':visible' WHERE id = :id";
+        $Query = "UPDATE $this->table SET 'name' = ':name', 'project_id' = ':project_id', 'description' = ':description', 'visible' = ':visible', 'version' = ':version' WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":id" => $UpdateModel->id,
@@ -91,6 +92,7 @@ class UpdateRepository extends ObjectRepository
             ":name" => $UpdateModel->name,
             ":description" => $UpdateModel->descriptionm,
             ":visible" => $UpdateModel->visible,
+            ":version" => $UpdateModel->version
         ]);
     }
 

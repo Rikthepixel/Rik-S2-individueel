@@ -57,17 +57,19 @@ html, body {
     margin-top: 5%;
     padding: 1%;
 
-    height: 100%;
+    height: auto;
     width: 100%;
 }
 
 .project {
     display: inline-block;
     
-    aspect-ratio: 1/1;
     width: 30%;
+    height: auto;
     transition: all .2s ease-in-out;
 
+    margin-bottom: 2%;
+    
     text-decoration: none;
 }
 
@@ -92,14 +94,20 @@ html, body {
     border-radius: 20%;
 }
 
+.project_link {
+    display: block;
+
+    margin-top: 2%;
+}
+
 .project_name {
 
     text-decoration: none;
     
     display: block;
     font-family: var(--fontFamily);
-    font-size: 120%;
-    font-weight: bold;
+    font-size: 150%;
+    font-weight: bolder;
     
     color: black;
     
@@ -112,18 +120,18 @@ html, body {
     
     display: block;
     font-family: var(--fontFamily);
-    font-size: 200%;
     font-weight: bold;
     
     color: black;
     
-    width: 100%;
+    width: auto;
+    margin-top: 0;
 }
 
 .project_info {
     margin: 0;
-    margin-top: 10%;
-    margin-bottom: 10%;
+    margin-top: 5%;
+    margin-bottom: 3%;
 
     text-align: center;
     display: flex;
@@ -133,16 +141,18 @@ html, body {
 
 .project_info_name_and_image {
     width: 40%;
+
+    margin: 0;
 }
 
 .project_description {
     display: inline-block;
 
     width: 50%;
-    height: 100%;
+    height: auto;
 
     text-align: left;
-    word-wrap: break-word;
+    white-space: pre-line;
 }
 
 .project_updates_wrapper{
@@ -169,19 +179,19 @@ html, body {
 .update_description {
     display: inline-block;
 
-    text-align: left !important;
-    word-wrap: break-word;
+    padding: 1.5%;
 }
 
 .update_description_label {
     display: block;
 
     text-align: left !important;
-    word-wrap: break-word;
 
-    margin-left: 2%;
-
+    font-family: var(--fontFamily);
     font-size: x-large;
+
+    margin: auto;
+    margin-left: 1.5%;
 }
 
 .update_description_value {
@@ -189,8 +199,9 @@ html, body {
 
     text-align: left !important;
     word-wrap: break-word;
+    font-family: var(--fontFamily);
 
-    margin-left: 3%;
+    margin-left: 2.5%;
 }
 
 .update_info_wrapper {
@@ -220,7 +231,7 @@ html, body {
     margin-left: 1%;
     margin-right: 1%;
 
-    width: 15%;
+    width: 30%;
 
     justify-content: left;
 }
@@ -228,23 +239,36 @@ html, body {
 .update_info_item_label{
     margin-left: 3%;
     margin-right: 3%;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    vertical-align: baseline;
 
     font-size: 150%;
+    font-family: var(--fontFamily);
 }
 
 .update_info_item_value {
     width: auto;
+    margin-top: auto;
+    margin-bottom: auto;
+
+    vertical-align: baseline;
+    text-align: center;
 
     font-size: 150%;
+    font-family: var(--fontFamily);
 }
 
 .update_info_header {
     background-color: var(--mainColor);
     color: #ffffff;
 
-    width: 100%;
+    width: auto;
     height: 5%;
     justify-content: left;
+
+    padding: 1%;
 
     border-radius: 5px;
 }
@@ -255,6 +279,9 @@ html, body {
 
 .project_updates_header {
     font-size: xx-large;
+    font-family: var(--fontFamily);
+    font-weight: bold;
+
     justify-content: left;
 
     margin-left: 7.5%;

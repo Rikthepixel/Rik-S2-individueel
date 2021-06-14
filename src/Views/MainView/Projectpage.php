@@ -5,19 +5,20 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 
     <div class="project_info">
         <div class="project_info_name_and_image">
-            <img src=<?= $Project["project_icon"]; ?> alt="project_image" class="project_image_medium">
-            <div class="project_name_large">
+        <h1 class="project_name_large">
                 <?= $Project["project_info"]->name; ?>
-            </div>
+            </h1>
+            <img src=<?= $Project["project_icon"]; ?> alt="project_image" class="project_image_medium">
         </div>
         <div class="project_description">
             <?= $Project["project_info"]->description; ?>
+            <a class="project_link" href= <?= $Project["project_info"]->link; ?>> <?= $Project["project_info"]->link; ?> </a>
         </div>
     </div>
 
-    <div class="project_updates_wrapper project_updates_header">
+    <h1 class="project_updates_wrapper project_updates_header">
         Updates: 
-    </div>
+    </h1>
 
     <div class="project_updates_wrapper">
         <div class="project_updates_container">
@@ -93,7 +94,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
                 else {
                     updateInfoDescription.hidden = false
                     updateInfoDescription.style.visibility = "visible"
-                    updateInfoDescription.style.display = "initial"
+                    updateInfoDescription.style.display = ""
 
                     updateInfoHeader.style.backgroundColor = null;
                 }

@@ -3,10 +3,10 @@ use PHPUnit\Framework\TestCase;
 
 class UnittestFile extends TestCase
 {
-    public function testEmpty(): bool
+    public function testPop(): void
     {
         $this->assertTrue(true);
-
-        return true;
     }
+
+    
 }

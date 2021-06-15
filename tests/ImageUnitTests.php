@@ -1,6 +1,6 @@
 <?php
 use PHPUnit\Framework\TestCase;
-$_SERVER["DOCUMENT_ROOT"] = realpath("."); // "C:\Users\Rik\Documents\Github\Rik-S2-individueel";
+$_SERVER["DOCUMENT_ROOT"] = realpath(".");
 include_once $_SERVER["DOCUMENT_ROOT"]."\src\Controllers\ImageController.php";
 
 class ImageUnitTests extends TestCase
@@ -15,5 +15,15 @@ class ImageUnitTests extends TestCase
         $this->assertFileExists(".".$Source);
     }
 
+    public function testGetImage()
+    {
+        $id = 0;
+        $imageController = new ImageController();
+
+        $image = $imageController->GetImage($id);
+
+        $this->assertIsObject($image);
+        $this->assertNotNull($image);
+    }
     
 }

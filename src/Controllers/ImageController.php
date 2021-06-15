@@ -16,6 +16,6 @@ class ImageController extends ObjectController
 
     public function GetImage(int $id)
     {
-        return $this->Repository->Get($id);
+        return $this->Repository->GetSingle($id);
     }
 }

@@ -9,8 +9,32 @@ class UpdateController extends ObjectController
         $this->Repository = new UpdateRepository();
     }
 
-    public function GetUpdates(int $Project_id)
+    public function getUpdates(int $Project_id)
     {
         return $this->Repository->GetAllByProject($Project_id);
+    }
+
+    public function getVisibleUpdates(int $Project_id)
+    {
+        $updates = $this->Repository->GetAllByProject($Project_id);
+
+        $visibleUpdates = array();
+        foreach ($updates as $key => $value) {
+            if ($value->visible) {
+                array_push($visibleUpdates, $value);
+            }
+        }
+
+        return $visibleUpdates;
+    }
+
+    public function createUpdate(UpdateModel $update)
+    {
+        $this->Repository->Create($update);
+    }
+
+    public function SetProjectVisiblilty(UpdateModel $update, bool $visible)
+    {
+        $this->Repository->SetVisibility($update->id, $visible);
     }
 }

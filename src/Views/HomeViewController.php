@@ -37,7 +37,7 @@ class HomeViewController
         $request->GetRequestVariables();
 
         $Projectinfo = $this->ProjectController->GetProject($request->id);
-        $Updates = $this->UpdateController->GetUpdates($Projectinfo->id);
+        $Updates = $this->UpdateController->getVisibleUpdates($Projectinfo->id);
         $IconSource = $this->ImageController->GetImageSource($Projectinfo->image);
 
         if (!$Projectinfo->visible) {

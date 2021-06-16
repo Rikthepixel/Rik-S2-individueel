@@ -206,6 +206,7 @@ html, body {
 
     margin: auto;
     margin-left: 1.5%;
+    width: 100%;
 }
 
 .update_description_value {
@@ -216,6 +217,7 @@ html, body {
     font-family: var(--fontFamily);
 
     margin-left: 2.5%;
+    width: 100%;
 }
 
 .update_info_wrapper {

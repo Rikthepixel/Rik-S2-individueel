@@ -71,7 +71,7 @@ class UpdateRepository extends ObjectRepository
     
     public function Create(Model $UpdateModel)
     {
-        $Query = "INSERT INTO $this->table ('name', 'description', 'visible', 'project_id', 'version') VALUES (':name', ':description', ':visible', ':project_id', ':version')";
+        $Query = "INSERT INTO $this->table (name, description, visible, project_id, version) VALUES (:name, :description, :visible, :project_id, :version)";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             "project_id" => $UpdateModel->project_id,
@@ -84,7 +84,7 @@ class UpdateRepository extends ObjectRepository
 
     public function Update(Model $UpdateModel)
     {
-        $Query = "UPDATE $this->table SET 'name' = ':name', 'project_id' = ':project_id', 'description' = ':description', 'visible' = ':visible', 'version' = ':version' WHERE id = :id";
+        $Query = "UPDATE $this->table SET name = :name, project_id = :project_id, description = :description, visible = :visible, version = :version WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":id" => $UpdateModel->id,
@@ -98,7 +98,7 @@ class UpdateRepository extends ObjectRepository
 
     public function SetVisibility(Model $UpdateModel, $Visible)
     {
-        $Query = "UPDATE $this->table SET 'visible' = ':visible' WHERE id = :id";
+        $Query = "UPDATE $this->table SET visible = :visible WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":id" => $UpdateModel->id,

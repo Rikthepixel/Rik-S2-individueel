@@ -57,11 +57,11 @@ class ProjectRepository extends ObjectRepository
  
     public function Create(Model $ProjectModel)
     {
-        $Query = "INSERT INTO $this->table ('name', 'description', 'link', 'visible', 'image_id') VALUES (':name', ':description', ':link', ':visible', ':image_id' )";
+        $Query = "INSERT INTO $this->table (name, description, link, visible, image_id) VALUES (:name, :description, :link, :visible, :image_id )";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":name" => $ProjectModel->name,
-            ":description" => $ProjectModel->descriptionm,
+            ":description" => $ProjectModel->description,
             ":link" => $ProjectModel->link,
             ":visible" => $ProjectModel->visible,
             ":image_id" => $ProjectModel->image->id
@@ -70,7 +70,7 @@ class ProjectRepository extends ObjectRepository
 
     public function Update(Model $ProjectModel)
     {
-        $Query = "UPDATE $this->table SET 'name' = ':name', 'description' = ':description', 'link' = ':link', 'image_id' = ':image_id', 'visible' = ':visible' WHERE id = :id";
+        $Query = "UPDATE $this->table SET name = :name, description' = :description, link = :link, image_id = :image_id, visible = :visible WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":id" => $ProjectModel->id,

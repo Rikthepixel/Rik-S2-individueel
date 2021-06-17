@@ -85,7 +85,13 @@ class DatabaseHandler
             $ExecutedSuccesfully = $Statement->execute();
         }
         if ($ExecutedSuccesfully) {
-            $FetchedArray = $Statement->fetchAll();
+            try {
+                $FetchedArray = $Statement->fetchAll();
+            } catch (\Throwable $th) {
+                //no data given
+                return $ExecutedSuccesfully;
+            } 
+
 
             if (gettype($FetchedArray) != "array") {
                 return $ExecutedSuccesfully;

@@ -53,10 +53,10 @@ class ImageRepository extends ObjectRepository
     
     public function Create(Model $ImageModel)
     {
-        $Query = "INSERT INTO $this->table ('name') VALUES (':name')";
+        $Query = "INSERT INTO $this->table (name) VALUES (:name)";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
 
-
+        echo $Query;
 
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":name" => $ImageModel->name,
@@ -111,7 +111,8 @@ class ImageRepository extends ObjectRepository
         if ($ImageId)
         {
             for ($i=0; $i < count($ImageId); $i++) { 
-                return $ImageId[$i];
+                $index = "MAX(id)";
+                return $ImageId[$i]->$index;
             }
         }
     }
@@ -127,6 +128,7 @@ class ImageRepository extends ObjectRepository
         $this->Create(new ImageModel(0, $Name, 0));
         $id = $this->GetMaxId();
 
+        var_dump($id);
         $newPath = $this->storagePath."/".$id;
         move_uploaded_file($File["tmp_name"],  $newPath);
 

@@ -5,7 +5,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."\src\Controllers\ImageController.php";
 
 class ImageUnitTests extends TestCase
 {
-    public function testImageLoads(): void
+    public function testGetImageSource(): void
     {
         $id = 0;
         $imageModel = new ImageModel($id, "", "");

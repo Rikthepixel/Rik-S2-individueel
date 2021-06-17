@@ -362,9 +362,32 @@ html, body {
 
     border: 0;
     border-radius: 0.5em;
+    text-decoration: none;
 }
 
 .submit_button:hover {
     background-color: var(--mainColorHover);
     color: var(--headerTextColorHover);
+
+    text-decoration: underline;
+}
+
+.admin_add_button_wrapper {
+    margin-top: 5%;
+    margin-left: 5%;
+    width: 30%;
+    height: 10%;
+}
+
+.admin_add_button {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    height: 100%;
+}
+
+.vertical_Center {
+    margin-top: auto !important;
+    margin-bottom: auto !important;
 }

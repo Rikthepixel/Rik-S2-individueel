@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/src/Views/inc/style.css">
+    <title>Create project</title>
+</head>
+<body>
+
+    <div class="header">
+        <a class="header_item" href="/Projects.php">
+            Projects
+        </a>
+    </div>
+
+    <form class="edit_form" action="/Api/Projects/Create.php" method="post">
+        <h1>
+            Edit Project
+        </h1>
+        <div class="edit_item_wrapper">
+            <label class="edit_item_label" for="Name">Name:</label>
+            <input class="edit_item edit_item_value" type="text" name="Name">
+        </div>
+
+        <div class="edit_item_wrapper">
+            <label class="edit_item_label" for="Description">Description:</label>
+            <textarea class="edit_item edit_item_value edit_item_textarea" name="Description"></textarea>
+        </div>
+
+        <div class="edit_item_wrapper">
+            <label class="edit_item_label" for="Link">Link:</label>
+            <input class="edit_item edit_item_value" type="text" name="Link">
+        </div>
+
+        <div class="edit_item_wrapper">
+            <label class="edit_item_label" for="Image">Image:</label>
+            <input class="edit_item edit_item_value" type="file" name="Image">
+        </div>
+
+        <div class="edit_item_wrapper">
+            <label class="edit_item_label" for="Visible">Visible:</label>
+            <input type="checkbox" name="Visible">
+        </div>
+
+        <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper">
+            <input class="edit_item_value submit_button edit_form_sumbit_button" type="submit" value="Submit">
+        </div>
+
+    </form>
+</body>
+</html>

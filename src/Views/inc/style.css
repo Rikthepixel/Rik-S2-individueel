@@ -12,6 +12,8 @@
     --fontFamily: Arial, Helvetica, sans-serif;
 
     --hoverProjectIncrease: 1.1;
+
+    font-family: var(--fontFamily);
 }
 
 html, body {
@@ -41,7 +43,6 @@ html, body {
     margin-right: 0.5%;
 
     font-size: 100%;
-    font-family: var(--fontFamily);
     font-weight: bold;
 
     color: var(--headerTextColor);
@@ -100,7 +101,6 @@ html, body {
 
 .project_link {
     display: block;
-    font-family: var(--fontFamily);
 
     font-weight: bold;
 
@@ -112,7 +112,6 @@ html, body {
     text-decoration: none;
     
     display: block;
-    font-family: var(--fontFamily);
     font-size: 150%;
     font-weight: bolder;
     
@@ -126,7 +125,6 @@ html, body {
     text-decoration: none;
     
     display: block;
-    font-family: var(--fontFamily);
     font-weight: bold;
     
     color: black;
@@ -161,7 +159,6 @@ html, body {
     padding: 1%;
     border-radius: 1em;
 
-    font-family: var(--fontFamily);
     background-color: var(--secondaryColor);
     color: var(--headerTextColor);
 
@@ -201,7 +198,6 @@ html, body {
 
     text-align: left !important;
 
-    font-family: var(--fontFamily);
     font-size: x-large;
 
     margin: auto;
@@ -214,7 +210,6 @@ html, body {
 
     text-align: left !important;
     white-space: pre-line;
-    font-family: var(--fontFamily);
 
     margin-left: 2.5%;
     width: 100%;
@@ -261,7 +256,6 @@ html, body {
     vertical-align: baseline;
 
     font-size: 150%;
-    font-family: var(--fontFamily);
 }
 
 .update_info_item_value {
@@ -273,7 +267,6 @@ html, body {
     text-align: center;
 
     font-size: 150%;
-    font-family: var(--fontFamily);
 }
 
 .update_info_header {
@@ -295,11 +288,83 @@ html, body {
 
 .project_updates_header {
     font-size: xx-large;
-    font-family: var(--fontFamily);
     font-weight: bold;
 
     justify-content: left;
 
     margin-left: 7.5%;
     margin-bottom: 1%;
+}
+
+.edit_form {
+    width: 95%;
+
+    margin: 0;
+    margin-top: 5%;
+    margin-left: auto !important;
+    margin-right: auto !important;
+}
+
+.edit_item_wrapper {
+
+    width: 90%;
+
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+
+    margin-bottom: 2%;
+}
+
+.edit_item {
+    margin-top: 1% !important;
+}
+.edit_item_value {
+    display: block;
+
+    --Edit_Item_Width: 95%;
+    width: var(--Edit_Item_Width);
+
+    margin: 0;
+    margin-left: auto;
+    margin-right: auto;
+    padding: auto;
+}
+
+.edit_item_label {
+    font-weight: bold;
+}
+
+.edit_item_textarea {
+    max-width: var(--Edit_Item_Width);
+    min-width: var(--Edit_Item_Width);
+
+    min-height: 4em;
+}
+
+.edit_form_submit_wrapper {
+    height: 5%;
+
+    margin-top: 2%;
+}
+
+.edit_form_sumbit_button {
+    height: 90%;
+    width: 85%;
+
+    margin-top: auto !important;
+    margin-bottom: auto !important;
+}
+
+.submit_button {
+    background-color: var(--mainColor);
+    color: var(--headerTextColor);
+
+    border: 0;
+    border-radius: 0.5em;
+}
+
+.submit_button:hover {
+    background-color: var(--mainColorHover);
+    color: var(--headerTextColorHover);
 }

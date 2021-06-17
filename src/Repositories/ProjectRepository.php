@@ -70,7 +70,7 @@ class ProjectRepository extends ObjectRepository
 
     public function Update(Model $ProjectModel)
     {
-        $Query = "UPDATE $this->table SET name = :name, description' = :description, link = :link, image_id = :image_id, visible = :visible WHERE id = :id";
+        $Query = "UPDATE $this->table SET name = :name, description = :description, link = :link, image_id = :image_id, visible = :visible WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":id" => $ProjectModel->id,

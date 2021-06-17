@@ -130,7 +130,7 @@ class ImageRepository extends ObjectRepository
         $newPath = $this->storagePath."/".$id;
         move_uploaded_file($File["tmp_name"],  $newPath);
 
-        return $newPath;
+        return $id;
     }
 
     public function GetSource(int $id)

@@ -76,7 +76,7 @@ class UpdateRepository extends ObjectRepository
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             "project_id" => $UpdateModel->project_id,
             ":name" => $UpdateModel->name,
-            ":description" => $UpdateModel->descriptionm,
+            ":description" => $UpdateModel->description,
             ":visible" => $UpdateModel->visible,
             ":version" => $UpdateModel->version
         ]);
@@ -90,7 +90,7 @@ class UpdateRepository extends ObjectRepository
             ":id" => $UpdateModel->id,
             ":project_id" => $UpdateModel->project_id,
             ":name" => $UpdateModel->name,
-            ":description" => $UpdateModel->descriptionm,
+            ":description" => $UpdateModel->description,
             ":visible" => $UpdateModel->visible,
             ":version" => $UpdateModel->version
         ]);

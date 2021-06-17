@@ -75,7 +75,7 @@ class ProjectRepository extends ObjectRepository
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":id" => $ProjectModel->id,
             ":name" => $ProjectModel->name,
-            ":description" => $ProjectModel->descriptionm,
+            ":description" => $ProjectModel->description,
             ":link" => $ProjectModel->link,
             ":visible" => $ProjectModel->visible,
             ":image_id" => $ProjectModel->image->id

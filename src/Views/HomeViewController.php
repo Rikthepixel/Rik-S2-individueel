@@ -116,6 +116,7 @@ class HomeViewController
         }
 
         $project = $this->ProjectController->GetProject($request->id);
+        $project_updates = $this->UpdateController->getUpdates($project->id);
 
         include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Project/ProjectEdit.php";
     }

@@ -391,3 +391,19 @@ html, body {
     margin-top: auto !important;
     margin-bottom: auto !important;
 }
+
+.hreflink {
+    color: var(--headerTextColor);
+    text-decoration: none;
+}
+
+.hreflink:hover{
+    color: var(--headerTextColorHover);
+    text-decoration: underline;
+}
+
+.update_info_edit {
+    padding: 2%;
+    background-color: var(--secondaryColor);
+    border-radius: 0.5em;
+}

@@ -61,8 +61,19 @@ class UpdateViewController
         if (!isset($request->Visible) || $request->Visible == null) { $request->Visible = false; }
 
         $update = new UpdateModel(0, $request->project_id, $request->Name, $request->Description, $request->Visible, $request->Version);
-        $sucess = $this->UpdateController->createUpdate($update);
+        $success = $this->UpdateController->createUpdate($update);
 
         header('Location: /admin/projects/project?id='.$request->project_id);
+    }
+
+    public function AdminDeleteUpdate()
+    {
+        $request = new Request();
+        $request->GetRequestVariables();
+
+        if (!isset($request->id)) { return null; }
+        $success = $this->UpdateController->removeUpdate($request->id);
+
+        header('Location: /admin/projects');
     }
 }

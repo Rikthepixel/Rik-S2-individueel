@@ -30,6 +30,11 @@ class ProjectController extends ObjectController
         return $this->Repository->Update($project);
     }
 
+    public function removeProject(int $id)
+    {
+        return $this->Repository->Delete($id);
+    }
+
     public function SetProjectVisiblilty(ProjectModel $project, bool $visible)
     {
         $this->Repository->SetVisibility($project->id, $visible);

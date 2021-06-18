@@ -1,20 +1,21 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Route.php";
 
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/UpdateViewController.php";
+
 Route::add("/", function() {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
     $HomeViewController = new HomeViewController();
     $HomeViewController->GetFrontPage();
 });
 
 Route::add("/Projects", function() {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
     $HomeViewController = new HomeViewController();
     $HomeViewController->GetFrontPage();
 });
 
 Route::add("/Project", function() {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
     $HomeViewController = new HomeViewController();
     $HomeViewController->GetProjectPage();
 });
@@ -24,7 +25,6 @@ Route::add("/Project", function() {
 //
 Route::add("/admin/projects", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
     $HomeViewController = new HomeViewController();
     $HomeViewController->GetProjectAdminPanel();
 });
@@ -34,30 +34,30 @@ Route::add("/admin/projects", function()
 //
 Route::add("/admin/projects/add", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";
     $ProjectViewController = new ProjectViewController();
     $ProjectViewController->GetAdminProjectCreatePage();
 });
 Route::add("/admin/projects/addnew", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";
     $ProjectViewController = new ProjectViewController();
     $ProjectViewController->AdminCreateProject();
 }, "post");
 
 Route::add("/admin/projects/project", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";
     $ProjectViewController = new ProjectViewController();
     $ProjectViewController->GetAdminProjectEditPage();
 });
 Route::add("/admin/projects/edit", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";
     $ProjectViewController = new ProjectViewController();
     $ProjectViewController->AdminEditProject();
 }, "post");
-
+Route::add("/admin/projects/delete", function()
+{
+    $ProjectViewController = new ProjectViewController();
+    $ProjectViewController->AdminDeleteProject();
+});
 
 
 //
@@ -65,26 +65,28 @@ Route::add("/admin/projects/edit", function()
 //
 Route::add("/admin/projects/editupdate", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/UpdateViewController.php";
     $UpdateViewController = new UpdateViewController();
     $UpdateViewController->GetAdminEditUpdatePage();
 });
 Route::add("/admin/projects/updateedit", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/UpdateViewController.php";
     $UpdateViewController = new UpdateViewController();
     $UpdateViewController->AdminEditUpdate();
 }, "post");
 
 Route::add("/admin/projects/addupdate", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/UpdateViewController.php";
+
     $UpdateViewController = new UpdateViewController();
     $UpdateViewController->GetAdminAddUpdatePage();
 });
 Route::add("/admin/projects/addnewupdate", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/UpdateViewController.php";
     $UpdateViewController = new UpdateViewController();
     $UpdateViewController->AdminAddUpdate();
 }, "post");
+Route::add("/admin/projects/deleteupdate", function()
+{
+    $UpdateViewController = new UpdateViewController();
+    $UpdateViewController->AdminDeleteUpdate();
+});

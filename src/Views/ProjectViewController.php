@@ -119,4 +119,15 @@ class ProjectViewController
         $Updated = $this->ProjectController->UpdateProject($ExistingProject);
         header('Location: /admin/projects');
     }
+
+    public function AdminDeleteProject()
+    {
+        $request = new Request();
+        $request->GetRequestVariables();
+
+        if (!isset($request->id)) { return null; }
+        $success = $this->ProjectController->removeProject($request->id);
+
+        header('Location: /admin/projects/project?id='.$request->project_id);
+    }
 }

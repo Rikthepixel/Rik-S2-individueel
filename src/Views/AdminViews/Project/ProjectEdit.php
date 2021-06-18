@@ -33,8 +33,11 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 
         <input name="id" hidden type="text" Value=<?=$project->id?>>
 
-        <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper">
+        <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper edit_page_bottom_buttons">
             <input class="edit_item_value submit_button edit_form_sumbit_button" type="submit" value="Save changes">
+            <div class="delete_button edit_page_delete_button">
+                <a class="hreflink horizontal_Center vertical_Center" href="/admin/projects/delete">Delete</a>
+            </div>
         </div>
 
     </form>

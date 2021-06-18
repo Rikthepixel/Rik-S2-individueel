@@ -2,7 +2,7 @@
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 ?>
 
-<form class="edit_form" action=<?= "/admin/projects/updateedit?project_id=".$Update->project_id ?>  method="post" enctype="multipart/form-data">
+    <form class="edit_form" action=<?= "/admin/projects/updateedit?project_id=".$Update->project_id ?>  method="post" enctype="multipart/form-data">
         <h1>
             Edit update of project: <?= $Project->name ?>
         </h1>
@@ -26,13 +26,17 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
             <input type="checkbox" name="Visible" <?php if ($Update->visible) { echo "checked"; } ?>>
         </div>
 
-        <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper">
-            <input class="edit_item_value submit_button edit_form_sumbit_button" type="submit" value="Add update">
+        <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper edit_page_bottom_buttons">
+            <input class="edit_item_value submit_button edit_form_sumbit_button" type="submit" value="Save changes">
+            <div class="delete_button edit_page_delete_button">
+            <a class="hreflink horizontal_Center vertical_Center" href="/admin/projects/delete">Delete</a>
+        </div>
         </div>
 
         <input type="hidden" name="project_id", Value=<?= $Update->project_id ?>>
         <input type="hidden" name="id", Value=<?= $Update->id ?>>
     </form>
+
 
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/footer.html";

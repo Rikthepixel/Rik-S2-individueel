@@ -43,6 +43,11 @@ class UpdateController extends ObjectController
         return $this->Repository->GetSingle($id);
     }
 
+    public function removeUpdate(int $id)
+    {
+        return $this->Repository->Delete($id);
+    }
+
     public function SetProjectVisiblilty(UpdateModel $update, bool $visible)
     {
         $this->Repository->SetVisibility($update->id, $visible);

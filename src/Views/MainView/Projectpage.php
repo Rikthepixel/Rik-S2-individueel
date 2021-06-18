@@ -3,12 +3,13 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 ?>
 
 
+
 <div class="project_info">
     <div class="project_info_name_and_image">
         <h1 class="project_name_large">
             <?= $Project["project_info"]->name; ?>
         </h1>
-        <img src=<?= $Project["project_icon"]; ?> alt="project_image" class="project_image_medium">
+        <img alt="project_image" class="project_image_medium" src=<?= "'".$Project["project_icon"]."'"; ?>>
         <a class="project_link" href=<?= $Project["project_info"]->link; ?>> <?= $Project["project_info"]->link; ?> </a>
     </div>
     <div class="project_description"> <?= $Project["project_info"]->description; ?> </div>

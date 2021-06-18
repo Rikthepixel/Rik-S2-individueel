@@ -6,7 +6,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
     <?php foreach($Projects as $key=>$Project): ?>
     <div class="project">
         <a class='project_name' href=<?= '/Project?id='.$Project['project_info']->id?>>
-            <img src=<?= $Project["project_icon"] ?> class='project_image_medium' alt='project'>
+            <img class='project_image_medium' alt='project' src=<?= "'".$Project["project_icon"]."'"; ?>>
         </a>
 
         <a class='project_name' href=<?= '/Project?id='.$Project['project_info']->id ?>> <?= $Project["project_info"]->name ?> 

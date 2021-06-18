@@ -13,7 +13,7 @@ class ProjectRepository extends ObjectRepository
 
     public function GetAll()
     {
-        $Query = "SELECT projects.*, imgs.name as image_name, imgs.created_at as image_created_at FROM $this->table projects LEFT JOIN images imgs ON imgs.id = projects.image_id ORDER BY projects.id DESC";
+        $Query = "SELECT projects.*, imgs.name as image_name, imgs.created_at as image_created_at FROM $this->table projects LEFT JOIN images imgs ON imgs.id = projects.image_id ORDER BY projects.name ASC";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         $Data = $this->DatabaseHandler->ExecuteStatement($Statement);
 

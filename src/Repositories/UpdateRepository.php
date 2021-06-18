@@ -51,7 +51,7 @@ class UpdateRepository extends ObjectRepository
 
     public function GetAllByProject($project_id)
     {
-        $Query = "SELECT updates.* FROM $this->table updates WHERE updates.project_id = :project_id ORDER BY updates.id DESC";
+        $Query = "SELECT updates.* FROM $this->table updates WHERE updates.project_id = :project_id ORDER BY updates.version DESC";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         $Data = $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":project_id" => $project_id

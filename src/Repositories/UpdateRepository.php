@@ -84,11 +84,10 @@ class UpdateRepository extends ObjectRepository
 
     public function Update(Model $UpdateModel)
     {
-        $Query = "UPDATE $this->table SET name = :name, project_id = :project_id, description = :description, visible = :visible, version = :version WHERE id = :id";
+        $Query = "UPDATE $this->table SET name = :name, description = :description, visible = :visible, version = :version WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":id" => $UpdateModel->id,
-            ":project_id" => $UpdateModel->project_id,
             ":name" => $UpdateModel->name,
             ":description" => $UpdateModel->description,
             ":visible" => $UpdateModel->visible,

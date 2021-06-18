@@ -30,7 +30,12 @@ class UpdateController extends ObjectController
 
     public function createUpdate(UpdateModel $update)
     {
-        $this->Repository->Create($update);
+        return $this->Repository->Create($update);
+    }
+
+    public function changeUpdate(UpdateModel $update)
+    {
+        return $this->Repository->Update();
     }
 
     public function SetProjectVisiblilty(UpdateModel $update, bool $visible)

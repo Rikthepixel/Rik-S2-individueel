@@ -19,6 +19,9 @@ Route::add("/Project", function() {
     $HomeViewController->GetProjectPage();
 });
 
+//
+// Admin
+//
 Route::add("/admin/projects", function()
 {
     include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
@@ -26,58 +29,62 @@ Route::add("/admin/projects", function()
     $HomeViewController->GetProjectAdminPanel();
 });
 
-Route::add("/admin/projects/project", function()
-{
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
-    $HomeViewController = new HomeViewController();
-    $HomeViewController->GetProjectEditPage();
-});
-
+//
+// Admin Projects
+//
 Route::add("/admin/projects/add", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
-    $HomeViewController = new HomeViewController();
-    $HomeViewController->GetProjectCreatePage();
+    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";
+    $ProjectViewController = new ProjectViewController();
+    $ProjectViewController->GetAdminProjectCreatePage();
 });
+Route::add("/admin/projects/addnew", function()
+{
+    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";
+    $ProjectViewController = new ProjectViewController();
+    $ProjectViewController->AdminCreateProject();
+}, "post");
+
+Route::add("/admin/projects/project", function()
+{
+    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";
+    $ProjectViewController = new ProjectViewController();
+    $ProjectViewController->GetAdminProjectEditPage();
+});
+Route::add("/admin/projects/edit", function()
+{
+    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";
+    $ProjectViewController = new ProjectViewController();
+    $ProjectViewController->AdminEditProject();
+}, "post");
+
+
+
+//
+// Admin Updates
+//
+Route::add("/admin/projects/editupdate", function()
+{
+    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/UpdateViewController.php";
+    $UpdateViewController = new UpdateViewController();
+    $UpdateViewController->GetAdminEditUpdatePage();
+});
+Route::add("/admin/projects/updateedit", function()
+{
+    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/UpdateViewController.php";
+    $UpdateViewController = new UpdateViewController();
+    $UpdateViewController->AdminEditUpdate();
+}, "post");
 
 Route::add("/admin/projects/addupdate", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
-    $HomeViewController = new HomeViewController();
-    $HomeViewController->GetAddUpdatePage();
+    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/UpdateViewController.php";
+    $UpdateViewController = new UpdateViewController();
+    $UpdateViewController->GetAdminAddUpdatePage();
 });
-
-Route::add("/admin/projects/editupdate", function()
-{
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
-    $HomeViewController = new HomeViewController();
-    $HomeViewController->GetEditUpdatePage();
-});
-
-Route::add("/admin/projects/addnew", function()
-{
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
-    $HomeViewController = new HomeViewController();
-    $HomeViewController->CreateProject();
-}, "post");
-
-Route::add("/admin/projects/edit", function()
-{
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
-    $HomeViewController = new HomeViewController();
-    $HomeViewController->EditProject();
-}, "post");
-
-Route::add("/admin/projects/updateedit", function()
-{
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
-    $HomeViewController = new HomeViewController();
-    $HomeViewController->EditUpdate();
-}, "post");
-
 Route::add("/admin/projects/addnewupdate", function()
 {
-    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
-    $HomeViewController = new HomeViewController();
-    $HomeViewController->AddUpdate();
+    include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/UpdateViewController.php";
+    $UpdateViewController = new UpdateViewController();
+    $UpdateViewController->AdminAddUpdate();
 }, "post");

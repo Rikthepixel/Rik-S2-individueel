@@ -14,5 +14,13 @@ class UpdateUnitTests extends TestCase
 
         $this->assertIsArray($updates);
     }
-    
+
+    public function testGetUpdate()
+    {
+        $updateController = new UpdateController();
+        $Update = $updateController->GetUpdate(1);
+
+        $this->assertIsObject($Update);
+        $this->assertNotNull($Update);
+    }
 }

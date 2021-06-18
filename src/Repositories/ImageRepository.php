@@ -56,8 +56,6 @@ class ImageRepository extends ObjectRepository
         $Query = "INSERT INTO $this->table (name) VALUES (:name)";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
 
-        echo $Query;
-
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
             ":name" => $ImageModel->name,
         ]);
@@ -125,12 +123,25 @@ class ImageRepository extends ObjectRepository
         }
 
         $Name = basename($File["name"]);
-        $this->Create(new ImageModel(0, $Name, 0));
-        $id = $this->GetMaxId();
+        $success = $this->Create(new ImageModel(0, $Name, 0));
 
-        var_dump($id);
-        $newPath = $this->storagePath."/".$id;
-        move_uploaded_file($File["tmp_name"],  $newPath);
+        if (!$success) {
+            return null;
+        }
+
+        $id = $this->GetMaxId();
+        $path_parts = pathinfo($File["name"]);
+
+        if (!isset($path_parts["extension"])) {
+            return null;
+        }
+
+        $newPath = $this->storagePath."/".$id.".".$path_parts["extension"];
+       
+        if (!move_uploaded_file($File["tmp_name"],  $newPath)) {
+            var_dump($newPath);
+            die();
+        }
 
         return $id;
     }

@@ -33,6 +33,11 @@ class UpdateViewController
         $request = new Request();
         $request->GetRequestVariables();
         $Update = $this->UpdateController->getUpdate($request->id);
+
+        if (!$Update) {
+            header('Location: /admin/projects');
+        }
+
         $Project = $this->ProjectController->GetProject($Update->project_id);
 
         include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Update/EditUpdate.php";
@@ -74,6 +79,11 @@ class UpdateViewController
         if (!isset($request->id)) { return null; }
         $success = $this->UpdateController->removeUpdate($request->id);
 
-        header('Location: /admin/projects');
+        if (isset($request->project_id)) { 
+            header('Location: /admin/projects/project?id='.$request->project_id); 
+        } else {
+            header('Location: /admin/projects');
+        }
+
     }
 }

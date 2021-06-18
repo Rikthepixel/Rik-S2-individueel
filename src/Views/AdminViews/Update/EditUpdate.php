@@ -28,9 +28,10 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 
         <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper edit_page_bottom_buttons">
             <input class="edit_item_value submit_button edit_form_sumbit_button" type="submit" value="Save changes">
+
             <div class="delete_button edit_page_delete_button">
-            <a class="hreflink horizontal_Center vertical_Center" href="/admin/projects/delete">Delete</a>
-        </div>
+                <a class="hreflink horizontal_Center vertical_Center" href=<?= "/admin/projects/deleteupdate?id=".$Update->id."&project_id=".$Update->project_id ?>>Delete</a>
+            </div>
         </div>
 
         <input type="hidden" name="project_id", Value=<?= $Update->project_id ?>>

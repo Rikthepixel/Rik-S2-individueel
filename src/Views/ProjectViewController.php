@@ -128,6 +128,6 @@ class ProjectViewController
         if (!isset($request->id)) { return null; }
         $success = $this->ProjectController->removeProject($request->id);
 
-        header('Location: /admin/projects/project?id='.$request->project_id);
+        header('Location: /admin/projects');
     }
 }

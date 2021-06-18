@@ -339,7 +339,9 @@ html, body {
     max-width: var(--Edit_Item_Width);
     min-width: var(--Edit_Item_Width);
 
-    min-height: 4em;
+    white-space: pre-line;
+
+    min-height: 10em;
 }
 
 .edit_form_submit_wrapper {
@@ -349,7 +351,7 @@ html, body {
 }
 
 .edit_form_sumbit_button {
-    height: 90%;
+    height: 3em;
     width: 85%;
 
     margin-top: auto !important;

@@ -8,7 +8,9 @@ class ProjectViewController
 {
     public function __construct()
     {
-        $this->ProjectController = new ProjectController();    
+        $this->ProjectController = new ProjectController();
+        $this->ImageController = new ImageController();
+        $this->UpdateController = new UpdateController();
     }
 
     public function GetApi()

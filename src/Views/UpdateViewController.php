@@ -1,4 +1,5 @@
 <?php
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ProjectController.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/UpdateController.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Request.php";
 
@@ -6,6 +7,7 @@ class UpdateViewController
 {
     public function __construct()
     {
+        $this->ProjectController = new ProjectController();
         $this->UpdateController = new UpdateController();    
     }
 
@@ -22,8 +24,7 @@ class UpdateViewController
         $update->visible = $request->Visible;
         $update->version = $request->Version;
 
-        $sucess = $this->UpdateController->changeUpdate($update);
-
+        $success = $this->UpdateController->changeUpdate($update);
         header('Location: /admin/projects/project?id='.$request->project_id);
     }
 
@@ -32,6 +33,7 @@ class UpdateViewController
         $request = new Request();
         $request->GetRequestVariables();
         $Update = $this->UpdateController->getUpdate($request->id);
+        $Project = $this->ProjectController->GetProject($Update->project_id);
 
         include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Update/EditUpdate.php";
     }
@@ -45,7 +47,7 @@ class UpdateViewController
             header('Location: /admin/projects');
         }
 
-        $project_id = $request->project_id;
+        $Project = $this->ProjectController->GetProject($request->project_id);
         include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Update/Add.php";
     }
 

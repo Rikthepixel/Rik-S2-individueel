@@ -2,9 +2,9 @@
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 ?>
 
-<form class="edit_form" action=<?= "/admin/projects/addnewupdate?project_id=".$project_id ?> method="post" enctype="multipart/form-data">
+<form class="edit_form" action=<?= "/admin/projects/addnewupdate?project_id=".$Project->id ?> method="post" enctype="multipart/form-data">
         <h1>
-            Add update to project: <?= $project_id ?>
+            Add update to project: <?= $Project->name ?>
         </h1>
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Name">Name:</label>
@@ -29,7 +29,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
         <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper">
             <input class="edit_item_value submit_button edit_form_sumbit_button" type="submit" value="Add update">
         </div>
-        <input type="hidden" name="project_id", Value=<?= $project_id ?>>
+        <input type="hidden" name="project_id", Value=<?= $Project->id ?>>
     </form>
 
 <?php

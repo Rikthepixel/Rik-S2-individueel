@@ -4,7 +4,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 
 <form class="edit_form" action=<?= "/admin/projects/updateedit?project_id=".$Update->project_id ?>  method="post" enctype="multipart/form-data">
         <h1>
-            Add update to project: <?= $Update->project_id ?>
+            Edit update of project: <?= $Project->name ?>
         </h1>
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Name">Name:</label>

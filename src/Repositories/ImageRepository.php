@@ -146,6 +146,15 @@ class ImageRepository extends ObjectRepository
         return $id;
     }
 
+    public function CanBeUploaded($File)
+    {
+        if(!file_exists($File['tmp_name']) || !is_uploaded_file($File['tmp_name'])) {
+            return false;
+        }
+
+        return true;
+    }
+
     public function GetSource(int $id)
     {
         $ImageSource = $this->storagePath."/".$id.".png";

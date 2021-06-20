@@ -19,17 +19,12 @@ class ImageController extends ObjectController
         return $this->Repository->GetSingle($id);
     }
 
-    public function IsValidUpload($File)
-    {
-        if(!file_exists($File['tmp_name']) || !is_uploaded_file($File['tmp_name'])) {
-            return false;
-        }
-
-        return true;
-    }
-
     public function CreateImage($ImageFile)
     {
+        if (!$this->Repository->CanBeUploaded($ImageFile)){
+            return null;
+        }
+
         $id = $this->Repository->StoreImage($ImageFile);
 
         if (!$id) { return null; }

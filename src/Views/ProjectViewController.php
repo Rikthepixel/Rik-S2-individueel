@@ -52,12 +52,10 @@ class ProjectViewController
         $image = new ImageModel(0, "", 0);
         if (isset($_FILES["Image"])) {
             $imageFile = $_FILES["Image"];
-            if ($this->ImageController->IsValidUpload($imageFile)) {
-                $CreatedImage = $this->ImageController->CreateImage($imageFile);
+            $CreatedImage = $this->ImageController->CreateImage($imageFile);
 
-                if ($CreatedImage != null) {
-                    $image = $CreatedImage;
-                }
+            if ($CreatedImage != null) {
+                $image = $CreatedImage;
             }
         }
 

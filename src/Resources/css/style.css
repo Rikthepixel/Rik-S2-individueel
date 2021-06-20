@@ -36,12 +36,20 @@ html, body {
 
 .header_item {
     color: var(--headerTextColor) !important;
+    background-color: transparent;
+
+    
     text-decoration: none;
+
+    border-radius: 1em;
 }
 
 .header_item:hover {
     color: var(--headerTextColorHover) !important;
+    background-color: var(--mainColorHover);
+
     text-decoration: underline;
+    font-weight: bold;
 }
 
 .project_container {
@@ -436,7 +444,7 @@ html, body {
 
 .edit_page_delete_button {
     width: 20%;
-    height: 2.5em;
+    height: 3em;
 
     display: flex;
     justify-content: center;
@@ -532,4 +540,6 @@ html, body {
 .output_image {
     width: 25% !important;
     margin: 1%;
+
+    display: block;
 }

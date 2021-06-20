@@ -23,7 +23,10 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.html";
 
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Visible">Visible:</label>
-            <input type="checkbox" name="Visible" checked>
+            <div class="CustomCheck">
+                <input type="checkbox" value="None" id="CustomCheck" name="Visible" checked/>
+                <label for="CustomCheck"></label>
+            </div>
         </div>
 
         <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper">

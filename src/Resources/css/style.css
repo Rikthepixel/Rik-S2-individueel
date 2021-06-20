@@ -10,6 +10,8 @@
 
     --headerTextColor: #eeeeee;
     --headerTextColorHover: #ffffff;
+
+    --background-color: rgb(253, 253, 253);
     --fontFamily: Arial, Helvetica, sans-serif;
 
     --hoverProjectIncrease: 1.1;
@@ -27,6 +29,20 @@ html, body {
     padding: 0;
     width: 100%;
     height: 100%;
+
+    background-color: var(--background-color) !important;
+}
+
+input, textarea {
+    border-radius: 0.5em;
+    border-style: solid;
+    border-width: 0.1em;
+    border-color: var(--secondaryColor);
+}
+
+input[type=file] {
+    border-width: 0;
+    border-radius: 0;
 }
 
 .header {
@@ -37,8 +53,8 @@ html, body {
 .header_item {
     color: var(--headerTextColor) !important;
     background-color: transparent;
-
     
+    text-align: center;
     text-decoration: none;
 
     border-radius: 1em;
@@ -89,7 +105,7 @@ html, body {
 .icon_image {
     aspect-ratio: 1/1;
     object-fit: cover;
-    border-radius: 20%;
+    border-radius: 15%;
 
     width: 80%;
     height: auto;

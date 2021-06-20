@@ -80,7 +80,13 @@ class ProjectViewController
         }
 
         $project = $this->ProjectController->GetProject($request->id);
+
+        if (!$project) {
+            header('Location: /admin/projects');  
+        }
+        
         $project_updates = $this->UpdateController->getUpdates($project->id);
+        $project_icon = $this->ImageController->GetImageSource($project->image);
 
         include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Project/ProjectEdit.php";
     }

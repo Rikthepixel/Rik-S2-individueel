@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.html";
 ?>
 
 <form class="edit_form" action=<?= "/admin/projects/addnewupdate?project_id=".$Project->id ?> method="post" enctype="multipart/form-data">
@@ -27,11 +27,11 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
         </div>
 
         <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper">
-            <input class="edit_item_value submit_button edit_form_sumbit_button" type="submit" value="Add update">
+            <input class="edit_item_value submit_button submit_button_dark edit_form_sumbit_button" type="submit" value="Add update">
         </div>
         <input type="hidden" name="project_id", Value=<?= $Project->id ?>>
     </form>
 
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/footer.html";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
 ?>

@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.html";
 ?>
 
     <form class="edit_form" action=<?= "/admin/projects/updateedit?project_id=".$Update->project_id ?>  method="post" enctype="multipart/form-data">
@@ -23,11 +23,14 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Visible">Visible:</label>
-            <input type="checkbox" name="Visible" <?php if ($Update->visible) { echo "checked"; } ?>>
+            <div class="CustomCheck">
+                <input type="checkbox" value="None" id="CustomCheck" name="Visible" <?php if ($Update->visible) { echo "checked"; } ?>/>
+                <label for="CustomCheck"></label>
+            </div>
         </div>
 
         <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper edit_page_bottom_buttons">
-            <input class="edit_item_value submit_button edit_form_sumbit_button" type="submit" value="Save changes">
+            <input class="edit_item_value submit_button submit_button_dark edit_form_sumbit_button" type="submit" value="Save changes">
 
             <div class="delete_button edit_page_delete_button">
                 <a class="hreflink horizontal_Center vertical_Center" href=<?= "/admin/projects/deleteupdate?id=".$Update->id."&project_id=".$Update->project_id ?>>Delete</a>
@@ -40,5 +43,5 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 
 
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/footer.html";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
 ?>

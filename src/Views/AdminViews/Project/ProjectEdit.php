@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.html";
 ?>
 
 <form class="edit_form" action=<?= "/admin/projects/edit?id=".$project->id ?> method="post" enctype="multipart/form-data">
@@ -8,7 +8,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
         </h1>
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Name">Name:</label>
-            <input class="edit_item edit_item_value" type="text" name="Name" Value=<?= $project->name ?> required>
+            <input class="edit_item edit_item_value" type="text" name="Name" Value=<?= "'".$project->name."'" ?> required>
         </div>
 
         <div class="edit_item_wrapper">
@@ -28,13 +28,16 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Visible" >Visible:</label>
-            <input type="checkbox" name="Visible" <?php if ($project->visible) { echo "checked"; } ?>>
+            <div class="CustomCheck">
+                <input type="checkbox" value="None" id="CustomCheck" name="Visible" <?php if ($project->visible) { echo "checked"; } ?>/>
+                <label for="CustomCheck"></label>
+            </div>
         </div>
 
         <input name="id" hidden type="text" Value=<?=$project->id?>>
 
         <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper edit_page_bottom_buttons">
-            <input class="edit_item_value submit_button edit_form_sumbit_button" type="submit" value="Save changes">
+            <input class="edit_item_value submit_button_dark submit_button edit_form_sumbit_button" type="submit" value="Save changes">
 
             <div class="delete_button edit_page_delete_button">
                 <a class="hreflink horizontal_Center vertical_Center" href=<?= "/admin/projects/delete?id=".$project->id ?>>Delete</a>
@@ -67,7 +70,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
                     <div class="update_info_item_value"><?= $Update->version ?></div>
                 </div>
                 <div class="update_info_wrapper_left update_info_item">
-                    <a href=<?= "/admin/projects/editupdate?id=".$Update->id."&project_id=".$Update->project_id ?> class="update_info_item_value hreflink update_info_edit">Edit</a>
+                    <a href=<?= "/admin/projects/editupdate?id=".$Update->id."&project_id=".$Update->project_id ?> class="update_info_item_value hreflink submit_button_dark update_info_edit ">Edit</a>
                 </div>
             </div>
 
@@ -81,56 +84,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 </div>
 <?php endif ?>
 
-<script>
-    var Headers = document.getElementsByClassName("update_info_header")
-    var Descriptions = document.getElementsByClassName("update_description")
-    for (let index = 0; index < Headers.length; index++) {
-        const updateInfoHeader = Headers[index];
-        updateInfoHeader.style.backgroundColor = "var(--mainColorSelected)"
-    }
-
-    for (let index = 0; index < Descriptions.length; index++) {
-        const updateInfoDescription = Descriptions[index];
-
-        updateInfoDescription.hidden = true
-        updateInfoDescription.style.visibility = "hidden"
-        updateInfoDescription.style.display = "none"
-    }
-
-
-    function ExpandUpdate(event) {
-        var EventTarget = event.target
-
-        var updateInfo = EventTarget.closest(".update_info")
-        var updateInfoHeader = null;
-        var updateInfoDescription = null;
-
-        for (let index = 0; index < updateInfo.children.length; index++) {
-            const element = updateInfo.children[index];
-            if (element.className == "update_description") {
-                updateInfoDescription = element
-            } else if (element.className == "update_info_wrapper update_info_header") {
-                updateInfoHeader = element
-            }
-        }
-
-        if (updateInfoDescription && updateInfoHeader) {
-            if (!updateInfoDescription.hidden) {
-                updateInfoDescription.hidden = true
-                updateInfoDescription.style.visibility = "hidden"
-                updateInfoDescription.style.display = "none"
-
-                updateInfoHeader.style.backgroundColor = "var(--mainColorSelected)"
-            } else {
-                updateInfoDescription.hidden = false
-                updateInfoDescription.style.visibility = "visible"
-                updateInfoDescription.style.display = ""
-
-                updateInfoHeader.style.backgroundColor = null;
-            }
-        }
-    }
-</script>
+<script src="/src/Views/inc/js/updateslist.js"></script>
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/footer.html";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
 ?>

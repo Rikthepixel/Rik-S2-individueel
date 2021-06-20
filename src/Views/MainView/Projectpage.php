@@ -1,18 +1,24 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.html";
 ?>
 
-
-
-<div class="project_info">
-    <div class="project_info_name_and_image">
-        <h1 class="project_name_large">
+<div class="container project-info">
+    <div class="row">
+        <div class="col-4">
+            <div class="d-flex flex-wrap justify-content-center text-center">
+            <h1 class="project_name_large">
             <?= $Project["project_info"]->name; ?>
         </h1>
-        <img alt="project_image" class="project_image_medium" src=<?= "'".$Project["project_icon"]."'"; ?>>
+        <img alt="project icon" class="icon_image" src=<?= "'".$Project["project_icon"]."'"; ?>>
         <a class="project_link" href=<?= $Project["project_info"]->link; ?>> <?= $Project["project_info"]->link; ?> </a>
+            </div>
+        </div>
+        <div class="col">
+            <div class="project_description_col">
+                <div class="project_description"><?= $Project["project_info"]->description ?></div>
+            </div>
+        </div>
     </div>
-    <div class="project_description"> <?= $Project["project_info"]->description; ?> </div>
 </div>
 
 <?php if (count($Project["project_updates"]) > 0) : ?>
@@ -44,57 +50,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 
 <?php endif ?>
 
-<script>
-    var Headers = document.getElementsByClassName("update_info_header")
-    var Descriptions = document.getElementsByClassName("update_description")
-    for (let index = 0; index < Headers.length; index++) {
-        const updateInfoHeader = Headers[index];
-        updateInfoHeader.style.backgroundColor = "var(--mainColorSelected)"
-    }
-
-    for (let index = 0; index < Descriptions.length; index++) {
-        const updateInfoDescription = Descriptions[index];
-
-        updateInfoDescription.hidden = true
-        updateInfoDescription.style.visibility = "hidden"
-        updateInfoDescription.style.display = "none"
-    }
-
-
-    function ExpandUpdate(event) {
-        var EventTarget = event.target
-
-        var updateInfo = EventTarget.closest(".update_info")
-        var updateInfoHeader = null;
-        var updateInfoDescription = null;
-
-        for (let index = 0; index < updateInfo.children.length; index++) {
-            const element = updateInfo.children[index];
-            if (element.className == "update_description") {
-                updateInfoDescription = element
-            } else if (element.className == "update_info_wrapper update_info_header") {
-                updateInfoHeader = element
-            }
-        }
-
-        if (updateInfoDescription && updateInfoHeader) {
-            if (!updateInfoDescription.hidden) {
-                updateInfoDescription.hidden = true
-                updateInfoDescription.style.visibility = "hidden"
-                updateInfoDescription.style.display = "none"
-
-                updateInfoHeader.style.backgroundColor = "var(--mainColorSelected)"
-            } else {
-                updateInfoDescription.hidden = false
-                updateInfoDescription.style.visibility = "visible"
-                updateInfoDescription.style.display = ""
-
-                updateInfoHeader.style.backgroundColor = null;
-            }
-        }
-    }
-</script>
-
+<script src="/src/Views/inc/js/updateslist.js"></script>
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/footer.html";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
 ?>

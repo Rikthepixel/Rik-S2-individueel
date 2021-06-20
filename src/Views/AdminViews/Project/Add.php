@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.html";
 ?>
 
 <form class="edit_form" action="/admin/projects/addnew" method="post" enctype="multipart/form-data">
@@ -28,15 +28,18 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/header.html";
 
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Visible">Visible:</label>
-            <input type="checkbox" name="Visible" checked>
+            <div class="CustomCheck">
+                <input type="checkbox" value="None" id="CustomCheck" name="Visible" checked/>
+                <label for="CustomCheck"></label>
+            </div>
         </div>
 
         <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper">
-            <input class="edit_item_value submit_button edit_form_sumbit_button" type="submit" value="Add project">
+            <input class="edit_item_value submit_button_dark submit_button edit_form_sumbit_button" type="submit" value="Add project">
         </div>
 
     </form>
 
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/footer.html";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
 ?>

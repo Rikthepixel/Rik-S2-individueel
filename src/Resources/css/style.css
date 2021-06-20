@@ -64,11 +64,11 @@ html, body {
 .project {
     display: inline-block;
     
-    width: 30%;
+    width: 25%;
     height: auto;
     transition: all .2s ease-in-out;
 
-    margin-bottom: 2%;
+    margin-bottom: 3%;
     
     text-decoration: none;
 }
@@ -527,4 +527,9 @@ html, body {
     -ms-filter: "progid:DXImageTransform.Microsoft.Alpha(Opacity=100)";
     filter: alpha(opacity=100);
     opacity: 1;
+}
+
+.output_image {
+    width: 25% !important;
+    margin: 1%;
 }

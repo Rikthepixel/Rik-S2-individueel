@@ -23,7 +23,8 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.html";
 
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Image">Image:</label>
-            <input class="edit_item edit_item_value" type="file" name="Image">
+            <input class="edit_item edit_item_value" accept="image/*" type="file" name="Image" onchange="loadFile(event)">
+            <img id="output" class="icon_image output_image" <?php if (isset($project_icon)) { echo("src='".$project_icon."'"); } else { echo("hidden"); }?>/>
         </div>
 
         <div class="edit_item_wrapper">
@@ -84,6 +85,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.html";
 </div>
 <?php endif ?>
 
+<script src="/src/Views/inc/js/imageupload.js"></script>
 <script src="/src/Views/inc/js/updateslist.js"></script>
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";

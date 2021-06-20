@@ -78,8 +78,15 @@ class DatabaseHandler
 
     }
 
-    public function ExecuteStatement($Statement, $Parameters = null) {
+    public function ExecuteStatement($Statement, $Parameters = null, $EscapeInjection = true) {
         if ($Parameters != null) {
+            
+            if ($EscapeInjection) {
+                for ($i=0; $i < $Parameters; $i++) { 
+                    $Parameters[$i] = $this->EscapeInjection($Parameters[$i]);
+                }
+            }
+
             $ExecutedSuccesfully = $Statement->execute($Parameters);
         } else {
             $ExecutedSuccesfully = $Statement->execute();
@@ -113,7 +120,7 @@ class DatabaseHandler
         return $this->DatabaseConnection->prepare($Query);
     }
 
-    public function EscapeInjection($UnsafeVariable) {
-        return trim(htmlspecialchars_decode(strip_tags($UnsafeVariable)));
+    public function EscapeInjection($UnsafeVariable, $allowedTags = "") {
+        return trim(htmlspecialchars_decode(strip_tags($UnsafeVariable, $allowedTags)));
     }
 }

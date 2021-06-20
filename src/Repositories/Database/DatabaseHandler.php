@@ -80,10 +80,10 @@ class DatabaseHandler
 
     public function ExecuteStatement($Statement, $Parameters = null, $EscapeInjection = true) {
         if ($Parameters != null) {
-            
+
             if ($EscapeInjection) {
-                for ($i=0; $i < $Parameters; $i++) { 
-                    $Parameters[$i] = $this->EscapeInjection($Parameters[$i]);
+                foreach ($Parameters as $key => $param) {
+                    $Parameters[$key] = $this->EscapeInjection($param);
                 }
             }
 

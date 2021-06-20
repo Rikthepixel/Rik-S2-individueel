@@ -3,14 +3,15 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.html";
 ?>
 
 <div class="container project-info">
+    <div class="row text-center">
+        <h1 class="project_name_large"><?= $Project["project_info"]->name; ?></h1>
+    </div>
     <div class="row">
         <div class="col-4">
             <div class="d-flex flex-wrap justify-content-center text-center">
-            <h1 class="project_name_large">
-            <?= $Project["project_info"]->name; ?>
-        </h1>
-        <img alt="project icon" class="icon_image" src=<?= "'".$Project["project_icon"]."'"; ?>>
-        <a class="project_link" href=<?= $Project["project_info"]->link; ?>> <?= $Project["project_info"]->link; ?> </a>
+                <img alt="project icon" class="icon_image" src=<?= "'".$Project["project_icon"]."'"; ?>>
+                <label class="project_link_label" for="link">Link:</label>
+                <a class="project_link" href=<?= $Project["project_info"]->link; ?>> <?= $Project["project_info"]->link; ?> </a>
             </div>
         </div>
         <div class="col">

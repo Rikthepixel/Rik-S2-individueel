@@ -45,6 +45,10 @@ input[type=file] {
     border-radius: 0;
 }
 
+a:hover {
+    color: var(--mainColor);
+}
+
 .header {
     background-color: var(--mainColor);
     color: var(--headerTextColor);
@@ -90,7 +94,7 @@ input[type=file] {
     
     width: 25%;
     height: auto;
-    transition: all .2s ease-in-out;
+    transition: all .15s ease-in-out;
 
     margin-bottom: 3%;
     
@@ -100,6 +104,12 @@ input[type=file] {
 .project:hover {
     transform: scale(var(--hoverProjectIncrease));
     text-decoration: underline;
+
+    color: var(--mainColor);
+}
+
+.project:hover a {
+    color: var(--mainColor);
 }
 
 .icon_image {
@@ -113,14 +123,14 @@ input[type=file] {
     padding: 0 !important;
 }
 
-.project_link {
+.project_link, .project_link_label {
     display: block;
-
     font-weight: bold;
-
-    margin-top: 2%;
-
     width: 100%;
+}
+
+.project_link_label {
+    margin-top: 2%;
 }
 
 .project_name {

@@ -28,32 +28,16 @@ html, body {
 
 .header {
     background-color: var(--mainColor);
-    margin: 0;
-    padding: 0;
-    padding-left: 1%;
-    height: 5%;
-    width: auto;
-    vertical-align: middle;
-    
-    display: flex;
-    align-items: center;
-    justify-content: left;
+    color: var(--headerTextColor);
 }
 
 .header_item {
-    margin: 0;
-    margin-left: 0.5%;
-    margin-right: 0.5%;
-
-    font-size: 100%;
-    font-weight: bold;
-
-    color: var(--headerTextColor);
+    color: var(--headerTextColor) !important;
     text-decoration: none;
 }
 
 .header_item:hover {
-    color: var(--headerTextColorHover);
+    color: var(--headerTextColorHover) !important;
     text-decoration: underline;
 }
 

@@ -1,21 +1,57 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/src/Resources/css/style.css">
+
+    <link rel="stylesheet" href="/src/Resources/utility/bootstrap/css/bootstrap.min.css">
+    <script src="/src/Resources/utility/bootstrap/js/bootstrap.min.js"></script>
+
     <script src="/src/Resources/js/jquery-3.6.0.js"></script>
     <title>Portfolio</title>
 </head>
+
 <body>
 
-    <div class="header">
-        <a class="header_item" href="/Projects">
-            Projects
-        </a>
+    <nav class="navbar header navbar-expand-lg" role="navigation">
 
-        <a class="header_item" href="/Admin/Projects">
-            Admin
-        </a>
-    </div>
+        <div class="container-fluid">
+
+            <div class="navbar-brand">
+                Portfolio website
+            </div>
+
+            <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false"
+                aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+
+            <div class="collapse navbar-collapse" id="navbarSupportedContent">
+
+                <ul class="navbar-nav me-auto">
+
+                    <li class="nav-item">
+                        <a class="header_item nav-link" href="/Projects">
+                            Projects
+                        </a>
+                    </li>
+
+                    <li class="nav-item">
+                        <a class="header_item nav-link" href="/Admin/Projects">
+                            Admin
+                        </a>
+                    </li>
+
+                </ul>
+
+            </div>
+
+
+        </div>
+
+
+    </nav>

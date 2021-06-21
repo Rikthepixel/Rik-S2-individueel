@@ -11,7 +11,7 @@
     <script src="/src/Resources/utility/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="/src/Resources/js/jquery-3.6.0.js"></script>
-    <title>Portfolio</title>
+    <title><?php if (isset($title)) { echo $title; echo " - ";} ?> Portfolio</title>
 </head>
 
 <body>

@@ -1,5 +1,6 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.html";
+$title = "Add project";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
 ?>
 
 <form class="edit_form" action="/admin/projects/addnew" method="post" enctype="multipart/form-data">

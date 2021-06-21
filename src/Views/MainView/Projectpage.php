@@ -1,5 +1,6 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.html";
+$title = $Project["project_info"]->name;
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
 ?>
 
 <div class="container project-info">

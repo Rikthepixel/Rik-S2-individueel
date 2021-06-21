@@ -11,6 +11,12 @@
   }
 }
 
+@media (min-width: 600px) {
+  html {
+    font-size: 0.9rem;
+  }
+}
+
 @media (min-width: 800px) {
   html {
     font-size: 1rem;
@@ -24,7 +30,7 @@
 }
 
 
-@media (min-width: 1500px) {
+@media (min-width: 1650px) {
   html {
     font-size: 1.2rem;
   }

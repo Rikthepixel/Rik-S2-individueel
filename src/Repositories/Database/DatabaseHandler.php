@@ -82,9 +82,11 @@ class DatabaseHandler
         if ($Parameters != null) {
 
             if ($EscapeInjection) {
+
                 foreach ($Parameters as $key => $param) {
-                    $Parameters[$key] = $this->EscapeInjection($param);
+                    $Parameters[$key] = $this->escapeInjection($param);
                 }
+
             }
 
             $ExecutedSuccesfully = $Statement->execute($Parameters);
@@ -120,7 +122,13 @@ class DatabaseHandler
         return $this->DatabaseConnection->prepare($Query);
     }
 
-    public function EscapeInjection($UnsafeVariable, $allowedTags = "") {
-        return trim(htmlspecialchars_decode(strip_tags($UnsafeVariable, $allowedTags)));
+    public function escapeInjection($UnsafeVariable, $allowedTags = null) {
+
+        if ($allowedTags) {
+            var_dump(strip_tags("$UnsafeVariable", $allowedTags));
+        }
+
+        return strip_tags("$UnsafeVariable", $allowedTags);
     }
+
 }

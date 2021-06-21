@@ -1,10 +1,10 @@
 :root {
-    --mainColor: #125fc7;
-    --mainColorHover: #1755a7;
-    --mainColorSelected: rgb(32, 79, 141);
+    --mainColorSelected: #1f78ec;
+    --mainColorHover: #2571d4;
+    --mainColor: #2164bb;
 
-    --secondaryColor: rgb(99, 99, 99);
-    --secondaryColorHover: rgb(71, 71, 71);
+    --secondaryColorHover: rgb(99, 99, 99);
+    --secondaryColor: rgb(80, 80, 80);
 
     --tertiaryColor: rgb(103, 11, 126);
 
@@ -18,9 +18,11 @@
 
     --deleteColor: rgb(226, 2, 2);
     --deleteColorHover: rgb(255, 4, 4);
-    
-    font-family: var(--fontFamily);
 
+    --NormalTransition: all .25s ease-in-out;
+
+    font-family: var(--fontFamily);
+    /* background: var(--mainColorGradient); */
     word-wrap: break-word;
 }
 
@@ -43,6 +45,10 @@ input, textarea {
 input[type=file] {
     border-width: 0;
     border-radius: 0;
+}
+
+a {
+    transition: var(--NormalTransition);
 }
 
 a:hover {
@@ -411,6 +417,8 @@ li {
     border: 0;
     border-radius: 0.5em;
     text-decoration: none;
+
+    transition: var(--NormalTransition);
 }
 
 .submit_button:hover {
@@ -427,6 +435,8 @@ li {
     border: 0;
     border-radius: 0.5em;
     text-decoration: none;
+
+    transition: var(--NormalTransition);
 }
 
 .delete_button:hover {

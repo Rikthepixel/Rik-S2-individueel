@@ -48,6 +48,15 @@ class UpdateController extends ObjectController
         return $this->Repository->Delete($id);
     }
 
+    public function removeProjectUpdates(int $project_id)
+    {
+        $updates = $this->Repository->GetAllByProject($project_id);
+
+        foreach ($updates as $key => $update) {
+            $this->Repository->Delete($update->id);
+        }
+    }
+
     public function SetProjectVisiblilty(UpdateModel $update, bool $visible)
     {
         $this->Repository->SetVisibility($update->id, $visible);

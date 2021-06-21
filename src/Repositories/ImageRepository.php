@@ -123,32 +123,65 @@ class ImageRepository extends ObjectRepository
         }
 
         $Name = basename($File["name"]);
-        $success = $this->Create(new ImageModel(0, $Name, 0));
-
-        if (!$success) {
-            return null;
-        }
-
-        $id = $this->GetMaxId();
         $path_parts = pathinfo($File["name"]);
 
         if (!isset($path_parts["extension"])) {
             return null;
         }
-
-        $newPath = $this->storagePath."/".$id.".".$path_parts["extension"];
-       
-        if (!move_uploaded_file($File["tmp_name"],  $newPath)) {
-            var_dump($newPath);
-            die();
+    
+        $quality = 90;
+        $imageTmp = null;
+        $newExtention = "jpg";
+        switch (exif_imagetype($File["tmp_name"])) {
+            case IMAGETYPE_PNG:
+                $imageTmp = imagecreatefrompng($File["tmp_name"]);
+                break;
+            case IMAGETYPE_JPEG:
+                $imageTmp = imagecreatefromjpeg($File["tmp_name"]);
+                break;
+            case IMAGETYPE_GIF:
+                $imageTmp = imagecreatefromgif($File["tmp_name"]);
+                $newExtention = "gif";
+                break;
+            case IMAGETYPE_BMP:
+                $imageTmp = imagecreatefrombmp($File["tmp_name"]);
+                break;
+            default:
+                $imageTmp = imagecreatefromjpeg($File["tmp_name"]);
+                break;
         }
 
+        $success = $this->Create(new ImageModel(0, $Name, 0));
+        if (!$success) {
+            return null;
+        }
+
+        $id = $this->GetMaxId();
+        if (!$id) {
+            return null;
+        }
+
+        $newPath = $this->storagePath."/".$id.".".$newExtention;
+        if (!imagejpeg($imageTmp, $newPath, $quality)){
+            imagedestroy($imageTmp);
+            $this->Delete($id);
+            return null;
+        }
+        imagedestroy($imageTmp);
+        
         return $id;
     }
 
     public function CanBeUploaded($File)
     {
+        if (!isset($File['tmp_name'])) { return false; }
+
         if(!file_exists($File['tmp_name']) || !is_uploaded_file($File['tmp_name'])) {
+            return false;
+        }
+
+        if (!exif_imagetype($File['tmp_name'])) {
+            //Its an image
             return false;
         }
 
@@ -157,13 +190,26 @@ class ImageRepository extends ObjectRepository
 
     public function GetSource(int $id)
     {
-        $ImageSource = $this->storagePath."/".$id.".png";
-      
-        if (file_exists($ImageSource))
+        $files = glob($this->storagePath."/".$id.".*");
+
+        if (count($files) == 0) { return null; }
+
+        $image = null;
+
+        for ($i=0; $i < count($files); $i++) { 
+            if (exif_imagetype($files[$i])) {
+                //Its an image
+                $image = $files[$i];
+
+                break;
+            }
+        }
+
+        if (file_exists($image))
         {
-            return $this->sourcePath."/".$id.".png";
+            return $this->sourcePath."/".basename($image);
         }
         
-        return "";
+        return null;
     }
 }

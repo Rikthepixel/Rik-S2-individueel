@@ -1,92 +1,91 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Route.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Utility/Route.php";
 
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/UpdateViewController.php";
 
-Route::add("/", function() {
+Route::add("/", function(Request $request) {
     $HomeViewController = new HomeViewController();
-    $HomeViewController->GetFrontPage();
+    $HomeViewController->GetFrontPage($request);
 });
 
-Route::add("/Projects", function() {
+Route::add("/Projects", function(Request $request) {
     $HomeViewController = new HomeViewController();
-    $HomeViewController->GetFrontPage();
+    $HomeViewController->GetFrontPage($request);
 });
 
-Route::add("/Project", function() {
+Route::add("/Project", function(Request $request) {
     $HomeViewController = new HomeViewController();
-    $HomeViewController->GetProjectPage();
+    $HomeViewController->GetProjectPage($request);
 });
 
 //
 // Admin
 //
-Route::add("/admin/projects", function()
+Route::add("/admin/projects", function(Request $request)
 {
     $HomeViewController = new HomeViewController();
-    $HomeViewController->GetProjectAdminPanel();
+    $HomeViewController->GetProjectAdminPanel($request);
 });
 
 //
 // Admin Projects
 //
-Route::add("/admin/projects/add", function()
+Route::add("/admin/projects/add", function(Request $request)
 {
     $ProjectViewController = new ProjectViewController();
-    $ProjectViewController->GetAdminProjectCreatePage();
+    $ProjectViewController->GetAdminProjectCreatePage($request);
 });
-Route::add("/admin/projects/addnew", function()
+Route::add("/admin/projects/addnew", function(Request $request)
 {
     $ProjectViewController = new ProjectViewController();
-    $ProjectViewController->AdminCreateProject();
+    $ProjectViewController->AdminCreateProject($request);
 }, "post");
 
-Route::add("/admin/projects/project", function()
+Route::add("/admin/projects/project", function(Request $request)
 {
     $ProjectViewController = new ProjectViewController();
-    $ProjectViewController->GetAdminProjectEditPage();
+    $ProjectViewController->GetAdminProjectEditPage($request);
 });
-Route::add("/admin/projects/edit", function()
+Route::add("/admin/projects/edit", function(Request $request)
 {
     $ProjectViewController = new ProjectViewController();
-    $ProjectViewController->AdminEditProject();
+    $ProjectViewController->AdminEditProject($request);
 }, "post");
-Route::add("/admin/projects/delete", function()
+Route::add("/admin/projects/delete", function(Request $request)
 {
     $ProjectViewController = new ProjectViewController();
-    $ProjectViewController->AdminDeleteProject();
+    $ProjectViewController->AdminDeleteProject($request);
 });
 
 
 //
 // Admin Updates
 //
-Route::add("/admin/projects/editupdate", function()
+Route::add("/admin/projects/editupdate", function(Request $request)
 {
     $UpdateViewController = new UpdateViewController();
-    $UpdateViewController->GetAdminEditUpdatePage();
+    $UpdateViewController->GetAdminEditUpdatePage($request);
 });
-Route::add("/admin/projects/updateedit", function()
+Route::add("/admin/projects/updateedit", function(Request $request)
 {
     $UpdateViewController = new UpdateViewController();
-    $UpdateViewController->AdminEditUpdate();
+    $UpdateViewController->AdminEditUpdate($request);
 }, "post");
 
-Route::add("/admin/projects/addupdate", function()
+Route::add("/admin/projects/addupdate", function(Request $request)
 {
-
     $UpdateViewController = new UpdateViewController();
-    $UpdateViewController->GetAdminAddUpdatePage();
+    $UpdateViewController->GetAdminAddUpdatePage($request);
 });
-Route::add("/admin/projects/addnewupdate", function()
+Route::add("/admin/projects/addnewupdate", function(Request $request)
 {
     $UpdateViewController = new UpdateViewController();
-    $UpdateViewController->AdminAddUpdate();
+    $UpdateViewController->AdminAddUpdate($request);
 }, "post");
-Route::add("/admin/projects/deleteupdate", function()
+Route::add("/admin/projects/deleteupdate", function(Request $request)
 {
     $UpdateViewController = new UpdateViewController();
-    $UpdateViewController->AdminDeleteUpdate();
+    $UpdateViewController->AdminDeleteUpdate($request);
 });

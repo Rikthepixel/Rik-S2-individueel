@@ -1,4 +1,5 @@
 <?php
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Utility/Request.php";
 
 class Route {
 
@@ -98,7 +99,10 @@ class Route {
               array_shift($matches); // Remove basepath
             }
 
-            if($return_value = call_user_func_array($route['function'], $matches)) {
+
+            $request = new Request();
+            $request->GetRequestVariables();
+            if($return_value = call_user_func_array($route['function'], array($request))) {
               echo $return_value;
             }
 

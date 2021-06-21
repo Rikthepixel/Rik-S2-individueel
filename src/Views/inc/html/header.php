@@ -12,7 +12,7 @@
 
     <script src="/src/Resources/js/jquery-3.6.0.js"></script>
     <title><?php if (isset($title)) { echo $title; echo " - ";}?> Portfolio</title>
-    <?php if(!isset($title)) { $selectedHref = ""; } ?>
+    <?php if(!isset($selectedHref)) { $selectedHref = ""; } ?>
 </head>
 
 <body>

@@ -1,7 +1,6 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ProjectController.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/UpdateController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Request.php";
 
 class UpdateViewController
 {
@@ -11,10 +10,8 @@ class UpdateViewController
         $this->UpdateController = new UpdateController();    
     }
 
-    public function AdminEditUpdate()
+    public function AdminEditUpdate(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
 
         if (!isset($request->id)) { return null; }
        
@@ -28,10 +25,8 @@ class UpdateViewController
         header('Location: /admin/projects/project?id='.$request->project_id);
     }
 
-    public function GetAdminEditUpdatePage()
+    public function GetAdminEditUpdatePage(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
         $Update = $this->UpdateController->getUpdate($request->id);
 
         if (!$Update) {
@@ -43,10 +38,8 @@ class UpdateViewController
         include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Update/EditUpdate.php";
     }
 
-    public function GetAdminAddUpdatePage()
+    public function GetAdminAddUpdatePage(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
 
         if (!isset($request->project_id)) {
             header('Location: /admin/projects');
@@ -56,10 +49,8 @@ class UpdateViewController
         include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Update/Add.php";
     }
 
-    public function AdminAddUpdate()
+    public function AdminAddUpdate(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
 
         if (!isset($request->project_id)) { return null; }
 
@@ -71,10 +62,8 @@ class UpdateViewController
         header('Location: /admin/projects/project?id='.$request->project_id);
     }
 
-    public function AdminDeleteUpdate()
+    public function AdminDeleteUpdate(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
 
         if (!isset($request->id)) { return null; }
         $success = $this->UpdateController->removeUpdate($request->id);

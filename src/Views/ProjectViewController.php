@@ -2,7 +2,6 @@
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ImageController.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ProjectController.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/UpdateController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Request.php";
 
 class ProjectViewController
 {
@@ -13,10 +12,8 @@ class ProjectViewController
         $this->UpdateController = new UpdateController();
     }
 
-    public function GetApi()
+    public function GetApi(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
 
         if (!isset($request->id)) {
             
@@ -44,10 +41,8 @@ class ProjectViewController
         include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Project/Add.php";
     }
 
-    public function AdminCreateProject()
+    public function AdminCreateProject(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
 
         $image = new ImageModel(0, "", 0);
         if (isset($_FILES["Image"])) {
@@ -68,10 +63,8 @@ class ProjectViewController
         header('Location: /admin/projects');
     }
 
-    public function GetAdminProjectEditPage()
+    public function GetAdminProjectEditPage(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
 
         if (!isset($request->id)) {
             header('Location: /admin/projects');  
@@ -89,10 +82,8 @@ class ProjectViewController
         include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Project/ProjectEdit.php";
     }
 
-    public function AdminEditProject()
+    public function AdminEditProject(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
 
         if (!isset($request->id)) { return null; } 
 
@@ -122,10 +113,8 @@ class ProjectViewController
         header('Location: /admin/projects');
     }
 
-    public function AdminDeleteProject()
+    public function AdminDeleteProject(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
 
         if (!isset($request->id)) { return null; }
         $success = $this->ProjectController->removeProject($request->id);

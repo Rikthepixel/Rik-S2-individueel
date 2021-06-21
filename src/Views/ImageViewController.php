@@ -1,6 +1,6 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ImageController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Request.php";
+
 
 class ImageViewController
 {
@@ -9,10 +9,8 @@ class ImageViewController
         $this->ImageController = new ImageController();
     }
 
-    public function GetApi()
+    public function GetApi(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
 
         $Image = null;
         if (isset($request->id)) {

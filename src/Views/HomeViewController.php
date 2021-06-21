@@ -2,7 +2,6 @@
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ImageController.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ProjectController.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/UpdateController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Request.php";
 
 class HomeViewController
 {
@@ -34,10 +33,8 @@ class HomeViewController
         include $_SERVER["DOCUMENT_ROOT"]."/src/Views/MainView/Frontpage.php";
     }
 
-    public function GetProjectPage()
+    public function GetProjectPage(Request $request)
     {
-        $request = new Request();
-        $request->GetRequestVariables();
 
         $Projectinfo = $this->ProjectController->GetProject($request->id);
         $Updates = $this->UpdateController->getVisibleUpdates($Projectinfo->id);

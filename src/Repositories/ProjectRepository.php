@@ -1,6 +1,7 @@
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Models/ProjectModel.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Repositories/ObjectRepository.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Utility/HtmlTags.php";
 
 class ProjectRepository extends ObjectRepository
 {
@@ -60,12 +61,12 @@ class ProjectRepository extends ObjectRepository
         $Query = "INSERT INTO $this->table (name, description, link, visible, image_id) VALUES (:name, :description, :link, :visible, :image_id )";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            ":name" => $ProjectModel->name,
-            ":description" => $ProjectModel->description,
-            ":link" => $ProjectModel->link,
-            ":visible" => $ProjectModel->visible,
-            ":image_id" => $ProjectModel->image->id
-        ]);
+            ":name" => $this->DatabaseHandler->escapeInjection($ProjectModel->name),
+            ":description" => $this->DatabaseHandler->escapeInjection($ProjectModel->description, HtmlTags::getDescriptionTags()),
+            ":link" => $this->DatabaseHandler->escapeInjection($ProjectModel->link),
+            ":visible" => $this->DatabaseHandler->escapeInjection($ProjectModel->visible),
+            ":image_id" => $this->DatabaseHandler->escapeInjection($ProjectModel->image->id)
+        ], false);
     }
 
     public function Update(Model $ProjectModel)
@@ -73,13 +74,13 @@ class ProjectRepository extends ObjectRepository
         $Query = "UPDATE $this->table SET name = :name, description = :description, link = :link, image_id = :image_id, visible = :visible WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            ":id" => $ProjectModel->id,
-            ":name" => $ProjectModel->name,
-            ":description" => $ProjectModel->description,
-            ":link" => $ProjectModel->link,
-            ":visible" => $ProjectModel->visible,
-            ":image_id" => $ProjectModel->image->id
-        ]);
+            ":id" => $this->DatabaseHandler->escapeInjection($ProjectModel->id),
+            ":name" => $this->DatabaseHandler->escapeInjection($ProjectModel->name),
+            ":description" => $this->DatabaseHandler->escapeInjection($ProjectModel->description, HtmlTags::getDescriptionTags()),
+            ":link" => $this->DatabaseHandler->escapeInjection($ProjectModel->link),
+            ":visible" => $this->DatabaseHandler->escapeInjection($ProjectModel->visible),
+            ":image_id" => $this->DatabaseHandler->escapeInjection($ProjectModel->image->id)
+        ], false);
     }
 
     public function SetVisibility(int $id, $Visible)

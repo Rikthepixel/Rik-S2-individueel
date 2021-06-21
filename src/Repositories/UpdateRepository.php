@@ -74,12 +74,12 @@ class UpdateRepository extends ObjectRepository
         $Query = "INSERT INTO $this->table (name, description, visible, project_id, version) VALUES (:name, :description, :visible, :project_id, :version)";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            "project_id" => $UpdateModel->project_id,
-            ":name" => $UpdateModel->name,
-            ":description" => $UpdateModel->description,
-            ":visible" => $UpdateModel->visible,
-            ":version" => $UpdateModel->version
-        ]);
+            "project_id" => $this->DatabaseHandler->escapeInjection($UpdateModel->project_id),
+            ":name" => $this->DatabaseHandler->escapeInjection($UpdateModel->name),
+            ":description" => $this->DatabaseHandler->escapeInjection($UpdateModel->description, HtmlTags::getDescriptionTags()),
+            ":visible" => $this->DatabaseHandler->escapeInjection($UpdateModel->visible),
+            ":version" => $this->DatabaseHandler->escapeInjection($UpdateModel->version)
+        ], false);
     }
 
     public function Update(Model $UpdateModel)
@@ -87,12 +87,12 @@ class UpdateRepository extends ObjectRepository
         $Query = "UPDATE $this->table SET name = :name, description = :description, visible = :visible, version = :version WHERE id = :id";
         $Statement = $this->DatabaseHandler->CreateStatement($Query);
         return $this->DatabaseHandler->ExecuteStatement($Statement, [
-            ":id" => $UpdateModel->id,
-            ":name" => $UpdateModel->name,
-            ":description" => $UpdateModel->description,
-            ":visible" => $UpdateModel->visible,
-            ":version" => $UpdateModel->version
-        ]);
+            ":id" => $this->DatabaseHandler->escapeInjection($UpdateModel->id),
+            ":name" => $this->DatabaseHandler->escapeInjection($UpdateModel->name),
+            ":description" => $this->DatabaseHandler->escapeInjection($UpdateModel->description, HtmlTags::getDescriptionTags()),
+            ":visible" => $this->DatabaseHandler->escapeInjection($UpdateModel->visible),
+            ":version" => $this->DatabaseHandler->escapeInjection($UpdateModel->version)
+        ], false);
     }
 
     public function SetVisibility(Model $UpdateModel, $Visible)

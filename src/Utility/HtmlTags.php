@@ -2,7 +2,7 @@
 
 class HtmlTags {
 
-    public static $EmphasisTags = "<strong><b><i><u>";
+    public static $EmphasisTags = "<strong><b> <i><em> <u><ins> <del><s> <small> <mark>";
     public static $ListTags = "<li><lu>";
     public static $HeaderTags = "<h1><h2><h3><h4><h5>";
     public static $ScriptTags = "<script>";

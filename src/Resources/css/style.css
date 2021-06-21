@@ -49,6 +49,13 @@ a:hover {
     color: var(--mainColor);
 }
 
+li {
+    margin: 0;
+    padding: 0;
+
+    display: inline list-item;
+}
+
 .header {
     background-color: var(--mainColor);
     color: var(--headerTextColor);

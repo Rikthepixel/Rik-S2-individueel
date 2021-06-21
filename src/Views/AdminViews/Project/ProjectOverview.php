@@ -1,5 +1,6 @@
 <?php
 $title = "Admin projects";
+$selectedHref = "/Admin/Projects";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
 ?>
     <div class="admin_add_button_wrapper">

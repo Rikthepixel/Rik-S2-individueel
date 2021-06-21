@@ -11,11 +11,11 @@
     <script src="/src/Resources/utility/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="/src/Resources/js/jquery-3.6.0.js"></script>
-    <title><?php if (isset($title)) { echo $title; echo " - ";} ?> Portfolio</title>
+    <title><?php if (isset($title)) { echo $title; echo " - ";}?> Portfolio</title>
+    <?php if(!isset($title)) { $selectedHref = ""; } ?>
 </head>
 
 <body>
-
     <nav class="navbar header navbar-expand-lg" role="navigation">
 
         <div class="container-fluid">
@@ -32,15 +32,23 @@
 
                 <ul class="navbar-nav me-auto">
 
-                    <li class="nav-item">
-                        <a class="header_item nav-link" href="/Projects">
+                    <li class="nav-item header_item">
+                        <a <?php if ($selectedHref == "/Projects") { echo "class='header_item_link nav-link header_item_active'"; } 
+                                    else { echo "class='header_item_link nav-link'"; } ?> 
+                            href="/Projects">
+
                             Projects
+
                         </a>
                     </li>
 
-                    <li class="nav-item">
-                        <a class="header_item nav-link" href="/Admin/Projects">
+                    <li class="nav-item header_item">
+                        <a <?php if ($selectedHref == "/Admin/Projects") { echo "class='header_item_link nav-link header_item_active'"; } 
+                                    else { echo "class='header_item_link nav-link'"; } ?> 
+                            href="/Admin/Projects">
+                        
                             Admin
+
                         </a>
                     </li>
 

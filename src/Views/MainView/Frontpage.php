@@ -1,5 +1,6 @@
 <?php
 $title = "Projects";
+$selectedHref = "/Projects";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
 ?>
 <div class="project_container justify-content-center"> 

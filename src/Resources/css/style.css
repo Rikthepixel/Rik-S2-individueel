@@ -92,6 +92,8 @@ li {
 .header_item_active {
     color: var(--headerTextColorHover) !important;
     background-color: var(--mainColorSelected);
+
+    font-weight: bold;
 }
 
 .project_container {
@@ -131,6 +133,18 @@ li {
 
 .project:hover a {
     color: var(--mainColor);
+}
+
+@media (max-width: 800px) {
+    .project {
+        width: 30%;
+    }
+}
+
+@media (max-width: 400px) {
+    .project {
+        width: 40%;
+    }
 }
 
 .icon_image {
@@ -453,6 +467,32 @@ li {
     margin-right: auto;
     width: 30%;
     height: 10%;
+}
+
+@media (max-width: 600px) {
+    .admin_add_button_wrapper {
+        width: 80%;
+        height: 7.5%;
+    }
+}
+
+@media (max-width: 900px) {
+    .admin_add_button_wrapper {
+        width: 70%;
+        height: 7.5%;
+    }
+}
+
+@media (max-width: 1200px) {
+    .admin_add_button_wrapper {
+        width: 55%;
+    }
+}
+
+@media (max-width: 1600px) {
+    .admin_add_button_wrapper {
+        width: 50%;
+    }
 }
 
 .admin_add_button {

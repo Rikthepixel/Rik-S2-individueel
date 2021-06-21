@@ -129,9 +129,12 @@ class ImageRepository extends ObjectRepository
             return null;
         }
     
-        $quality = 90;
+        $quality = 50;
         $imageTmp = null;
         $newExtention = "jpg";
+
+        $OriginalImageSize = filesize($File["tmp_name"]);
+
         switch (exif_imagetype($File["tmp_name"])) {
             case IMAGETYPE_PNG:
                 $imageTmp = imagecreatefrompng($File["tmp_name"]);
@@ -161,13 +164,26 @@ class ImageRepository extends ObjectRepository
             return null;
         }
 
+        $originalPath = $this->storagePath."/".$id.".".$path_parts["extension"];
         $newPath = $this->storagePath."/".$id.".".$newExtention;
+
         if (!imagejpeg($imageTmp, $newPath, $quality)){
             imagedestroy($imageTmp);
+
             $this->Delete($id);
             return null;
         }
         imagedestroy($imageTmp);
+        
+        $NewImageSize = filesize($newPath);
+        if ($NewImageSize > $OriginalImageSize) {
+
+            if (!move_uploaded_file($File["tmp_name"], $originalPath)) {
+                $this->Delete($id);
+                return null;
+            }
+
+        }
         
         return $id;
     }

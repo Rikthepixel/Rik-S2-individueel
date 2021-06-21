@@ -5,11 +5,12 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/src/Resources/css/style.css">
 
     <link rel="stylesheet" href="/src/Resources/utility/bootstrap/css/bootstrap.min.css">
-    <script src="/src/Resources/utility/bootstrap/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="/src/Resources/css/style.css">
+    <link rel="stylesheet" href="/src/Resources/css/scaledtext.css">
 
+    <script src="/src/Resources/utility/bootstrap/js/bootstrap.min.js"></script>
     <script src="/src/Resources/js/jquery-3.6.0.js"></script>
     <title><?php if (isset($title)) { echo $title; echo " - ";}?> Portfolio</title>
     <?php if(!isset($selectedHref)) { $selectedHref = ""; } ?>

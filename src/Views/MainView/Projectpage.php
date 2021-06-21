@@ -4,7 +4,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
 ?>
 
 <div class="container project-info">
-    <div class="row text-center">
+    <div class="row text-center justify-content-center">
         <h1 class="project_name_large"><?= $Project["project_info"]->name; ?></h1>
     </div>
     <div class="row">

@@ -42,7 +42,6 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
         <input type="hidden" name="id", Value=<?= $Update->id ?>>
     </form>
 
-    <script src="/src/Views/inc/js/utility.js"></script>
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
 ?>

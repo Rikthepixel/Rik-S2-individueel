@@ -12,6 +12,7 @@
 
     <script src="/src/Resources/utility/bootstrap/js/bootstrap.min.js"></script>
     <script src="/src/Resources/js/jquery-3.6.0.js"></script>
+    <script src="/src/Resources/js/utility.js"></script>
     <title><?php if (isset($title)) { echo $title; echo " - ";}?> Portfolio</title>
     <?php if(!isset($selectedHref)) { $selectedHref = ""; } ?>
 </head>

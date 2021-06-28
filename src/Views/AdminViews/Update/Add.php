@@ -36,7 +36,6 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
         <input type="hidden" name="project_id", Value=<?= $Project->id ?>>
     </form>
 
-    <script src="/src/Views/inc/js/utility.js"></script>
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
 ?>

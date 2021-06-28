@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Utility/Request.php";
+include __DIR__."/Request.php";
 
 class Route {
 

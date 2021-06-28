@@ -25,7 +25,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Image">Image:</label>
             <img id="output" class="icon_image output_image" hidden/>
-            <input class="edit_item edit_item_value" accept="image/*" type="file" name="Image" onchange="displayLoadedImage(event)">
+            <input class="edit_item edit_item_value" accept="image/*" type="file" name="Image" onchange="ImageUtility.displayLoadedImage(event)">
         </div>
 
         <div class="edit_item_wrapper">
@@ -41,8 +41,6 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
         </div>
 
     </form>
-
-    <script src="/src/Views/inc/js/utility.js"></script>
 <?php
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
 ?>

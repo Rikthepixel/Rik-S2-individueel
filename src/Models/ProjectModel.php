@@ -1,5 +1,5 @@
 <?php 
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Models/Model.php";
+include_once __DIR__."/Model.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Models/ImageModel.php";
 
 class ProjectModel extends Model

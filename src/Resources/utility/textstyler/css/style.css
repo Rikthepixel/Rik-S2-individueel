@@ -1,0 +1,116 @@
+:root {
+    --textStylerBarColor: rgb(105, 105, 105);
+
+    --textStylerCatagoryColor: rgb(146, 145, 145);
+
+    --textStylerItemColor: rgb(184, 184, 184);
+
+    --textStylerBorderThickness: 0.1rem;
+    --textStylerBorderRadius: 0.4rem;
+}
+
+.textstyler_bar {
+    width: 100%;
+    height: 2rem;
+    background-color: var(--textStylerBarColor);
+
+    display: flex;
+    align-items: center;
+    justify-self: flex-start;
+}
+
+.textstyler_item {
+    width: min-content;
+
+    text-align: center;
+
+    border-radius: var(--textStylerBorderRadius);
+    border-style: none;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    padding-left: 1rem;
+    padding-right: 1rem;
+
+    margin-right: 0.1rem;
+    margin-left: 0.1rem;
+
+    height: inherit;
+
+    background-color: transparent;
+    transition: background-color 0.25s ease-in-out;
+}
+
+.textstyler_item:hover {
+    background-color: var(--textStylerItemColor);
+}
+
+.textstyler_item * {
+    width: 100%;
+
+    text-align: center;
+
+    margin-top: auto;
+    margin-bottom: auto;
+
+    padding-right: 0.2rem;
+    padding-left: 0.2rem;
+
+    min-width: 1.5rem;
+}
+
+.textstyler_item img {
+    height: 80%;
+    aspect-ratio: auto;
+
+    object-fit: contain;
+}
+
+.textstyler_catagory {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    
+    height: 100%;
+
+    margin-right: 0.2rem;
+    margin-left: 0.2rem;
+
+    padding-right: 0.2rem;
+    padding-left: 0.2rem;
+
+    border-radius: var(--textStylerBorderRadius);
+    border-left: var(--textStylerBorderThickness) solid var(--textStylerCatagoryColor);
+    border-right: var(--textStylerBorderThickness) solid var(--textStylerCatagoryColor);
+    
+    background-color: transparent;
+}
+
+.textstyler_dropdown {
+    position: relative;
+    width: min-content;
+
+    align-items: flex-start;
+}
+
+.textstyler_dropdown_content {
+    width: 100%;
+
+    padding-top: 0.3rem;
+    padding-bottom: 0.3rem;
+
+    display: none;
+    position: absolute;
+
+    margin-top: 50%;
+
+    box-shadow: 0px 8px 16px 0px rgba(0,0,0,0.2);
+    z-index: 1;
+}
+
+.textstyler_dropdown:hover .textstyler_dropdown_content {
+    display: block;
+}

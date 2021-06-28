@@ -1,6 +1,6 @@
 <?php
-include_once $_SERVER['DOCUMENT_ROOT']."/src/Repositories/Database/DatabaseHandler.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Resources/Utility/HtmlTags.php";
+include_once __DIR__."/Database/DatabaseHandler.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Resources/utility/HtmlTags.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Models/Model.php";
 
 abstract class ObjectRepository {

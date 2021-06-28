@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Resources/Utility/router/Route.php";
+include_once $_SERVER["DOCUMENT_ROOT"]."/src/Resources/utility/router/Route.php";
 
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
 include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";

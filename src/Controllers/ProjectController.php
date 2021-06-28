@@ -15,6 +15,11 @@ class ProjectController extends ObjectController
         return $this->Repository->GetAll();
     }
 
+    public function GetAllVisibleProjects()
+    {
+        return $this->Repository->GetAllVisible();
+    }
+
     public function GetProject(int $id)
     {
         return $this->Repository->GetSingle($id);

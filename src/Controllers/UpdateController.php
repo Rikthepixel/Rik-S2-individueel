@@ -16,16 +16,9 @@ class UpdateController extends ObjectController
 
     public function getVisibleUpdates(int $Project_id)
     {
-        $updates = $this->Repository->GetAllByProject($Project_id);
+        $updates = $this->Repository->GetAllVisibleByProject($Project_id);
 
-        $visibleUpdates = array();
-        foreach ($updates as $key => $value) {
-            if ($value->visible) {
-                array_push($visibleUpdates, $value);
-            }
-        }
-
-        return $visibleUpdates;
+        return $updates;
     }
 
     public function createUpdate(UpdateModel $update)

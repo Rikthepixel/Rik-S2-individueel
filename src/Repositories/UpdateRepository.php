@@ -68,6 +68,26 @@ class UpdateRepository extends ObjectRepository
 
         return $Updates;
     }
+
+    public function GetAllVisibleByProject($project_id)
+    {
+        $Query = "SELECT updates.* FROM $this->table updates WHERE updates.project_id = :project_id AND updates.visible = 1 ORDER BY updates.version DESC";
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $Data = $this->DatabaseHandler->ExecuteStatement($Statement, [
+            ":project_id" => $project_id
+        ]);
+
+        $Updates = array();
+        if ($Data) 
+        {
+            for ($i=0; $i < count($Data); $i++) { 
+                $Update = new UpdateModel($Data[$i]->id, $Data[$i]->project_id, $Data[$i]->name, $Data[$i]->description, $Data[$i]->visible, $Data[$i]->version);
+                array_push($Updates, $Update);
+            }
+        }
+
+        return $Updates;
+    }
     
     public function Create(Model $UpdateModel)
     {

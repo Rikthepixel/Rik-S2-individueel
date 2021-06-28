@@ -16,11 +16,9 @@ class HomeViewController
     {
         $Projects = array();
 
-        $AllProjects = $this->ProjectController->GetAllProjects();
+        $AllProjects = $this->ProjectController->GetAllVisibleProjects();
         for ($i=0; $i < count($AllProjects); $i++) { 
             $Project = $AllProjects[$i];
-
-            if (!$Project->visible) { continue; }
 
             $IconSource = $this->ImageController->GetImageSource($Project->image);
 

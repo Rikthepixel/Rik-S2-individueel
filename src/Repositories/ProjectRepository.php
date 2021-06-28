@@ -33,6 +33,27 @@ class ProjectRepository extends ObjectRepository
         return $Projects;
     }
 
+    public function GetAllVisible()
+    {
+        $Query = "SELECT projects.*, imgs.name as image_name, imgs.created_at as image_created_at FROM $this->table projects LEFT JOIN images imgs ON imgs.id = projects.image_id WHERE projects.visible = 1 ORDER BY projects.name ASC";
+        $Statement = $this->DatabaseHandler->CreateStatement($Query);
+        $Data = $this->DatabaseHandler->ExecuteStatement($Statement);
+
+        $Projects = array();
+        if ($Data != null && gettype($Data) == "array") 
+        {
+            for ($i=0; $i < count($Data); $i++) { 
+
+                $Project = new ProjectModel($Data[$i]->id, $Data[$i]->name, $Data[$i]->description, $Data[$i]->link, $Data[$i]->visible, 
+                    new ImageModel((int)$Data[$i]->image_id, $Data[$i]->image_name, $Data[$i]->image_created_at));
+
+                array_push($Projects, $Project);
+            }
+        }
+
+        return $Projects;
+    }
+
     public function GetSingle($id)
     {
         $Query = "SELECT projects.*, imgs.name as image_name, imgs.created_at as image_created_at FROM $this->table projects LEFT JOIN images imgs ON imgs.id = projects.image_id WHERE projects.id = :id";

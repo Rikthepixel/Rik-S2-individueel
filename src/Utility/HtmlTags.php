@@ -13,7 +13,7 @@ class HtmlTags {
     public static function getDescriptionTags() {
 
         if (!self::$DescriptionTags) {
-            self::$DescriptionTags = self::$EmphasisTags.self::$ListTags.self::$HeaderTags;
+            self::$DescriptionTags = self::$EmphasisTags.self::$ListTags.self::$HeaderTags.self::$ImageTags;
         }
 
         return self::$DescriptionTags;

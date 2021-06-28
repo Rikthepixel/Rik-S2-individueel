@@ -6,7 +6,8 @@ function GetLineNumber(Element)
     console.log(lineNo, lineText, numOfSpaces);
 }
 
-function displayLoadedImage(ImageLoadedEvent) {
+function displayLoadedImage(ImageLoadedEvent)
+{
     var Target = ImageLoadedEvent.target;
     var TargetParent = Target.parentNode;
 	var imagechildren = $(TargetParent).find("img");

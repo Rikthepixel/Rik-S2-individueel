@@ -14,7 +14,9 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
 
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Description">Description:</label>
-            <textarea class="edit_item edit_item_value edit_item_textarea" name="Description" required><?= $project->description ?></textarea>
+            <div class="edit_item_value edit_item">
+                <textarea class="edit_item_textarea" name="Description" required><?= $project->description ?></textarea>
+            </div>
         </div>
 
         <div class="edit_item_wrapper">

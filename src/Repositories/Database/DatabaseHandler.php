@@ -123,11 +123,6 @@ class DatabaseHandler
     }
 
     public function escapeInjection($UnsafeVariable, $allowedTags = null) {
-
-        if ($allowedTags) {
-            var_dump(strip_tags("$UnsafeVariable", $allowedTags));
-        }
-
         return strip_tags("$UnsafeVariable", $allowedTags);
     }
 

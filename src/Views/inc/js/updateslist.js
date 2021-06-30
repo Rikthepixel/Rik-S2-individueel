@@ -11,11 +11,11 @@ for (let index = 0; index < Descriptions.length; index++) {
 
 
 function ExpandUpdate(event) {
-    var EventTarget = event.target
+    let EventTarget = event.target
 
-    var updateInfo = EventTarget.closest(".update_info")
-    var updateInfoHeader = null;
-    var updateInfoDescription = null;
+    let updateInfo = EventTarget.closest(".update_info")
+    let updateInfoHeader = null;
+    let updateInfoDescription = null;
 
     for (let index = 0; index < updateInfo.children.length; index++) {
         const element = updateInfo.children[index];

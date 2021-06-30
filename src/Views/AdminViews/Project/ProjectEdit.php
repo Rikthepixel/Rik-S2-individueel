@@ -15,6 +15,7 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Description">Description:</label>
             <div class="edit_item_value edit_item">
+                <?php include $_SERVER["DOCUMENT_ROOT"]."/src/Resources/utility/textstyler/html/textstyler.php"; ?>
                 <textarea class="edit_item_textarea" name="Description" required><?= $project->description ?></textarea>
             </div>
         </div>

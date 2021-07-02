@@ -36,6 +36,8 @@ class Route {
 
   public static function run($basepath = '', $case_matters = false, $trailing_slash_matters = false, $multimatch = false) {
 
+    self::getIncludeRouteFiles();
+
     // The basepath never needs a trailing slash
     // Because the trailing slash will be added using the route expressions
     $basepath = rtrim($basepath, '/');
@@ -137,4 +139,24 @@ class Route {
     }
   }
 
+  private static function getIncludeRouteFiles()
+  {
+    $RoutesFolder = __DIR__."/Routes";
+    $RouteFiles = array_diff(scandir($RoutesFolder), array('..', '.'));
+
+    foreach ($RouteFiles as $key => $Filename) {
+      $RoutePath = $RoutesFolder."/".$Filename;
+      $RouteFileInfo = pathinfo($RoutePath);
+
+      if ($RouteFileInfo == null) {
+        continue;
+      }
+      
+      if ($RouteFileInfo['extension'] != "php") {
+        continue;
+      }
+
+      include_once $RoutePath;
+    }
+  }
 }

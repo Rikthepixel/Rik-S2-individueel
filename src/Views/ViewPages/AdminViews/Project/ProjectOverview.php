@@ -1,7 +1,7 @@
 <?php
 $title = "Admin projects";
 $selectedHref = "/Admin/Projects";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
+$ViewController->IncludeView("inc/html/header.php");
 ?>
     <div class="admin_add_button_wrapper">
         <a class="submit_button admin_add_button" href="/admin/projects/add">
@@ -25,6 +25,4 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
         <?php endforeach; ?>
     </div>
 
-<?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
-?>
+    <?php $ViewController->IncludeView("inc/html/footer.html");?>

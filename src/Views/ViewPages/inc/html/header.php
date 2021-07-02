@@ -1,11 +1,3 @@
-<?php
-    function GetRelativePath($path)
-    {
-        $npath = str_replace('\\', '/', $path);
-        return str_replace($_SERVER['DOCUMENT_ROOT'], '', $npath);
-    } 
-?>
-
 <!DOCTYPE html>
 <html lang="en">
 

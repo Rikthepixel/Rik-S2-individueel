@@ -1,9 +1,7 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Resources/utility/router/Route.php";
-
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/HomeViewController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/ProjectViewController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/UpdateViewController.php";
+include_once $GLOBALS["PATHS"]->Views."/ViewControllers/HomeViewController.php";
+include_once $GLOBALS["PATHS"]->Views."/ViewControllers/ProjectViewController.php";
+include_once $GLOBALS["PATHS"]->Views."/ViewControllers/UpdateViewController.php";
 
 Route::add("/", [new HomeViewController(), "GetFrontPage"]);
 Route::add("/Projects", [new HomeViewController(), "GetFrontPage"]);

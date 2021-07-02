@@ -1,7 +1,8 @@
 <?php
 $title = "Projects";
 $selectedHref = "/Projects";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
+
+$ViewController->IncludeView("inc/html/header.php");
 ?>
 <div class="project_container justify-content-center"> 
 
@@ -18,6 +19,4 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
     <?php endforeach ?>
 
 </div>
-<?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
-?>
+<?php $ViewController->IncludeView("inc/html/footer.html");?>

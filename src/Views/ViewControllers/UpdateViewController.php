@@ -1,8 +1,10 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ProjectController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/UpdateController.php";
+include_once "ViewController.php";
 
-class UpdateViewController
+include_once $GLOBALS["PATHS"]->Controllers."/ProjectController.php";
+include_once $GLOBALS["PATHS"]->Controllers."/UpdateController.php";
+
+class UpdateViewController extends ViewController
 {
     public function __construct()
     {
@@ -35,7 +37,10 @@ class UpdateViewController
 
         $Project = $this->ProjectController->GetProject($Update->project_id);
 
-        include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Update/EditUpdate.php";
+        $this->IncludeViewPage("AdminViews/Update/EditUpdate.php", array(
+            "Update" => $Update,
+            "Project" => $Project
+        ));
     }
 
     public function GetAdminAddUpdatePage(Request $request)
@@ -46,7 +51,10 @@ class UpdateViewController
         }
 
         $Project = $this->ProjectController->GetProject($request->project_id);
-        include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Update/Add.php";
+
+        $this->IncludeViewPage("AdminViews/Update/Add.php", array(
+            "Project" => $Project
+        ));
     }
 
     public function AdminAddUpdate(Request $request)

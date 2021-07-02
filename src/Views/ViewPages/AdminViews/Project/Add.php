@@ -1,11 +1,11 @@
 <?php
-$title = "Add update";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
+$title = "Add project";
+$ViewController->IncludeView("inc/html/header.php");
 ?>
 
-<form class="edit_form" action=<?= "/admin/projects/addnewupdate?project_id=".$Project->id ?> method="post" enctype="multipart/form-data">
+<form class="edit_form" action="/admin/projects/addnew" method="post" enctype="multipart/form-data">
         <h1>
-            Add update to project: <?= $Project->name ?>
+            Add project
         </h1>
         <div class="edit_item_wrapper">
             <label class="edit_item_label" for="Name">Name:</label>
@@ -18,8 +18,14 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
         </div>
 
         <div class="edit_item_wrapper">
-            <label class="edit_item_label" for="Link">Version:</label>
-            <input class="edit_item edit_item_value" type="text" name="Version">
+            <label class="edit_item_label" for="Link">Link:</label>
+            <input class="edit_item edit_item_value" type="text" name="Link">
+        </div>
+
+        <div class="edit_item_wrapper">
+            <label class="edit_item_label" for="Image">Image:</label>
+            <img id="output" class="icon_image output_image" hidden/>
+            <input class="edit_item edit_item_value" accept="image/*" type="file" name="Image" onchange="ImageUtility.displayLoadedImage(event)">
         </div>
 
         <div class="edit_item_wrapper">
@@ -31,11 +37,8 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
         </div>
 
         <div class="edit_item_wrapper edit_form_submit edit_form_submit_wrapper">
-            <input class="edit_item_value submit_button submit_button_dark edit_form_sumbit_button" type="submit" value="Add update">
+            <input class="edit_item_value submit_button_dark submit_button edit_form_sumbit_button" type="submit" value="Add project">
         </div>
-        <input type="hidden" name="project_id", Value=<?= $Project->id ?>>
-    </form>
 
-<?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
-?>
+    </form>
+    <?php $ViewController->IncludeView("inc/html/footer.html");?>

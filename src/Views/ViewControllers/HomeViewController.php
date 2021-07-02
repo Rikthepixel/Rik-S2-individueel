@@ -1,9 +1,11 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ImageController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ProjectController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/UpdateController.php";
+include_once "ViewController.php";
 
-class HomeViewController
+include_once $GLOBALS["PATHS"]->Controllers."/ImageController.php";
+include_once $GLOBALS["PATHS"]->Controllers."/ProjectController.php";
+include_once $GLOBALS["PATHS"]->Controllers."/UpdateController.php";
+
+class HomeViewController extends ViewController
 {
     public function __construct()
     {
@@ -14,7 +16,7 @@ class HomeViewController
     
     public function GetFrontPage()
     {
-        $Projects = array();
+        $ProcessedProjects = array();
 
         $AllProjects = $this->ProjectController->GetAllVisibleProjects();
         for ($i=0; $i < count($AllProjects); $i++) { 
@@ -22,13 +24,15 @@ class HomeViewController
 
             $IconSource = $this->ImageController->GetImageSource($Project->image);
 
-            array_push($Projects, [
+            array_push($ProcessedProjects, [
                 "project_info" => $Project,
                 "project_icon" => $IconSource
             ]);
         }
 
-        include $_SERVER["DOCUMENT_ROOT"]."/src/Views/MainView/Frontpage.php";
+        $this->IncludeView("MainView/Frontpage.php", array(
+            "Projects" => $ProcessedProjects
+        ));
     }
 
     public function GetProjectPage(Request $request)
@@ -49,24 +53,29 @@ class HomeViewController
             "project_updates" => $Updates,
             "project_icon" => $IconSource
         );
-        include $_SERVER["DOCUMENT_ROOT"]."/src/Views/MainView/Projectpage.php";
+
+        $this->IncludeView("MainView/Projectpage.php", array(
+            "Project" => $Project
+        ));
     }
 
     public function GetProjectAdminPanel()
     {
-        $Projects = array();
+        $ProcessedProjects = array();
 
-        $VisibleProjects = $this->ProjectController->GetAllProjects();
-        for ($i=0; $i < count($VisibleProjects); $i++) { 
-            $Project = $VisibleProjects[$i];
+        $Projects = $this->ProjectController->GetAllProjects();
+        for ($i=0; $i < count($Projects); $i++) { 
+            $Project = $Projects[$i];
             $IconSource = $this->ImageController->GetImageSource($Project->image);
 
-            array_push($Projects, [
+            array_push($ProcessedProjects, [
                 "project_info" => $Project,
                 "project_icon" => $IconSource
             ]);
         }
 
-        include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Project/ProjectOverview.php";
+        $this->IncludeView("AdminViews/Project/ProjectOverview.php", array(
+            "Projects" => $ProcessedProjects
+        ));
     }
 }

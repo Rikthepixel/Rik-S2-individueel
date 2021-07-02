@@ -1,8 +1,10 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ImageController.php";
+include_once "ViewController.php";
+
+include_once $GLOBALS["PATHS"]->Controllers."/ImageController.php";
 
 
-class ImageViewController
+class ImageViewController extends ViewController
 {
     public function __construct()
     {
@@ -17,14 +19,19 @@ class ImageViewController
             $Image = $this->ImageController->GetImage($request->id);
         }
 
-        include $_SERVER["DOCUMENT_ROOT"]."/src/Views/ApiViews/Images/Get.php";
+        $this->IncludeView("ApiViews/Images/Get.php", array(
+            "Image" => $Image
+        ));
     }
 
     public function GetAllApi()
     {
         
         $Images = $this->ImageController->GetAllImages();
-        include $_SERVER["DOCUMENT_ROOT"]."/src/Views/ApiViews/Images/GetAll.php";
+
+        $this->IncludeView("ApiViews/Images/GetAll.php", array(
+            "Images" => $Images
+        ));
         
     }
 }

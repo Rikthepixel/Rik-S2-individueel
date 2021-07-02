@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Resources/utility/router/Route.php";
+include_once $GLOBALS["PATHS"]->Views."/ViewControllers/ProjectViewController.php";
 
 Route::add("/api/projects/get", [new ProjectViewController(), "GetApi"], "post");
 Route::add("/api/projects/getall", [new ProjectViewController(), "GetAllApi"], "post");

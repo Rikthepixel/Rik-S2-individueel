@@ -1,9 +1,11 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ImageController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ProjectController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/UpdateController.php";
+include_once "ViewController.php";
 
-class ProjectViewController
+include_once $GLOBALS["PATHS"]->Controllers."/ImageController.php";
+include_once $GLOBALS["PATHS"]->Controllers."/ProjectController.php";
+include_once $GLOBALS["PATHS"]->Controllers."/UpdateController.php";
+
+class ProjectViewController extends ViewController
 {
     public function __construct()
     {
@@ -14,31 +16,30 @@ class ProjectViewController
 
     public function GetApi(Request $request)
     {
-
-        if (!isset($request->id)) {
-            
-            include $_SERVER["DOCUMENT_ROOT"]."/src/Views/ApiViews/Projects/Get.php";
-            
-        }
-        else {
-
+        $Project = null;
+        if (isset($request->id))
+        {
             $Project = $this->ProjectController->GetProject($request->id);
-            include $_SERVER["DOCUMENT_ROOT"]."/src/Views/ApiViews/Projects/Get.php";
-
         }
+
+        $this->IncludeView("ApiViews/Projects/Get.php", array(
+            "Project" => $Project
+        ));
     }
 
     public function GetAllApi()
     {
         
         $Projects = $this->ProjectController->GetAllProjects();
-        include $_SERVER["DOCUMENT_ROOT"]."/Objects/Views/ApiViews/Projects/GetAll.php";
+        $this->IncludeView("ApiViews/Projects/GetAll.php", array(
+            "Projects" => $Projects
+        ));
         
     }
 
     public function GetAdminProjectCreatePage()
     {
-        include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Project/Add.php";
+        $this->IncludeView("AdminViews/Project/Add.php");
     }
 
     public function AdminCreateProject(Request $request)
@@ -79,7 +80,12 @@ class ProjectViewController
         $project_updates = $this->UpdateController->getUpdates($project->id);
         $project_icon = $this->ImageController->GetImageSource($project->image);
 
-        include $_SERVER["DOCUMENT_ROOT"]."/src/Views/AdminViews/Project/ProjectEdit.php";
+
+        $this->IncludeView("AdminViews/Project/ProjectEdit.php", array(
+            "project" => $project,
+            "project_updates" => $project_updates,
+            "project_icon" => $project_icon
+        ));
     }
 
     public function AdminEditProject(Request $request)

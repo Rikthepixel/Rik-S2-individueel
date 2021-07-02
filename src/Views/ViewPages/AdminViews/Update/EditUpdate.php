@@ -1,6 +1,6 @@
 <?php
 $title = "Edit update";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
+$ViewController->IncludeView("inc/html/header.php");
 ?>
 
     <form class="edit_form" action=<?= "/admin/projects/updateedit?project_id=".$Update->project_id ?>  method="post" enctype="multipart/form-data">
@@ -42,6 +42,4 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
         <input type="hidden" name="id", Value=<?= $Update->id ?>>
     </form>
 
-<?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
-?>
+<?php $ViewController->IncludeView("inc/html/footer.html");?>

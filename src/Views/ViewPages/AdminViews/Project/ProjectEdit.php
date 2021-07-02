@@ -1,6 +1,6 @@
 <?php
 $title = "Edit project";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
+$ViewController->IncludeView("inc/html/header.php");
 ?>
 
 <form class="edit_form" action=<?= "/admin/projects/edit?id=".$project->id ?> method="post" enctype="multipart/form-data">
@@ -88,8 +88,5 @@ include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/header.php";
 </div>
 <?php endif ?>
 
-<script src="/src/Views/inc/js/updateslist.js"></script>
-
-<?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Views/inc/html/footer.html";
-?>
+<script src=<?= $ViewController->getRelativeIncludePath("inc/js/updateslist.js") ?>></script>
+<?php $ViewController->IncludeView("inc/html/footer.html");?>

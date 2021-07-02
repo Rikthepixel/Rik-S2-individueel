@@ -11,7 +11,7 @@ abstract class ObjectRepository {
     function __construct()
     {
         $this->DatabaseHandler = new DatabaseHandler();
-        $this->DatabaseHandler->Connect();
+        $this->DatabaseHandler->Connect($_ENV["Database"]->Server, $_ENV["Database"]->DatabaseName , $_ENV["Database"]->Username, $_ENV["Database"]->Password);
     }
 
     abstract public function GetAll();

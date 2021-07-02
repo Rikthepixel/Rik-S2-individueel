@@ -4,12 +4,10 @@ class DatabaseHandler
 {
     private $DatabaseConnection;
 
-    public function Connect() {
+    public function Connect($Server, $DatabaseName, $Username, $Password) {
         $this->DatabaseConnection = null;
         try {
-            $Host = DBInfo::$DBServer;
-            $DBname = DBInfo::$DBName;
-            $this->DatabaseConnection = new PDO("mysql:host=$Host;dbname=$DBname", DBInfo::$DBUser, DBInfo::$DBPassword);
+            $this->DatabaseConnection = new PDO("mysql:host=".$Server.";dbname=".$DatabaseName, $Username, $Password);
         } catch (PDOException $e) {
             $Message = $e->getMessage();
             echo "Connection error $Message";

@@ -18,27 +18,6 @@ class DatabaseHandler
             $this->DatabaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
         }
     }
-    
-    public function TestConnect() {
-        $this->DatabaseConnection = null;
-        try {
-            $DBHost = DBInfo::$TestDBServer;
-            $DBname = DBInfo::$TestDBName;
-            $this->DatabaseConnection = new PDO("mysql:dbname=$DBname;host=$DBHost", DBInfo::$TestDBUser, DBInfo::$TestDBPassword);
-        } catch (PDOException $e) {
-            $Message = $e->getMessage();
-            echo "Connection error $Message";
-        }
-        if ($this->DatabaseConnection != null) {
-            $this->DatabaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
-            $this->DatabaseConnection->setAttribute(PDO::ATTR_DEFAULT_FETCH_MODE, PDO::FETCH_ASSOC);
-        }
-
-        //$this->DatabaseConnection = mysqli_connect(DBInfo::$TestDBServer, DBInfo::$TestDBUser, DBInfo::$TestDBPassword, DBInfo::$TestDBName);
-        //if (!$this->DatabaseConnection) {
-        //    die("Connection to the database failed");
-        //}
-    }
 
     public function ExecuteQuery($Query) {
         $Response = $this->DatabaseConnection->query($Query);

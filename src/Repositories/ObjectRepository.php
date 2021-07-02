@@ -11,7 +11,7 @@ abstract class ObjectRepository {
     function __construct()
     {
         $this->DatabaseHandler = new DatabaseHandler();
-        $this->DatabaseHandler->TestConnect();
+        $this->DatabaseHandler->Connect();
     }
 
     abstract public function GetAll();

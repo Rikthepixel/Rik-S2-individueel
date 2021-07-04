@@ -1,5 +1,5 @@
 <?php
-include_once "DatabaseInfo.php";
+
 class DatabaseHandler
 {
     private $DatabaseConnection;

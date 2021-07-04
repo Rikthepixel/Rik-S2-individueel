@@ -1,11 +1,12 @@
 <?php
-$title = "Projects";
-$selectedHref = "/Projects";
-
-$ViewController->IncludeView("inc/html/header.php");
+$ViewController->IncludeView("inc/html/header.php", array(
+    "title" => "Projects",
+    "selectedHref" => "/Projects"
+));
 ?>
+<h1 class="text-center">My projects</h1>
 <div class="project_container justify-content-center"> 
-
+    
     <?php foreach($Projects as $key=>$Project): ?>
 
         <div class="project">

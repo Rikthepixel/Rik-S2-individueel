@@ -1,7 +1,7 @@
 <?php
-$title = $Project["project_info"]->name;
-
-$ViewController->IncludeView("inc/html/header.php");
+$ViewController->IncludeView("inc/html/header.php", array(
+    "title" => $Project["project_info"]->name,
+));
 ?>
 
 <div class="container project-info">

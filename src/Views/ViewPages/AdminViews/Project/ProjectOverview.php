@@ -1,7 +1,8 @@
 <?php
-$title = "Admin projects";
-$selectedHref = "/Admin/Projects";
-$ViewController->IncludeView("inc/html/header.php");
+$ViewController->IncludeView("inc/html/header.php", array(
+    "title" => "Admin projects",
+    "selectedHref" =>"/Admin/Projects"
+));
 ?>
     <div class="admin_add_button_wrapper">
         <a class="submit_button admin_add_button" href="/admin/projects/add">

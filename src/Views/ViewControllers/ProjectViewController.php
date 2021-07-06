@@ -41,7 +41,7 @@ class ProjectViewController extends ViewController
 
     public function GetAdminProjectCreatePage()
     {
-        $this->IncludeView("AdminViews/Project/Add.php");
+        $this->IncludeView("AdminViews/Project/ProjectAddEdit.php");
     }
 
     public function AdminCreateProject(Request $request)
@@ -83,7 +83,7 @@ class ProjectViewController extends ViewController
         $project_icon = $this->ImageController->GetImageSource($project->image);
 
 
-        $this->IncludeView("AdminViews/Project/ProjectEdit.php", array(
+        $this->IncludeView("AdminViews/Project/ProjectAddEdit.php", array(
             "project" => $project,
             "project_updates" => $project_updates,
             "project_icon" => $project_icon

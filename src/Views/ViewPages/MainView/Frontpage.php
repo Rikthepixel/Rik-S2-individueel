@@ -1,7 +1,6 @@
 <?php
 $ViewController->IncludeView("inc/html/header.php", array(
-    "title" => "Projects",
-    "selectedHref" => "/Projects"
+    "title" => "Projects"
 ));
 ?>
 <h1 class="text-center">My projects</h1>

@@ -16,7 +16,18 @@
     <script src="/src/Resources/js/utility.js"></script>
     
     <title><?php if (isset($title)) { echo $title; echo " - ";}?> Portfolio</title>
-    <?php if(!isset($selectedHref)) { $selectedHref = ""; } ?>
+    <?php 
+    
+        function AddActiveHeaderLink(string $Path)
+        {
+            $ReturnClass = "";
+            if ($Path == GetActiveHREF()){
+                $ReturnClass = "header_item_active";
+            }
+
+            return $ReturnClass;
+        }
+    ?>
 </head>
 
 <body>
@@ -37,22 +48,14 @@
                 <ul class="navbar-nav me-auto">
 
                     <li class="nav-item header_item">
-                        <a <?php if ($selectedHref == "/Projects") { echo "class='header_item_link nav-link header_item_active'"; } 
-                                    else { echo "class='header_item_link nav-link'"; } ?> 
-                            href="/Projects">
-
+                        <a class='header_item_link nav-link <?= AddActiveHeaderLink("/Projects"); ?>' href="/Projects">
                             Projects
-
                         </a>
                     </li>
 
                     <li class="nav-item header_item">
-                        <a <?php if ($selectedHref == "/Admin/Projects") { echo "class='header_item_link nav-link header_item_active'"; } 
-                                    else { echo "class='header_item_link nav-link'"; } ?> 
-                            href="/Admin/Projects">
-                        
+                        <a class='header_item_link nav-link <?= AddActiveHeaderLink("/Admin/Projects"); ?>' href="/Admin/Projects">
                             Admin
-
                         </a>
                     </li>
 

@@ -52,6 +52,17 @@ function GetRelativePath($path) {
   return str_replace($_SERVER['DOCUMENT_ROOT'], '', $npath);
 }
 
+function GetActiveHREF()
+{
+  $parsed_url = parse_url($_SERVER['REQUEST_URI']);
+  if (isset($parsed_url["path"]))
+  {
+    return $parsed_url["path"];
+  }
+
+  return null;
+}
+
 //Autoloader
 if (true)
 {

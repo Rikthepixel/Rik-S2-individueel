@@ -1,8 +1,10 @@
 <?php
-include_once "ViewController.php";
+namespace Views\ViewControllers;
 
-include_once $GLOBALS["PATHS"]->Controllers."/ProjectController.php";
-include_once $GLOBALS["PATHS"]->Controllers."/UpdateController.php";
+use Router\Request;
+
+use Controllers\ProjectController;
+use Controllers\UpdateController;
 
 class UpdateViewController extends ViewController
 {

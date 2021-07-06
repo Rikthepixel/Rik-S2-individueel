@@ -1,5 +1,7 @@
 <?php
 
+namespace Repositories\Database;
+
 class DatabaseHandler
 {
     private $DatabaseConnection;
@@ -7,13 +9,13 @@ class DatabaseHandler
     public function Connect($Server, $DatabaseName, $Username, $Password) {
         $this->DatabaseConnection = null;
         try {
-            $this->DatabaseConnection = new PDO("mysql:host=".$Server.";dbname=".$DatabaseName, $Username, $Password);
-        } catch (PDOException $e) {
+            $this->DatabaseConnection = new \PDO("mysql:host=".$Server.";dbname=".$DatabaseName, $Username, $Password);
+        } catch (\PDOException $e) {
             $Message = $e->getMessage();
             echo "Connection error $Message";
         }
         if ($this->DatabaseConnection != null) {
-            $this->DatabaseConnection->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+            $this->DatabaseConnection->setAttribute(\PDO::ATTR_ERRMODE, \PDO::ERRMODE_EXCEPTION);
         }
     }
 
@@ -36,13 +38,13 @@ class DatabaseHandler
                         return $ReturnArray[0];
                     }
                     return $ReturnArray;
-                }  catch(PDOException $e) {
+                }  catch(\PDOException $e) {
                     try {
                         if ( $Response->queryString) {
                             return true;
                         }
                         return;
-                    } catch(Error $e) {
+                    } catch(\Error $e) {
                         return $Response;
                     }
 

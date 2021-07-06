@@ -1,6 +1,8 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ObjectController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Repositories/UpdateRepository.php";
+namespace Controllers;
+
+use Repositories\UpdateRepository;
+use Models\UpdateModel;
 
 class UpdateController extends ObjectController
 {

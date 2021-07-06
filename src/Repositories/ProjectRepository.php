@@ -1,6 +1,11 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Models/ProjectModel.php";
-include_once __DIR__."/ObjectRepository.php";
+namespace Repositories;
+
+use Models\Model;
+use Models\ProjectModel;
+use Models\ImageModel;
+
+use Resources\utility\HtmlTags;
 
 class ProjectRepository extends ObjectRepository
 {

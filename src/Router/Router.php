@@ -1,7 +1,7 @@
 <?php
-include __DIR__."/Request.php";
+namespace Router;
 
-class Route {
+class Router {
 
   private static $routes = Array();
   private static $pathNotFound = null;

@@ -1,9 +1,11 @@
 <?php
-include_once "ViewController.php";
+namespace Views\ViewControllers;
 
-include_once $GLOBALS["PATHS"]->Controllers."/ImageController.php";
-include_once $GLOBALS["PATHS"]->Controllers."/ProjectController.php";
-include_once $GLOBALS["PATHS"]->Controllers."/UpdateController.php";
+use Router\Request;
+
+use Controllers\ImageController;
+use Controllers\ProjectController;
+use Controllers\UpdateController;
 
 class ProjectViewController extends ViewController
 {

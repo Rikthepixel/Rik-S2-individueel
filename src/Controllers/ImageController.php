@@ -1,6 +1,11 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ObjectController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Repositories/ImageRepository.php";
+namespace Controllers;
+
+use Repositories\ImageRepository;
+use Models\ImageModel;
+
+include_once __DIR__."/ObjectController.php";
+include_once $GLOBALS["PATHS"]->Repositories."/ImageRepository.php";
 
 class ImageController extends ObjectController
 {

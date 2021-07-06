@@ -1,7 +1,8 @@
 <?php
-include_once __DIR__."/Database/DatabaseHandler.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Resources/utility/HtmlTags.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Models/Model.php";
+namespace Repositories;
+
+use Models\Model;
+use Repositories\Database\DatabaseHandler;
 
 abstract class ObjectRepository {
     

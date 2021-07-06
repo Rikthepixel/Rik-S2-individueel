@@ -1,4 +1,5 @@
 <?php
+namespace Resources\utility;
 
 class HtmlTags {
 

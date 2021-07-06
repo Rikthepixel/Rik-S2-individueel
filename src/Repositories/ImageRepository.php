@@ -1,6 +1,8 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Models/ImageModel.php";
-include_once __DIR__."/ObjectRepository.php";
+namespace Repositories;
+
+use Models\Model;
+use Models\ImageModel;
 
 class ImageRepository extends ObjectRepository
 {

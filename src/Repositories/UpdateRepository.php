@@ -1,6 +1,10 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Models/UpdateModel.php";
-include_once __DIR__."/ObjectRepository.php";
+namespace Repositories;
+
+use Models\Model;
+use Models\UpdateModel;
+
+use Resources\utility\HtmlTags;
 
 class UpdateRepository extends ObjectRepository
 {

@@ -1,5 +1,5 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Repositories/ObjectRepository.php";
+namespace Controllers;
 
 class ObjectController 
 {

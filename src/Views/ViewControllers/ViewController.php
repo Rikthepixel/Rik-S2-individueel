@@ -1,4 +1,5 @@
 <?php
+namespace Views\ViewControllers;
 
 class ViewController 
 {

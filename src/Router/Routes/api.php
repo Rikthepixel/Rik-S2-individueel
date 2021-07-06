@@ -1,5 +1,7 @@
 <?php
-include_once $GLOBALS["PATHS"]->Views."/ViewControllers/ProjectViewController.php";
+use Router\Router;
 
-Route::add("/api/projects/get", [new ProjectViewController(), "GetApi"], "post");
-Route::add("/api/projects/getall", [new ProjectViewController(), "GetAllApi"], "post");
+use Views\ViewControllers\ProjectViewController;
+
+Router::add("/api/projects/get", [new ProjectViewController, "GetApi"], "post");
+Router::add("/api/projects/getall", [new ProjectViewController, "GetAllApi"], "post");

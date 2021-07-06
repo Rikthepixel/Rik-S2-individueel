@@ -1,5 +1,5 @@
 <?php 
-include_once __DIR__."/Model.php";
+namespace Models;
 
 class UpdateModel extends Model
 {

@@ -1,7 +1,8 @@
 <?php
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Controllers/ObjectController.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Repositories/ProjectRepository.php";
-include_once $_SERVER["DOCUMENT_ROOT"]."/src/Models/ProjectModel.php";
+namespace Controllers;
+
+use Repositories\ProjectRepository;
+use Models\ProjectModel;
 
 class ProjectController extends ObjectController
 {

@@ -1,8 +1,9 @@
 <?php
-include_once "ViewController.php";
+namespace Views\ViewControllers;
 
-include_once $GLOBALS["PATHS"]->Controllers."/ImageController.php";
+use Router\Request;
 
+use Controllers\ImageController;
 
 class ImageViewController extends ViewController
 {

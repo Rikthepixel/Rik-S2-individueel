@@ -1,6 +1,5 @@
 <?php
 $EnviromentFilePath = $_SERVER['DOCUMENT_ROOT']."/.env";
-$SourceDirectoryPath = $_SERVER['DOCUMENT_ROOT']."/src";
 
 //Setup ENV
 if (file_exists($EnviromentFilePath))
@@ -12,6 +11,17 @@ if (file_exists($EnviromentFilePath))
   $EnvVariables = json_decode($JsonEnvString);
   if ($EnvVariables != null && gettype($EnvVariables) == "object") {
     foreach ((array)$EnvVariables as $key => $value) {
+
+      if ($key == "Paths") {
+        $value = (array)$value;
+
+        foreach ($value as $PathKey => $Path) {
+          $value[$PathKey] = $_SERVER['DOCUMENT_ROOT'].$Path;
+        }
+
+        $value = (object)$value;
+      }
+
       $_ENV[$key] = $value;
     }
   }
@@ -20,12 +30,12 @@ if (file_exists($EnviromentFilePath))
 //Setup Globals
 if (true)
 {
-  $SourcePaths = array_diff(scandir($SourceDirectoryPath), array('..', '.'));
+  $SourcePaths = array_diff(scandir($_ENV["Paths"]->Source), array('..', '.'));
 
   $GLOBALS["PATHS"] = (object)array();
 
   foreach ($SourcePaths as $key => $SourceFolder) {
-    $SourcePath = $SourceDirectoryPath."/".$SourceFolder;
+    $SourcePath = $_ENV["Paths"]->Source."/".$SourceFolder;
 
     //If the path is a file (not a directory/folder) skip it
     if (is_file($SourcePath)) {
@@ -42,6 +52,26 @@ function GetRelativePath($path) {
   return str_replace($_SERVER['DOCUMENT_ROOT'], '', $npath);
 }
 
+//Autoloader
+if (true)
+{
+  function myAutoLoad($Classname)
+  {
+    //echo $Classname;
+    $ClassPath = $_ENV["Paths"]->Source."\\".$Classname.".php";
+    
+    //echo $ClassPath;
+    if (!file_exists($ClassPath))
+    {
+      echo "Autoload fail: ".$ClassPath;
+      return false;
+    }
+
+    include_once $ClassPath;
+  }
+
+  spl_autoload_register('myAutoLoad');
+}
+
 // Run router
-include_once $GLOBALS["PATHS"]->Router."/Route.php";
-Route::run("/");
+Router\Router::run("/");
